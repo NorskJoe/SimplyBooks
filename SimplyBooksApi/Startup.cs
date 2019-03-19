@@ -29,7 +29,7 @@ namespace SimplyBooksApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            var connection = @"Server=.;Database=SimplyBooks;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SimplyBooksContext>
                 (options => options.UseSqlServer(connection));
         }
