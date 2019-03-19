@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyBooksApi", "SimplyBooksApi\SimplyBooksApi.csproj", "{3A5F261C-3ECD-4B71-8CF4-693A155F5C84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Web", "SimplyBooks.Web\SimplyBooks.Web.csproj", "{3A5F261C-3ECD-4B71-8CF4-693A155F5C84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyBooks.Models", "SimplyBooks.Models\SimplyBooks.Models.csproj", "{49179DEC-5425-47B5-B033-1E29F4765C08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Models", "SimplyBooks.Models\SimplyBooks.Models.csproj", "{49179DEC-5425-47B5-B033-1E29F4765C08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyBooks.Services", "SimplyBooks.Services\SimplyBooks.Services.csproj", "{227CBBB8-C3E5-4444-AA5A-8106F895B172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Services", "SimplyBooks.Services\SimplyBooks.Services.csproj", "{227CBBB8-C3E5-4444-AA5A-8106F895B172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
