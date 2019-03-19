@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimplyBooks.Models;
 
 namespace SimplyBooks.Models.Migrations
 {
     [DbContext(typeof(SimplyBooksContext))]
-    partial class SimplyBooksContextModelSnapshot : ModelSnapshot
+    [Migration("20190319073855_UpdatedIdNamesForModels")]
+    partial class UpdatedIdNamesForModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,7 @@ namespace SimplyBooks.Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(80);
+                    b.Property<string>("Name");
 
                     b.Property<int?>("NationalityId");
 
@@ -44,15 +44,13 @@ namespace SimplyBooks.Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int?>("AuthorId");
 
                     b.Property<int?>("GenreId");
 
                     b.Property<double>("Rating");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                    b.Property<string>("Title");
 
                     b.Property<DateTime>("YearPublished");
 
@@ -73,9 +71,7 @@ namespace SimplyBooks.Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("Name");
 
                     b.HasKey("GenreId");
 
@@ -88,9 +84,7 @@ namespace SimplyBooks.Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("Name");
 
                     b.HasKey("NationalityId");
 
@@ -108,8 +102,7 @@ namespace SimplyBooks.Models.Migrations
                 {
                     b.HasOne("SimplyBooks.Models.Author", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("SimplyBooks.Models.Genre", "Genre")
                         .WithMany()

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimplyBooks.Models;
 
 namespace SimplyBooks.Models.Migrations
 {
     [DbContext(typeof(SimplyBooksContext))]
-    partial class SimplyBooksContextModelSnapshot : ModelSnapshot
+    [Migration("20190319075432_UpdatedNullableAndMaxLengthOfModelProperties")]
+    partial class UpdatedNullableAndMaxLengthOfModelProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace SimplyBooks.Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int?>("AuthorId");
 
                     b.Property<int?>("GenreId");
 
@@ -108,8 +110,7 @@ namespace SimplyBooks.Models.Migrations
                 {
                     b.HasOne("SimplyBooks.Models.Author", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("SimplyBooks.Models.Genre", "Genre")
                         .WithMany()
