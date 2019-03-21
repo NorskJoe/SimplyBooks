@@ -9,7 +9,7 @@ using SimplyBooks.Services.Genres.Interfaces;
 
 namespace SimplyBooks.Web.Controllers.Genres
 {
-    [Route("v1/[controler")]
+    [Route("v1/genres")]
     [ApiController]
     public class GenresController : Controller
     {
@@ -20,7 +20,7 @@ namespace SimplyBooks.Web.Controllers.Genres
             _genresService = genresService;
         }
 
-        // PUT: v1/{controller}/update/{genre}
+        // PUT: v1/genres/update/{genre}
         [HttpPut("update{genre}")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,7 +43,7 @@ namespace SimplyBooks.Web.Controllers.Genres
             }
         }
 
-        // POST: v1/{controller}/add/{genre}
+        // POST: v1/genres/add/{genre}
         [HttpPost("add{genre}")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

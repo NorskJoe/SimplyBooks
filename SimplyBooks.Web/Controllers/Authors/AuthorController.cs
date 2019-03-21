@@ -9,7 +9,7 @@ using SimplyBooks.Services.Authors.Interfaces;
 
 namespace SimplyBooks.Web.Controllers.Authors
 {
-    [Route("v1/[controler")]
+    [Route("v1/authors")]
     [ApiController]
     public class AuthorsController : Controller
     {
@@ -20,7 +20,7 @@ namespace SimplyBooks.Web.Controllers.Authors
             _authorsService = authorsService;
         }
 
-        // PUT: v1/{controller}/update/{author}
+        // PUT: v1/authors/update/{author}
         [HttpPut("update{author}")]
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,7 +43,7 @@ namespace SimplyBooks.Web.Controllers.Authors
             }
         }
 
-        // POST: v1/{controller}/add/{author}
+        // POST: v1/authors/add/{author}
         [HttpPost("add{author}")]
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
