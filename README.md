@@ -15,3 +15,4 @@ A basic application that stores books a user has read along with their author an
 
 ### To Do
  - Deploy and host using Azure
+ - Add different users functionality
