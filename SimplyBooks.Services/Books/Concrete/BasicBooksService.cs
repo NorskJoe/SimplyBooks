@@ -20,6 +20,11 @@ namespace SimplyBooks.Services.Books.Concrete
             throw new NotImplementedException();
         }
 
+        public Task<HttpResponseMessage> GetBookAsync(int bookId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<HttpResponseMessage> ListAllBooksAsync()
         {
             throw new NotImplementedException();

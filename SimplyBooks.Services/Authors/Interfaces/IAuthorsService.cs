@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Authors.Interfaces
 {
-    interface IAuthorsService
+    public interface IAuthorsService
     {
-        Task<HttpResponseMessage> UpdateAuthor(Author author);
-        Task<HttpResponseMessage> AddAuthor(Author author);
+        Task<HttpResponseMessage> UpdateAuthorAsync(Author author);
+        Task<HttpResponseMessage> AddAuthorAsync(Author author);
     }
 }

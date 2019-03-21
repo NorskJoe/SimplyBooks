@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Genres.Interfaces
 {
-    interface IGenresService
+    public interface IGenresService
     {
         Task<HttpResponseMessage> UpdateGenreAsync(Genre genre);
         Task<HttpResponseMessage> AddGenreAsync(Genre genre);

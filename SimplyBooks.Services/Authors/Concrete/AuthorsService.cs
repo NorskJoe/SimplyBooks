@@ -10,12 +10,12 @@ namespace SimplyBooks.Services.Authors.Concrete
 {
     class AuthorsService : IAuthorsService
     {
-        public Task<HttpResponseMessage> AddAuthor(Author author)
+        public Task<HttpResponseMessage> AddAuthorAsync(Author author)
         {
             throw new NotImplementedException();
         }
 
-        public Task<HttpResponseMessage> UpdateAuthor(Author author)
+        public Task<HttpResponseMessage> UpdateAuthorAsync(Author author)
         {
             throw new NotImplementedException();
         }

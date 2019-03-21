@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books.Interfaces
 {
-    interface IListBooksByCriteriaService
+    public interface IListBooksByCriteriaService
     {
         Task<HttpResponseMessage> ListBooksByAuthorAsync(int authorId);
         Task<HttpResponseMessage> ListBooksByGenreAsync(int genreId);

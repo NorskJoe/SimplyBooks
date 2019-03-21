@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books.Interfaces
 {
-    interface IBasicBooksService
+    public interface IBasicBooksService
     {
         Task<HttpResponseMessage> AddBookAsync(Book book);
         Task<HttpResponseMessage> DeleteBookAsync(int bookId);
         Task<HttpResponseMessage> UpdateBookAsync(Book book);
         Task<HttpResponseMessage> ListAllBooksAsync();
+        Task<HttpResponseMessage> GetBookAsync(int bookId);
     }
 }

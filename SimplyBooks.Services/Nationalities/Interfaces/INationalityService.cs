@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Nationalities.Interfaces
 {
-    interface INationalityService
+    public interface INationalityService
     {
         Task<HttpResponseMessage> UpdateNationalityAsync(Nationality nationality);
         Task<HttpResponseMessage> AddNationalityAsync(Nationality nationality);
