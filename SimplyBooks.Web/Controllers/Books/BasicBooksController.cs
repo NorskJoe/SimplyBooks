@@ -25,7 +25,15 @@ namespace SimplyBooksApi.Controllers.Books
         public async Task<ActionResult<IList<Book>>> ListAllBooks()
         {
             var books = await _booksService.ListAllBooksAsync();
-            return Ok(books);
+
+            if (books == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(books);
+            }
         }
 
         // GET: v1/book/get/{id}

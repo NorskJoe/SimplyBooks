@@ -1,11 +1,16 @@
-﻿using SimplyBooks.Repository.Commands.Interfaces.Genres;
+﻿using SimplyBooks.Models;
+using SimplyBooks.Repository.Commands.Interfaces.Genres;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace SimplyBooks.Repository.Commands.Concrete.Genres
 {
     class AddGenreCommand : IAddGenreCommand
     {
+        public Task<HttpResponseMessage> AddGenre(Genre genre)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

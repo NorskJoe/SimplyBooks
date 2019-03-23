@@ -1,35 +1,56 @@
-﻿using SimplyBooks.Services.Books.Interfaces;
+﻿using SimplyBooks.Models;
+using SimplyBooks.Repository.Queries.Interfaces.Books;
+using SimplyBooks.Services.Books.Interfaces;
 using System;
-using System.Net.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books.Concrete
 {
     class ListBooksByCriteriaService : IListBooksByCriteriaService
     {
-        public Task<HttpResponseMessage> ListBooksByAuthorAsync(int authorId)
+        private readonly IListBooksByAuthorNationalityQuery _listByAuthorNationalityQuery;
+        private readonly IListBooksByAuthorQuery _listByAuthorQuery;
+        private readonly IListBooksByGenreQuery _listByGenreQuery;
+        private readonly IListBooksByYearPublishedQuery _listByYearPublishedQuery;
+        private readonly IListBooksByYearReadQuery _listByYearReadQuery;
+
+        public ListBooksByCriteriaService(IListBooksByAuthorNationalityQuery listByAuthorNationalityQuery,
+            IListBooksByAuthorQuery listByAuthorQuery,
+            IListBooksByGenreQuery listByGenreQuery,
+            IListBooksByYearPublishedQuery listByYearPublishedQuery,
+            IListBooksByYearReadQuery listByYearReadQuery)
         {
-            throw new NotImplementedException();
+            _listByAuthorNationalityQuery = listByAuthorNationalityQuery;
+            _listByAuthorQuery = listByAuthorQuery;
+            _listByGenreQuery = listByGenreQuery;
+            _listByYearPublishedQuery = listByYearPublishedQuery;
+            _listByYearReadQuery = listByYearReadQuery;
         }
 
-        public Task<HttpResponseMessage> ListBooksByAuthorNationalityAsync(int nationalityId)
+        public async Task<IList<Book>> ListBooksByAuthorNationalityAsync(int nationalityId)
         {
-            throw new NotImplementedException();
+            return await _listByAuthorNationalityQuery.Execute(nationalityId);
         }
 
-        public Task<HttpResponseMessage> ListBooksByGenreAsync(int genreId)
+        public async Task<IList<Book>> ListBooksByAuthorAsync(int authorId)
         {
-            throw new NotImplementedException();
+            return await _listByAuthorQuery.Execute(authorId);
         }
 
-        public Task<HttpResponseMessage> ListBooksByYearPublishedAsync(DateTime yearPublished)
+        public async Task<IList<Book>> ListBooksByGenreAsync(int genreId)
         {
-            throw new NotImplementedException();
+            return await _listByGenreQuery.Execute(genreId);
         }
 
-        public Task<HttpResponseMessage> ListBooksByYearReadAsync(DateTime yearRead)
+        public async Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished)
         {
-            throw new NotImplementedException();
+            return await _listByYearPublishedQuery.Execute(yearPublished);
+        }
+
+        public async Task<IList<Book>> ListBooksByYearReadAsync(DateTime yearRead)
+        {
+            return await _listByYearReadQuery.Execute(yearRead);
         }
     }
 }

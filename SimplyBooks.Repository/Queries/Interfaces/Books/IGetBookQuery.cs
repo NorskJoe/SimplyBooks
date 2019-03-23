@@ -1,11 +1,10 @@
 ﻿using SimplyBooks.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Repository.Queries.Interfaces.Books
 {
-    public interface IListBooksByAuthorQuery
+    public interface IGetBookQuery
     {
-        Task<IList<Book>> Execute(int id);
+        Task<Book> Execute(int id);
     }
 }

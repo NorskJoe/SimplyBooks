@@ -1,6 +1,10 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Repository.Commands.Interfaces.Books;
+using SimplyBooks.Repository.Queries.Interfaces.Books;
 using SimplyBooks.Services.Books.Interfaces;
-using System;
+using SimplyBooks.Services.Genres.Concrete;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -8,29 +12,75 @@ namespace SimplyBooks.Services.Books.Concrete
 {
     class BasicBooksService : IBasicBooksService
     {
-        public Task<HttpResponseMessage> AddBookAsync(Book book)
+        private readonly IAddBookCommand _addBookCommand;
+        private readonly IUpdateBookCommand _updateBookCommand;
+        private readonly IDeleteBookCommand _deleteBookCommand;
+        private readonly IGetBookQuery _getBookQuery;
+        private readonly IListAllBooksQuery _listAllBooksQuery;
+
+        public BasicBooksService(IAddBookCommand addBookCommand,
+            IUpdateBookCommand updateBookCommand,
+            IDeleteBookCommand deleteBookCommand,
+            IGetBookQuery getBookQuery,
+            IListAllBooksQuery listAllBooksQuery)
         {
-            throw new NotImplementedException();
+            _addBookCommand = addBookCommand;
+            _updateBookCommand = updateBookCommand;
+            _deleteBookCommand = deleteBookCommand;
+            _getBookQuery = getBookQuery;
+            _listAllBooksQuery = listAllBooksQuery;
         }
 
-        public Task<HttpResponseMessage> DeleteBookAsync(int bookId)
+        public async Task<HttpResponseMessage> AddBookAsync(Book book)
         {
-            throw new NotImplementedException();
+            var response = await _addBookCommand.Execute(book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.Conflict);
+            }
         }
 
-        public Task<HttpResponseMessage> GetBookAsync(int bookId)
+        public async Task<HttpResponseMessage> DeleteBookAsync(int bookId)
         {
-            throw new NotImplementedException();
+            var response = await _deleteBookCommand.Execute(bookId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
         }
 
-        public Task<HttpResponseMessage> ListAllBooksAsync()
+        public async Task<Book> GetBookAsync(int bookId)
         {
-            throw new NotImplementedException();
+            return await _getBookQuery.Execute(bookId);
         }
 
-        public Task<HttpResponseMessage> UpdateBookAsync(Book book)
+        public async Task<IList<Book>> ListAllBooksAsync()
         {
-            throw new NotImplementedException();
+            return await _listAllBooksQuery.Execute();
+        }
+
+        public async Task<HttpResponseMessage> UpdateBookAsync(Book book)
+        {
+            var response = await _updateBookCommand.Execute(book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
         }
     }
 }

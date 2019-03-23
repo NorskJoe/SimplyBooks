@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Genres.Interfaces;
 
 namespace SimplyBooks.Web.Controllers.Genres
@@ -52,8 +53,16 @@ namespace SimplyBooks.Web.Controllers.Genres
                 return BadRequest();
             }
 
-            var newGenre = await _genresService.AddGenreAsync(genre);
-            return Ok(newGenre);
+            try
+            {
+                await _genresService.AddGenreAsync(genre);
+            }
+            catch (EntityAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+
+            return Ok(genre);
         }
     }
 }

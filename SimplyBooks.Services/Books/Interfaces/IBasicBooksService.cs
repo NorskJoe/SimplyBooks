@@ -1,4 +1,5 @@
 ﻿using SimplyBooks.Models;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace SimplyBooks.Services.Books.Interfaces
         Task<HttpResponseMessage> AddBookAsync(Book book);
         Task<HttpResponseMessage> DeleteBookAsync(int bookId);
         Task<HttpResponseMessage> UpdateBookAsync(Book book);
-        Task<HttpResponseMessage> ListAllBooksAsync();
-        Task<HttpResponseMessage> GetBookAsync(int bookId);
+        Task<IList<Book>> ListAllBooksAsync();
+        Task<Book> GetBookAsync(int bookId);
     }
 }

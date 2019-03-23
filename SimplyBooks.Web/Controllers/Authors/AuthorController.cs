@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Authors.Interfaces;
 
 namespace SimplyBooks.Web.Controllers.Authors
@@ -52,8 +53,15 @@ namespace SimplyBooks.Web.Controllers.Authors
                 return BadRequest();
             }
 
-            var newAuthor = await _authorsService.AddAuthorAsync(author);
-            return Ok(newAuthor);
+            try
+            {
+                await _authorsService.AddAuthorAsync(author);
+            }
+            catch (EntityAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            return Ok(author);
         }
     }
 }

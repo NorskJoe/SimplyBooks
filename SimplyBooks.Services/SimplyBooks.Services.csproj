@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimplyBooks.Models\SimplyBooks.Models.csproj" />
+    <ProjectReference Include="..\SimplyBooks.Repository\SimplyBooks.Repository.csproj" />
   </ItemGroup>
 
 </Project>

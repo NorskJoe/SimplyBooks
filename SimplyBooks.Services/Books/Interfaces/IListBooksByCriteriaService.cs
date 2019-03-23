@@ -1,15 +1,16 @@
-﻿using System;
-using System.Net.Http;
+﻿using SimplyBooks.Models;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books.Interfaces
 {
     public interface IListBooksByCriteriaService
     {
-        Task<HttpResponseMessage> ListBooksByAuthorAsync(int authorId);
-        Task<HttpResponseMessage> ListBooksByGenreAsync(int genreId);
-        Task<HttpResponseMessage> ListBooksByAuthorNationalityAsync(int nationalityId);
-        Task<HttpResponseMessage> ListBooksByYearReadAsync(DateTime yearRead);
-        Task<HttpResponseMessage> ListBooksByYearPublishedAsync(DateTime yearPublished);
+        Task<IList<Book>> ListBooksByAuthorAsync(int authorId);
+        Task<IList<Book>> ListBooksByGenreAsync(int genreId);
+        Task<IList<Book>> ListBooksByAuthorNationalityAsync(int nationalityId);
+        Task<IList<Book>> ListBooksByYearReadAsync(DateTime yearRead);
+        Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished);
     }
 }

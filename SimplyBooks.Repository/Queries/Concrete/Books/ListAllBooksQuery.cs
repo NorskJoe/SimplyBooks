@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Repository.Queries.Concrete.Books
 {
-    class ListBooksByGenreQuery : IListBooksByGenreQuery
+    class ListAllBooksQuery : IListAllBooksQuery
     {
-        public Task<IList<Book>> Execute(int id)
+        public Task<IList<Book>> Execute()
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,8 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Repository.Commands.Interfaces.Genres;
 using SimplyBooks.Services.Genres.Interfaces;
-using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -8,14 +10,42 @@ namespace SimplyBooks.Services.Genres.Concrete
 {
     class GenresService : IGenresService
     {
-        public Task<HttpResponseMessage> AddGenreAsync(Genre genre)
+        private readonly IAddGenreCommand _addGenreCommand;
+        private readonly IUpdateGenreCommand _updateGenreCommand;
+
+        public GenresService(IAddGenreCommand addGenreCommand,
+            IUpdateGenreCommand updateGenreCommand)
         {
-            throw new NotImplementedException();
+            _addGenreCommand = addGenreCommand;
+            _updateGenreCommand = updateGenreCommand;
         }
 
-        public Task<HttpResponseMessage> UpdateGenreAsync(Genre genre)
+        public async Task<HttpResponseMessage> AddGenreAsync(Genre genre)
         {
-            throw new NotImplementedException();
+            var response = await _addGenreCommand.AddGenre(genre);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new EntityAlreadyExistsException(genre.Name);
+            }
+        }
+
+        public async Task<HttpResponseMessage> UpdateGenreAsync(Genre genre)
+        {
+            var response = await _updateGenreCommand.UpdateGenre(genre);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotModified);
+            }
         }
     }
 }
