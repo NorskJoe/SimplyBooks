@@ -44,7 +44,7 @@ namespace SimplyBooks.Services.Genres.Concrete
             }
             else
             {
-                throw new HttpResponseException(HttpStatusCode.NotModified);
+                throw new EntityNotFoundException(genre.Name);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Repository.Commands.Interfaces.Books;
 using SimplyBooks.Repository.Queries.Interfaces.Books;
 using SimplyBooks.Services.Books.Interfaces;
@@ -41,7 +42,7 @@ namespace SimplyBooks.Services.Books.Concrete
             }
             else
             {
-                throw new HttpResponseException(HttpStatusCode.Conflict);
+                throw new EntityNotFoundException(book.Title);
             }
         }
 
@@ -55,7 +56,7 @@ namespace SimplyBooks.Services.Books.Concrete
             }
             else
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new EntityNotFoundException();
             }
         }
 
@@ -79,7 +80,7 @@ namespace SimplyBooks.Services.Books.Concrete
             }
             else
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new EntityNotFoundException(book.Title);
             }
         }
     }

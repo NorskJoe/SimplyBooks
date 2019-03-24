@@ -45,7 +45,7 @@ namespace SimplyBooks.Services.Authors.Concrete
             }
             else
             {
-                throw new HttpResponseException(HttpStatusCode.NotModified);
+                throw new EntityNotFoundException(author.Name);
             }
         }
     }

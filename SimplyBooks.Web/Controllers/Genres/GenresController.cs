@@ -33,12 +33,12 @@ namespace SimplyBooks.Web.Controllers.Genres
 
             try
             {
-                var updatedGenre = await _genresService.UpdateGenreAsync(genre);
-                return Ok(updatedGenre);
+                await _genresService.UpdateGenreAsync(genre);
+                return Ok(genre);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
 
@@ -50,7 +50,7 @@ namespace SimplyBooks.Web.Controllers.Genres
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,21 +25,21 @@ namespace SimplyBooks.Web.Controllers.Authors
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateAuthor(Author author)
+        public async Task<IActionResult> UpdateAuthor(Author author)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
             {
-                var updatedAuthor = await _authorsService.UpdateAuthorAsync(author);
-                return Ok(updatedAuthor);
+                await _authorsService.UpdateAuthorAsync(author);
+                return Ok(author);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
 
@@ -46,11 +47,11 @@ namespace SimplyBooks.Web.Controllers.Authors
         [HttpPost("add{author}")]
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddAuthor([FromBody]Author author)
+        public async Task<IActionResult> AddAuthor([FromBody]Author author)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
