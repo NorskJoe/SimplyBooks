@@ -19,6 +19,30 @@ namespace SimplyBooks.Web.Controllers.Genres
             _genresService = genresService;
         }
 
+        // POST: v1/genres/add/{genre}
+        [HttpPost("add{genre}")]
+        [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult> AddGenre([FromBody]Genre genre)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _genresService.AddGenreAsync(genre);
+            }
+            catch (EntityAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+
+            return Ok(genre);
+        }
+
         // PUT: v1/genres/update/{genre}
         [HttpPut("update{genre}")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
@@ -42,27 +66,5 @@ namespace SimplyBooks.Web.Controllers.Genres
             }
         }
 
-        // POST: v1/genres/add/{genre}
-        [HttpPost("add{genre}")]
-        [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddGenre([FromBody]Genre genre)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                await _genresService.AddGenreAsync(genre);
-            }
-            catch (EntityAlreadyExistsException ex)
-            {
-                return Conflict(ex.Message);
-            }
-
-            return Ok(genre);
-        }
     }
 }

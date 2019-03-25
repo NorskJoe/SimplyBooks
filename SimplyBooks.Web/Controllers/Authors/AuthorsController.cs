@@ -20,6 +20,29 @@ namespace SimplyBooks.Web.Controllers.Authors
             _authorsService = authorsService;
         }
 
+        // POST: v1/authors/add/{author}
+        [HttpPost("add{author}")]
+        [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> AddAuthor([FromBody]Author author)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _authorsService.AddAuthorAsync(author);
+            }
+            catch (EntityAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            return Ok(author);
+        }
+
         // PUT: v1/authors/update/{author}
         [HttpPut("update{author}")]
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
@@ -41,28 +64,6 @@ namespace SimplyBooks.Web.Controllers.Authors
             {
                 return NotFound(ex.Message);
             }
-        }
-
-        // POST: v1/authors/add/{author}
-        [HttpPost("add{author}")]
-        [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddAuthor([FromBody]Author author)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                await _authorsService.AddAuthorAsync(author);
-            }
-            catch (EntityAlreadyExistsException ex)
-            {
-                return Conflict(ex.Message);
-            }
-            return Ok(author);
         }
     }
 }

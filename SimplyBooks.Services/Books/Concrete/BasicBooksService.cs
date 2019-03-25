@@ -32,9 +32,51 @@ namespace SimplyBooks.Services.Books.Concrete
             _listAllBooksQuery = listAllBooksQuery;
         }
 
+        public async Task<IList<Book>> ListAllBooksAsync()
+        {
+            var response = await _listAllBooksQuery.Execute();
+
+            if (response.Count == 0)
+            {
+                throw new EntityNotFoundException();
+            }
+            else
+            {
+                return response;
+            }
+        }
+
+        public async Task<Book> GetBookAsync(int bookId)
+        {
+            var response = await _getBookQuery.Execute(bookId);
+
+            if (response == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            else
+            {
+                return response;
+            }
+        }
+
         public async Task<HttpResponseMessage> AddBookAsync(Book book)
         {
             var response = await _addBookCommand.Execute(book);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new EntityAlreadyExistsException(book.Title);
+            }
+        }
+
+        public async Task<HttpResponseMessage> UpdateBookAsync(Book book)
+        {
+            var response = await _updateBookCommand.Execute(book);
 
             if (response.IsSuccessStatusCode)
             {
@@ -57,30 +99,6 @@ namespace SimplyBooks.Services.Books.Concrete
             else
             {
                 throw new EntityNotFoundException();
-            }
-        }
-
-        public async Task<Book> GetBookAsync(int bookId)
-        {
-            return await _getBookQuery.Execute(bookId);
-        }
-
-        public async Task<IList<Book>> ListAllBooksAsync()
-        {
-            return await _listAllBooksQuery.Execute();
-        }
-
-        public async Task<HttpResponseMessage> UpdateBookAsync(Book book)
-        {
-            var response = await _updateBookCommand.Execute(book);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                throw new EntityNotFoundException(book.Title);
             }
         }
     }
