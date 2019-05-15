@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Models", "Simpl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Services", "SimplyBooks.Services\SimplyBooks.Services.csproj", "{227CBBB8-C3E5-4444-AA5A-8106F895B172}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyBooks.Repository", "SimplyBooks.Repository\SimplyBooks.Repository.csproj", "{26082DC3-40A8-4267-9969-88A97B8CF7D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyBooks.Tests", "SimplyBooks.Tests\SimplyBooks.Tests.csproj", "{D7B0A15D-0165-42A3-88A1-4430AE3AF517}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{227CBBB8-C3E5-4444-AA5A-8106F895B172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{227CBBB8-C3E5-4444-AA5A-8106F895B172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{227CBBB8-C3E5-4444-AA5A-8106F895B172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26082DC3-40A8-4267-9969-88A97B8CF7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26082DC3-40A8-4267-9969-88A97B8CF7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26082DC3-40A8-4267-9969-88A97B8CF7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26082DC3-40A8-4267-9969-88A97B8CF7D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B0A15D-0165-42A3-88A1-4430AE3AF517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B0A15D-0165-42A3-88A1-4430AE3AF517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B0A15D-0165-42A3-88A1-4430AE3AF517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B0A15D-0165-42A3-88A1-4430AE3AF517}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Genres.Interfaces;
 
 namespace SimplyBooks.Web.Controllers.Genres
@@ -18,6 +17,30 @@ namespace SimplyBooks.Web.Controllers.Genres
         public GenresController(IGenresService genresService)
         {
             _genresService = genresService;
+        }
+
+        // POST: v1/genres/add/{genre}
+        [HttpPost("add{genre}")]
+        [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<ActionResult> AddGenre([FromBody]Genre genre)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _genresService.AddGenreAsync(genre);
+            }
+            catch (EntityAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+
+            return Ok(genre);
         }
 
         // PUT: v1/genres/update/{genre}
@@ -34,28 +57,14 @@ namespace SimplyBooks.Web.Controllers.Genres
 
             try
             {
-                var updatedGenre = await _genresService.UpdateGenreAsync(genre);
-                return Ok(updatedGenre);
+                await _genresService.UpdateGenreAsync(genre);
+                return Ok(genre);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
 
-        // POST: v1/genres/add/{genre}
-        [HttpPost("add{genre}")]
-        [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddGenre([FromBody]Genre genre)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var newGenre = await _genresService.AddGenreAsync(genre);
-            return Ok(newGenre);
-        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Authors.Interfaces;
 
 namespace SimplyBooks.Web.Controllers.Authors
@@ -20,42 +20,50 @@ namespace SimplyBooks.Web.Controllers.Authors
             _authorsService = authorsService;
         }
 
+        // POST: v1/authors/add/{author}
+        [HttpPost("add{author}")]
+        [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> AddAuthor([FromBody]Author author)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _authorsService.AddAuthorAsync(author);
+            }
+            catch (EntityAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            return Ok(author);
+        }
+
         // PUT: v1/authors/update/{author}
         [HttpPut("update{author}")]
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateAuthor(Author author)
+        public async Task<IActionResult> UpdateAuthor(Author author)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
             {
-                var updatedAuthor = await _authorsService.UpdateAuthorAsync(author);
-                return Ok(updatedAuthor);
+                await _authorsService.UpdateAuthorAsync(author);
+                return Ok(author);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-        }
-
-        // POST: v1/authors/add/{author}
-        [HttpPost("add{author}")]
-        [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddAuthor([FromBody]Author author)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var newAuthor = await _authorsService.AddAuthorAsync(author);
-            return Ok(newAuthor);
         }
     }
 }

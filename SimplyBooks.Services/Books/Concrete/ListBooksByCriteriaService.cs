@@ -1,37 +1,86 @@
-﻿using SimplyBooks.Services.Books.Interfaces;
+﻿using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Repository.Queries.Interfaces.Books;
+using SimplyBooks.Services.Books.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books.Concrete
 {
     class ListBooksByCriteriaService : IListBooksByCriteriaService
     {
-        public Task<HttpResponseMessage> ListBooksByAuthorAsync(int authorId)
+        private readonly IListBooksByAuthorNationalityQuery _listByAuthorNationalityQuery;
+        private readonly IListBooksByAuthorQuery _listByAuthorQuery;
+        private readonly IListBooksByGenreQuery _listByGenreQuery;
+        private readonly IListBooksByYearPublishedQuery _listByYearPublishedQuery;
+        private readonly IListBooksByYearReadQuery _listByYearReadQuery;
+
+        public ListBooksByCriteriaService(IListBooksByAuthorNationalityQuery listByAuthorNationalityQuery,
+            IListBooksByAuthorQuery listByAuthorQuery,
+            IListBooksByGenreQuery listByGenreQuery,
+            IListBooksByYearPublishedQuery listByYearPublishedQuery,
+            IListBooksByYearReadQuery listByYearReadQuery)
         {
-            throw new NotImplementedException();
+            _listByAuthorNationalityQuery = listByAuthorNationalityQuery;
+            _listByAuthorQuery = listByAuthorQuery;
+            _listByGenreQuery = listByGenreQuery;
+            _listByYearPublishedQuery = listByYearPublishedQuery;
+            _listByYearReadQuery = listByYearReadQuery;
         }
 
-        public Task<HttpResponseMessage> ListBooksByAuthorNationalityAsync(int nationalityId)
+        public async Task<IList<Book>> ListBooksByAuthorAsync(int authorId)
         {
-            throw new NotImplementedException();
+            var response = await _listByAuthorQuery.Execute(authorId);
+
+            if (response == null)
+            {
+                throw new EntityNotFoundException(authorId, typeof(Author).Name);
+            }
+            return response;
         }
 
-        public Task<HttpResponseMessage> ListBooksByGenreAsync(int genreId)
+        public async Task<IList<Book>> ListBooksByGenreAsync(int genreId)
         {
-            throw new NotImplementedException();
+            var response = await _listByGenreQuery.Execute(genreId);
+
+            if (response == null)
+            {
+                throw new EntityNotFoundException(genreId, typeof(Genre).Name);
+            }
+            return response;
         }
 
-        public Task<HttpResponseMessage> ListBooksByYearPublishedAsync(DateTime yearPublished)
+        public async Task<IList<Book>> ListBooksByAuthorNationalityAsync(int nationalityId)
         {
-            throw new NotImplementedException();
+            var response = await _listByAuthorNationalityQuery.Execute(nationalityId);
+
+            if (response == null)
+            {
+                throw new EntityNotFoundException(nationalityId, typeof(Nationality).Name);
+            }
+            return response;
         }
 
-        public Task<HttpResponseMessage> ListBooksByYearReadAsync(DateTime yearRead)
+
+        public async Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished)
         {
-            throw new NotImplementedException();
+            var response = await _listByYearPublishedQuery.Execute(yearPublished);
+            if (response == null)
+            {
+                throw new EntityNotFoundException(yearPublished, typeof(Book).Name);
+            }
+            return response;
+        }
+
+        public async Task<IList<Book>> ListBooksByYearReadAsync(DateTime yearRead)
+        {
+            var response = await _listByYearReadQuery.Execute(yearRead);
+            if (response == null)
+            {
+                throw new EntityNotFoundException(yearRead, typeof(Book).Name);
+            }
+            return response;
         }
     }
 }

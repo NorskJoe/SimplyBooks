@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Books.Interfaces;
 
 namespace SimplyBooksApi.Controllers.Books
@@ -23,47 +23,31 @@ namespace SimplyBooksApi.Controllers.Books
         // GET: v1/book/list
         [HttpGet("list")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IList<Book>>> ListAllBooks()
+        public async Task<IActionResult> ListAllBooks()
         {
-            var books = await _booksService.ListAllBooksAsync();
-            return Ok(books);
+            try
+            {
+                var books = await _booksService.ListAllBooksAsync();
+                return Ok(books);
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         // GET: v1/book/get/{id}
         [HttpGet("get{id}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Book>> GetBook(int bookId)
+        public async Task<IActionResult> GetBook(int bookId)
         {
             try
             {
                 var book = await _booksService.GetBookAsync(bookId);
                 return Ok(book);
             }
-            catch (Exception)
-            {
-                return NotFound();
-            }
-        }
-
-        // PUT: v1/book/update/{book}
-        [HttpPut("update{book}")]
-        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateBook(Book book)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                var updatedBook = await _booksService.UpdateBookAsync(book);
-                return Ok(updatedBook);
-            }
-            catch (Exception)
+            catch (EntityNotFoundException)
             {
                 return NotFound();
             }
@@ -73,29 +57,60 @@ namespace SimplyBooksApi.Controllers.Books
         [HttpPost("add{book}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddBook([FromBody]Book book)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> AddBook([FromBody]Book book)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
-            var newBook = await _booksService.AddBookAsync(book);
-            return Ok(newBook);
+            try
+            {
+                await _booksService.AddBookAsync(book);
+                return Ok(book);
+            }
+            catch (EntityAlreadyExistsException ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
+
+        // PUT: v1/book/update/{book}
+        [HttpPut("update{book}")]
+        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateBook(Book book)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await _booksService.UpdateBookAsync(book);
+                return Ok(book);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // DELETE: v1/book/delete/{id}
         [HttpDelete("delete{id}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteBook(int bookId)
+        public async Task<IActionResult> DeleteBook(int bookId)
         {
             try
             {
-                var deletedBook = await _booksService.DeleteBookAsync(bookId);
-                return Ok(deletedBook);
+                await _booksService.DeleteBookAsync(bookId);
+                return Ok();
             }
-            catch (Exception)
+            catch (EntityNotFoundException)
             {
                 return NotFound();
             }

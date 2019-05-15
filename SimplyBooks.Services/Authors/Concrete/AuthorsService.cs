@@ -1,23 +1,52 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Repository.Commands.Interfaces.Authors;
 using SimplyBooks.Services.Authors.Interfaces;
-using System;
-using System.Collections.Generic;
+using SimplyBooks.Services.Genres.Concrete;
+using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Authors.Concrete
 {
     class AuthorsService : IAuthorsService
     {
-        public Task<HttpResponseMessage> AddAuthorAsync(Author author)
+        private readonly IAddAuthorCommand _addAuthorCommand;
+        private readonly IUpdateAuthorCommand _updateAuthorCommand;
+
+        public AuthorsService(IAddAuthorCommand addAuthorCommand,
+            IUpdateAuthorCommand updateAuthorCommand)
         {
-            throw new NotImplementedException();
+            _addAuthorCommand = addAuthorCommand;
+            _updateAuthorCommand = updateAuthorCommand;
         }
 
-        public Task<HttpResponseMessage> UpdateAuthorAsync(Author author)
+        public async Task<HttpResponseMessage> AddAuthorAsync(Author author)
         {
-            throw new NotImplementedException();
+            var response = await _addAuthorCommand.AddAuthor(author);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new EntityAlreadyExistsException(author.Name);
+            }
+        }
+
+        public async Task<HttpResponseMessage> UpdateAuthorAsync(Author author)
+        {
+            var response = await _updateAuthorCommand.UpdateAuthor(author);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new EntityNotFoundException(author.Name);
+            }
         }
     }
 }
