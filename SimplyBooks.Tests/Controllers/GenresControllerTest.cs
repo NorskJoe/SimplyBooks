@@ -142,7 +142,7 @@ namespace SimplyBooks.Tests.Controllers
 
                 // Assert
                 var notFound = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"'{genre.Name}' could not be found in the database", notFound.Value);
+                Assert.Equal($"'{genre.Name}' could not be found", notFound.Value);
             }
 
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Books.Interfaces;
 
 namespace SimplyBooks.Web.Controllers.Books
@@ -26,16 +27,16 @@ namespace SimplyBooks.Web.Controllers.Books
         [HttpGet("by-author{id}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IList<Book>>> ListBooksByAuthor(int authorId)
+        public async Task<IActionResult> ListBooksByAuthor(int authorId)
         {
             try
             {
                 var books = await _listBooksService.ListBooksByAuthorAsync(authorId);
                 return Ok(books);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
 
@@ -43,16 +44,16 @@ namespace SimplyBooks.Web.Controllers.Books
         [HttpGet("by-genre{id}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IList<Book>>> ListBooksByGenre(int genreId)
+        public async Task<IActionResult> ListBooksByGenre(int genreId)
         {
             try
             {
                 var books = await _listBooksService.ListBooksByGenreAsync(genreId);
                 return Ok(books);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
 
@@ -60,16 +61,16 @@ namespace SimplyBooks.Web.Controllers.Books
         [HttpGet("by-authornationality{id}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IList<Book>>> ListBooksByAuthorNationality(int nationalityId)
+        public async Task<IActionResult> ListBooksByAuthorNationality(int nationalityId)
         {
             try
             {
                 var books = await _listBooksService.ListBooksByAuthorNationalityAsync(nationalityId);
                 return Ok(books);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
 
@@ -77,16 +78,16 @@ namespace SimplyBooks.Web.Controllers.Books
         [HttpGet("by-yearread{id}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IList<Book>>> ListBooksByYearRead(DateTime yearRead)
+        public async Task<IActionResult> ListBooksByYearRead(DateTime yearRead)
         {
             try
             {
                 var books = await _listBooksService.ListBooksByYearReadAsync(yearRead);
                 return Ok(books);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
 
@@ -94,16 +95,16 @@ namespace SimplyBooks.Web.Controllers.Books
         [HttpGet("by-yearpublished{id}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IList<Book>>> ListBooksByYearPublished(DateTime yearPublished)
+        public async Task<IActionResult> ListBooksByYearPublished(DateTime yearPublished)
         {
             try
             {
                 var books = await _listBooksService.ListBooksByYearPublishedAsync(yearPublished);
                 return Ok(books);
             }
-            catch (Exception)
+            catch (EntityNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
         }
     }

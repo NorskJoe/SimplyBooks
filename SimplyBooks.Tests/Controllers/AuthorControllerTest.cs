@@ -151,7 +151,7 @@ namespace SimplyBooks.Tests.Controllers
 
                 // Assert
                 var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"'{authorDoesNotExist.Name}' could not be found in the database",
+                Assert.Equal($"'{authorDoesNotExist.Name}' could not be found",
                     notFoundResult.Value);
             }
 

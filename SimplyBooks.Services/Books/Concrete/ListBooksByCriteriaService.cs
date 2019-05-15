@@ -1,4 +1,5 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Repository.Queries.Interfaces.Books;
 using SimplyBooks.Services.Books.Interfaces;
 using System;
@@ -28,29 +29,58 @@ namespace SimplyBooks.Services.Books.Concrete
             _listByYearReadQuery = listByYearReadQuery;
         }
 
-        public async Task<IList<Book>> ListBooksByAuthorNationalityAsync(int nationalityId)
-        {
-            return await _listByAuthorNationalityQuery.Execute(nationalityId);
-        }
-
         public async Task<IList<Book>> ListBooksByAuthorAsync(int authorId)
         {
-            return await _listByAuthorQuery.Execute(authorId);
+            var response = await _listByAuthorQuery.Execute(authorId);
+
+            if (response == null)
+            {
+                throw new EntityNotFoundException(authorId, typeof(Author).Name);
+            }
+            return response;
         }
 
         public async Task<IList<Book>> ListBooksByGenreAsync(int genreId)
         {
-            return await _listByGenreQuery.Execute(genreId);
+            var response = await _listByGenreQuery.Execute(genreId);
+
+            if (response == null)
+            {
+                throw new EntityNotFoundException(genreId, typeof(Genre).Name);
+            }
+            return response;
         }
+
+        public async Task<IList<Book>> ListBooksByAuthorNationalityAsync(int nationalityId)
+        {
+            var response = await _listByAuthorNationalityQuery.Execute(nationalityId);
+
+            if (response == null)
+            {
+                throw new EntityNotFoundException(nationalityId, typeof(Nationality).Name);
+            }
+            return response;
+        }
+
 
         public async Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished)
         {
-            return await _listByYearPublishedQuery.Execute(yearPublished);
+            var response = await _listByYearPublishedQuery.Execute(yearPublished);
+            if (response == null)
+            {
+                throw new EntityNotFoundException(yearPublished, typeof(Book).Name);
+            }
+            return response;
         }
 
         public async Task<IList<Book>> ListBooksByYearReadAsync(DateTime yearRead)
         {
-            return await _listByYearReadQuery.Execute(yearRead);
+            var response = await _listByYearReadQuery.Execute(yearRead);
+            if (response == null)
+            {
+                throw new EntityNotFoundException(yearRead, typeof(Book).Name);
+            }
+            return response;
         }
     }
 }

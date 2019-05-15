@@ -12,7 +12,19 @@ namespace SimplyBooks.Models.Exceptions
         }
 
         public EntityNotFoundException(string entityName)
-            : base($"'{entityName}' could not be found in the database")
+            : base($"'{entityName}' could not be found")
+        {
+
+        }
+
+        public EntityNotFoundException(int entityId, string entityTypeName)
+            : base($"A {entityTypeName} with an ID of {entityId} could not be found")
+        {
+
+        }
+
+        public EntityNotFoundException(DateTime searchDate, string entityTypeName)
+            : base($"A {entityTypeName} matching the year {searchDate.Year} could not be found")
         {
 
         }
