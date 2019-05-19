@@ -9,12 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\Concrete\Authors\" />
-    <Folder Include="Queries\Concrete\Genres\" />
-    <Folder Include="Queries\Concrete\Nationalities\" />
-    <Folder Include="Queries\Interfaces\Authors\" />
-    <Folder Include="Queries\Interfaces\Genres\" />
-    <Folder Include="Queries\Interfaces\Nationalities\" />
+    <Folder Include="Queries\Authors\" />
+    <Folder Include="Queries\Genres\" />
+    <Folder Include="Queries\Nationalities\" />
   </ItemGroup>
 
   <ItemGroup>

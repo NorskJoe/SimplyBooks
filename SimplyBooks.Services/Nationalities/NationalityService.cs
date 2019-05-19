@@ -8,8 +8,8 @@ namespace SimplyBooks.Services.Nationalities
 {
     public interface INationalityService
     {
-        Task<HttpResponseMessage> UpdateNationalityAsync(Nationality nationality);
         Task<HttpResponseMessage> AddNationalityAsync(Nationality nationality);
+        Task<HttpResponseMessage> UpdateNationalityAsync(Nationality nationality);
     }
 
     class NationalityService : INationalityService
@@ -41,7 +41,16 @@ namespace SimplyBooks.Services.Nationalities
 
         public async Task<HttpResponseMessage> UpdateNationalityAsync(Nationality nationality)
         {
-            return await _updateNationalityCommand.UpdateNationality(nationality);
+            var response = await _updateNationalityCommand.UpdateNationality(nationality);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response;
+            }
+            else
+            {
+                throw new EntityNotFoundException(nationality.Name);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Repository.Commands.Books;
+using SimplyBooks.Repository.Queries.Books;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;

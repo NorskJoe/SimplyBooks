@@ -240,7 +240,7 @@ namespace SimplyBooks.Tests.Controllers
 
                 // Assert
                 var conflict = Assert.IsType<ConflictObjectResult>(result);
-                Assert.Equal($"'{book.Title}' already exists in the database", conflict.Value);
+                Assert.Equal($"'{book.Title}' already exists", conflict.Value);
             }
 
         }
