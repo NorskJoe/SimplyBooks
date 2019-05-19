@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
-using SimplyBooks.Services.Books.Interfaces;
+using SimplyBooks.Services.Books;
 
 namespace SimplyBooksApi.Controllers.Books
 {

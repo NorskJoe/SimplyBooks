@@ -2,13 +2,12 @@
 using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
-using SimplyBooks.Services.Books.Interfaces;
+using SimplyBooks.Services.Books;
 using SimplyBooksApi.Controllers.Books;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers

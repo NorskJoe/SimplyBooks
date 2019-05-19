@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
-using SimplyBooks.Services.Books.Interfaces;
+using SimplyBooks.Services.Books;
 
 namespace SimplyBooks.Web.Controllers.Books
 {
