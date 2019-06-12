@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Commands.Books
         Task<HttpResponseMessage> Execute(Book book);
     }
 
-    class UpdateBookCommand : IUpdateBookCommand
+    public class UpdateBookCommand : IUpdateBookCommand
     {
         public Task<HttpResponseMessage> Execute(Book book)
         {

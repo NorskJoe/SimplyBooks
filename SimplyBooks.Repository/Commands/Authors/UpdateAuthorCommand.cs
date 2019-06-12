@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Commands.Authors
         Task<HttpResponseMessage> UpdateAuthor(Author author);
     }
 
-    class UpdateAuthorCommand : IUpdateAuthorCommand
+    public class UpdateAuthorCommand : IUpdateAuthorCommand
     {
         public Task<HttpResponseMessage> UpdateAuthor(Author author)
         {

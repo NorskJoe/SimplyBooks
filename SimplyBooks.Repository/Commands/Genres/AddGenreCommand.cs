@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Commands.Genres
         Task<HttpResponseMessage> AddGenre(Genre genre);
     }
 
-    class AddGenreCommand : IAddGenreCommand
+    public class AddGenreCommand : IAddGenreCommand
     {
         public Task<HttpResponseMessage> AddGenre(Genre genre)
         {

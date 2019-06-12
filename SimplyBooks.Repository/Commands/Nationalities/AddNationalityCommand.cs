@@ -11,7 +11,7 @@ namespace SimplyBooks.Repository.Commands.Nationalities
         Task<HttpResponseMessage> AddNationality(Nationality nationality);
     }
 
-    class AddNationalityCommand : IAddNationalityCommand
+    public class AddNationalityCommand : IAddNationalityCommand
     {
         private SimplyBooksContext _context;
 

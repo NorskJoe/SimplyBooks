@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Commands.Nationalities
         Task<HttpResponseMessage> UpdateNationality(Nationality nationality);
     }
 
-    class UpdateNationalityCommand : IUpdateNationalityCommand
+    public class UpdateNationalityCommand : IUpdateNationalityCommand
     {
         public Task<HttpResponseMessage> UpdateNationality(Nationality nationality)
         {

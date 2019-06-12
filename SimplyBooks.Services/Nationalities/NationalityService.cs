@@ -12,7 +12,7 @@ namespace SimplyBooks.Services.Nationalities
         Task<HttpResponseMessage> UpdateNationalityAsync(Nationality nationality);
     }
 
-    class NationalityService : INationalityService
+    public class NationalityService : INationalityService
     {
         private readonly IAddNationalityCommand _addNationalityCommand;
         private readonly IUpdateNationalityCommand _updateNationalityCommand;

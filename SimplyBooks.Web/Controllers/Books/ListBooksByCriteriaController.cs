@@ -9,7 +9,7 @@ using SimplyBooks.Services.Books;
 
 namespace SimplyBooks.Web.Controllers.Books
 {
-    [Route("v1/booklists")]
+    [Route("booklists")]
     [ApiController]
     public class ListBooksByCriteriaController : Controller
     {

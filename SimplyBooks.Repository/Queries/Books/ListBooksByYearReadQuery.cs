@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Queries.Books
         Task<IList<Book>> Execute(DateTime year);
     }
 
-    class ListBooksByYearReadQuery : IListBooksByYearReadQuery
+    public class ListBooksByYearReadQuery : IListBooksByYearReadQuery
     {
         public Task<IList<Book>> Execute(DateTime year)
         {

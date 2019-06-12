@@ -7,7 +7,7 @@ using SimplyBooks.Services.Nationalities;
 
 namespace SimplyBooks.Web.Controllers.Nationalities
 {
-    [Route("v1/nationalities")]
+    [Route("nationalities")]
     [ApiController]
     public class NationalitiesController : Controller
     {

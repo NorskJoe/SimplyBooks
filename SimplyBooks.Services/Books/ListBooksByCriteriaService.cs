@@ -16,7 +16,7 @@ namespace SimplyBooks.Services.Books
         Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished);
     }
 
-    class ListBooksByCriteriaService : IListBooksByCriteriaService
+    public class ListBooksByCriteriaService : IListBooksByCriteriaService
     {
         private readonly IListBooksByAuthorNationalityQuery _listByAuthorNationalityQuery;
         private readonly IListBooksByAuthorQuery _listByAuthorQuery;

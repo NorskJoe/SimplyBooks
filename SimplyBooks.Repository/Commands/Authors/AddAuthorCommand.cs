@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Commands.Authors
         Task<HttpResponseMessage> AddAuthor(Author author);
     }
 
-    class AddAuthorCommand : IAddAuthorCommand
+    public class AddAuthorCommand : IAddAuthorCommand
     {
         public Task<HttpResponseMessage> AddAuthor(Author author)
         {

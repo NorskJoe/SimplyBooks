@@ -7,7 +7,7 @@ using SimplyBooks.Services.Authors;
 
 namespace SimplyBooks.Web.Controllers.Authors
 {
-    [Route("v1/authors")]
+    [Route("authors")]
     [ApiController]
     public class AuthorsController : Controller
     {

@@ -8,7 +8,7 @@ using SimplyBooks.Services.Books;
 
 namespace SimplyBooksApi.Controllers.Books
 {
-    [Route("v1/book")]
+    [Route("book")]
     [ApiController]
     public class BasicBooksController : ControllerBase
     {

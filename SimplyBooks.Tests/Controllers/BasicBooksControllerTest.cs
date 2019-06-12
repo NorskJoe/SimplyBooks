@@ -193,7 +193,7 @@ namespace SimplyBooks.Tests.Controllers
                 };
                 BasicBookServiceMock
                     .Setup(x => x.AddBookAsync(book))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(book);
 
                 // Act
                 var result = await ControllerUnderTest.AddBook(book);

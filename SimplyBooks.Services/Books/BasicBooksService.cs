@@ -10,14 +10,14 @@ namespace SimplyBooks.Services.Books
 {
     public interface IBasicBooksService
     {
-        Task<HttpResponseMessage> AddBookAsync(Book book);
+        Task<Book> AddBookAsync(Book book);
         Task<HttpResponseMessage> DeleteBookAsync(int bookId);
         Task<HttpResponseMessage> UpdateBookAsync(Book book);
         Task<IList<Book>> ListAllBooksAsync();
         Task<Book> GetBookAsync(int bookId);
     }
 
-    class BasicBooksService : IBasicBooksService
+    public class BasicBooksService : IBasicBooksService
     {
         private readonly IAddBookCommand _addBookCommand;
         private readonly IUpdateBookCommand _updateBookCommand;
@@ -66,13 +66,13 @@ namespace SimplyBooks.Services.Books
             }
         }
 
-        public async Task<HttpResponseMessage> AddBookAsync(Book book)
+        public async Task<Book> AddBookAsync(Book book)
         {
-            var response = await _addBookCommand.Execute(book);
+            var newBook = await _addBookCommand.Execute(book);
 
-            if (response.IsSuccessStatusCode)
+            if (newBook != null)
             {
-                return response;
+                return newBook;
             }
             else
             {

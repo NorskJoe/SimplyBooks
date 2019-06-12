@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Queries.Books
         Task<IList<Book>> Execute();
     }
 
-    class ListAllBooksQuery : IListAllBooksQuery
+    public class ListAllBooksQuery : IListAllBooksQuery
     {
         public Task<IList<Book>> Execute()
         {

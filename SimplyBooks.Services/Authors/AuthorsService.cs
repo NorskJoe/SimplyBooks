@@ -12,7 +12,7 @@ namespace SimplyBooks.Services.Authors
         Task<HttpResponseMessage> AddAuthorAsync(Author author);
     }
 
-    class AuthorsService : IAuthorsService
+    public class AuthorsService : IAuthorsService
     {
         private readonly IAddAuthorCommand _addAuthorCommand;
         private readonly IUpdateAuthorCommand _updateAuthorCommand;

@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Queries.Books
         Task<IList<Book>> Execute(int id);
     }
 
-    class ListBooksByAuthorNationalityQuery : IListBooksByAuthorNationalityQuery
+    public class ListBooksByAuthorNationalityQuery : IListBooksByAuthorNationalityQuery
     {
         public Task<IList<Book>> Execute(int id)
         {

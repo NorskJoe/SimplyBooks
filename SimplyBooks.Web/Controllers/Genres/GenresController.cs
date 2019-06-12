@@ -7,7 +7,7 @@ using SimplyBooks.Services.Genres;
 
 namespace SimplyBooks.Web.Controllers.Genres
 {
-    [Route("v1/genres")]
+    [Route("genres")]
     [ApiController]
     public class GenresController : Controller
     {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimplyBooks.Models;
+using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,11 +11,31 @@ namespace SimplyBooks.Repository.Commands.Books
         Task<HttpResponseMessage> Execute(int id);
     }
 
-    class DeleteBookCommand : IDeleteBookCommand
+    public class DeleteBookCommand : IDeleteBookCommand
     {
-        public Task<HttpResponseMessage> Execute(int id)
+        private readonly SimplyBooksContext _context;
+
+        public DeleteBookCommand(SimplyBooksContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task<HttpResponseMessage> Execute(int id)
+        {
+            var book = new Book { BookId = id };
+
+            try
+            {
+                _context.Book.Attach(book);
+                _context.Book.Remove(book);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                //TODO
+            }
+            return new HttpResponseMessage(HttpStatusCode.OK);
+
         }
     }
 }

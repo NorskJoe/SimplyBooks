@@ -12,7 +12,7 @@ namespace SimplyBooks.Services.Genres
         Task<HttpResponseMessage> AddGenreAsync(Genre genre);
     }
 
-    class GenresService : IGenresService
+    public class GenresService : IGenresService
     {
         private readonly IAddGenreCommand _addGenreCommand;
         private readonly IUpdateGenreCommand _updateGenreCommand;
