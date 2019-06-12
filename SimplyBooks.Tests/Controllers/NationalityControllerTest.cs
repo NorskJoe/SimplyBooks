@@ -4,11 +4,8 @@ using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Nationalities;
 using SimplyBooks.Web.Controllers.Nationalities;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers

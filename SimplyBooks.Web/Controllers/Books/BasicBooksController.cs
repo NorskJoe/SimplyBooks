@@ -19,7 +19,7 @@ namespace SimplyBooksApi.Controllers.Books
             _booksService = booksService;
         }
 
-        // GET: v1/book/list
+        // GET: /book/list
         [HttpGet("list")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListAllBooks()
@@ -35,8 +35,8 @@ namespace SimplyBooksApi.Controllers.Books
             }
         }
 
-        // GET: v1/book/get/{id}
-        [HttpGet("get{id}")]
+        // GET: /book/get/{bookId}
+        [HttpGet("get/{bookId}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBook(int bookId)
@@ -52,8 +52,8 @@ namespace SimplyBooksApi.Controllers.Books
             }
         }
 
-        // POST: v1/book/add/{book}
-        [HttpPost("add{book}")]
+        // POST: /book/add/{book}
+        [HttpPost("add/{book}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
@@ -75,8 +75,8 @@ namespace SimplyBooksApi.Controllers.Books
             }
         }
 
-        // PUT: v1/book/update/{book}
-        [HttpPut("update{book}")]
+        // PUT: /book/update/{book}
+        [HttpPut("update/{book}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -98,8 +98,8 @@ namespace SimplyBooksApi.Controllers.Books
             }
         }
 
-        // DELETE: v1/book/delete/{id}
-        [HttpDelete("delete{id}")]
+        // DELETE: /book/delete/{id}
+        [HttpDelete("delete/{id}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBook(int bookId)

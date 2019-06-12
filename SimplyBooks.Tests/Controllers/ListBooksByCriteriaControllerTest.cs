@@ -317,7 +317,7 @@ namespace SimplyBooks.Tests.Controllers
                     .ReturnsAsync(books);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearRead(new DateTime(2013, 1, 1));
+                var result = await ControllerUnderTest.ListBooksByYearRead("2013");
 
                 // Assert
                 var okResult = Assert.IsType<OkObjectResult>(result);
@@ -354,7 +354,7 @@ namespace SimplyBooks.Tests.Controllers
                     .ThrowsAsync(new EntityNotFoundException(new DateTime(2012, 1, 1), typeof(Book).Name));
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearRead(new DateTime(2012, 1, 1));
+                var result = await ControllerUnderTest.ListBooksByYearRead("2012");
 
                 // Assert
                 var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
@@ -394,7 +394,7 @@ namespace SimplyBooks.Tests.Controllers
                     .ReturnsAsync(books);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearPublished(new DateTime(2012, 1, 1));
+                var result = await ControllerUnderTest.ListBooksByYearPublished("2012");
 
                 // Assert
                 var okResult = Assert.IsType<OkObjectResult>(result);
@@ -431,7 +431,7 @@ namespace SimplyBooks.Tests.Controllers
                     .ThrowsAsync(new EntityNotFoundException(new DateTime(2013, 1, 1), typeof(Book).Name));
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearPublished(new DateTime(2013, 1, 1));
+                var result = await ControllerUnderTest.ListBooksByYearPublished("2013");
 
                 // Assert
                 var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);

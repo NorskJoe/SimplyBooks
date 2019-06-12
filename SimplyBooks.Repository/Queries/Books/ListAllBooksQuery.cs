@@ -1,5 +1,5 @@
-﻿using SimplyBooks.Models;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplyBooks.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,9 +12,20 @@ namespace SimplyBooks.Repository.Queries.Books
 
     public class ListAllBooksQuery : IListAllBooksQuery
     {
-        public Task<IList<Book>> Execute()
+        private readonly SimplyBooksContext _context;
+
+        public ListAllBooksQuery(SimplyBooksContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task<IList<Book>> Execute()
+        {
+            return await _context.Book
+                            .Include(b => b.Author)
+                                .ThenInclude(a => a.Nationality)
+                            .Include(b => b.Genre)
+                            .ToListAsync();
         }
     }
 }

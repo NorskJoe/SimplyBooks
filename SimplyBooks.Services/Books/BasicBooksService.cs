@@ -3,6 +3,7 @@ using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace SimplyBooks.Services.Books
         {
             var response = await _listAllBooksQuery.Execute();
 
-            if (response.Count == 0)
+            if (!response.Any())
             {
                 throw new EntityNotFoundException();
             }

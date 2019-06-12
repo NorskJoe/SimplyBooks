@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimplyBooks.Models;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,18 +21,12 @@ namespace SimplyBooks.Repository.Queries.Books
 
         public async Task<Book> Execute(int id)
         {
-            Book book = null;
-            try
-            {
-                book = await _context.Book
-                                .Where(x => x.BookId == id)
-                                .FirstOrDefaultAsync();
-            }
-            catch (Exception)
-            {
-                // TODO
-            }
-            return book;
+            return await _context.Book
+                            .Include(b => b.Author)
+                                .ThenInclude(a => a.Nationality)
+                            .Include(b => b.Genre)
+                            .Where(b => b.BookId == id)
+                            .FirstOrDefaultAsync();
         }
     }
 }

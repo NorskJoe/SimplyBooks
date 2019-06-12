@@ -3,6 +3,7 @@ using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Repository.Queries.Books;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books
@@ -41,7 +42,7 @@ namespace SimplyBooks.Services.Books
         {
             var response = await _listByAuthorQuery.Execute(authorId);
 
-            if (response == null)
+            if (!response.Any())
             {
                 throw new EntityNotFoundException(authorId, typeof(Author).Name);
             }
@@ -52,7 +53,7 @@ namespace SimplyBooks.Services.Books
         {
             var response = await _listByGenreQuery.Execute(genreId);
 
-            if (response == null)
+            if (!response.Any())
             {
                 throw new EntityNotFoundException(genreId, typeof(Genre).Name);
             }
@@ -63,7 +64,7 @@ namespace SimplyBooks.Services.Books
         {
             var response = await _listByAuthorNationalityQuery.Execute(nationalityId);
 
-            if (response == null)
+            if (!response.Any())
             {
                 throw new EntityNotFoundException(nationalityId, typeof(Nationality).Name);
             }
@@ -74,7 +75,7 @@ namespace SimplyBooks.Services.Books
         public async Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished)
         {
             var response = await _listByYearPublishedQuery.Execute(yearPublished);
-            if (response == null)
+            if (!response.Any())
             {
                 throw new EntityNotFoundException(yearPublished, typeof(Book).Name);
             }
@@ -84,7 +85,7 @@ namespace SimplyBooks.Services.Books
         public async Task<IList<Book>> ListBooksByYearReadAsync(DateTime yearRead)
         {
             var response = await _listByYearReadQuery.Execute(yearRead);
-            if (response == null)
+            if (!response.Any())
             {
                 throw new EntityNotFoundException(yearRead, typeof(Book).Name);
             }
