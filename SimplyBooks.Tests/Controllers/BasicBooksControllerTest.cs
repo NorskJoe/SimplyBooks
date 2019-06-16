@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimplyBooks.Models;
+using SimplyBooks.Models.Dtos;
 using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Books;
 using SimplyBooksApi.Controllers.Books;
@@ -15,6 +17,7 @@ namespace SimplyBooks.Tests.Controllers
     public class BasicBooksControllerTest
     {
         protected Mock<IBasicBooksService> BasicBookServiceMock { get; }
+        protected Mock<IMapper> MapperMock { get; }
         protected BasicBooksController ControllerUnderTest { get; }
         protected Genre TestGenreOne { get; }
         protected Genre TestGenreTwo { get; }
@@ -24,7 +27,8 @@ namespace SimplyBooks.Tests.Controllers
         public BasicBooksControllerTest()
         {
             BasicBookServiceMock = new Mock<IBasicBooksService>();
-            ControllerUnderTest = new BasicBooksController(BasicBookServiceMock.Object);
+            MapperMock = new Mock<IMapper>();
+            ControllerUnderTest = new BasicBooksController(BasicBookServiceMock.Object, MapperMock.Object);
 
             TestGenreOne = new Genre
             {
@@ -251,21 +255,27 @@ namespace SimplyBooks.Tests.Controllers
             public async void Should_ok_with_book()
             {
                 // Arrange
-                var book = new Book
+                var bookDto = new BookDto
                 {
                     Title = "The Wind in the Willows",
-                    Author = TestAuthorTwo,
-                    Genre = TestGenreOne,
                     Rating = 5.8,
                     YearPublished = new DateTime(1970, 1, 1),
                     YearRead = DateTime.Now
                 };
+                var book = new Book
+                {
+                    Title = "The Wind in the Willows",
+                    Rating = 5.8,
+                    YearPublished = new DateTime(1970, 1, 1),
+                    YearRead = DateTime.Now
+                };
+
                 BasicBookServiceMock
                     .Setup(x => x.UpdateBookAsync(book))
                     .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
 
                 // Act
-                var result = await ControllerUnderTest.UpdateBook(book);
+                var result = await ControllerUnderTest.UpdateBook(bookDto);
 
                 // Assert
                 var okResult = Assert.IsType<OkObjectResult>(result);
@@ -276,7 +286,7 @@ namespace SimplyBooks.Tests.Controllers
             public async void Should_return_bad_request()
             {
                 // Arrange
-                var book = new Book();
+                var book = new BookDto();
                 ControllerUnderTest.ModelState.AddModelError("key", "some error");
 
                 // Act
@@ -300,12 +310,14 @@ namespace SimplyBooks.Tests.Controllers
                     YearPublished = new DateTime(1960, 1, 1),
                     YearRead = DateTime.Now
                 };
+                var bookDto = new BookDto();
+
                 BasicBookServiceMock
                     .Setup(x => x.UpdateBookAsync(book))
                     .ThrowsAsync(new EntityNotFoundException(book.Title));
 
                 // Act
-                var result = await ControllerUnderTest.UpdateBook(book);
+                var result = await ControllerUnderTest.UpdateBook(bookDto);
 
                 // Assert
                 var notFound = Assert.IsType<NotFoundObjectResult>(result);

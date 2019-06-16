@@ -1,4 +1,6 @@
-﻿using SimplyBooks.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplyBooks.Models;
+using SimplyBooks.Models.ResultModels;
 using System;
 using System.Threading.Tasks;
 
@@ -6,7 +8,7 @@ namespace SimplyBooks.Repository.Commands.Books
 {
     public interface IAddBookCommand
     {
-        Task<Book> Execute(Book book);
+        Task<Result> Execute(Book book);
     }
 
     public class AddBookCommand : IAddBookCommand
@@ -18,18 +20,24 @@ namespace SimplyBooks.Repository.Commands.Books
             _context = context;
         }
 
-        public async Task<Book> Execute(Book book)
+        public async Task<Result> Execute(Book book)
         {
+            Result result = new Result();
             try
             {
+                // Do not add Author/Genre/Nationality when adding book
+                _context.Entry(book.Author).State = EntityState.Unchanged;
+                _context.Entry(book.Author.Nationality).State = EntityState.Unchanged;
+                _context.Entry(book.Genre).State = EntityState.Unchanged;
                 _context.Book.Add(book);
                  await _context.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO
+                result.AddError($"Exception thrown AddBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
             }
-            return book;
+
+            return result;
         }
     }
 }

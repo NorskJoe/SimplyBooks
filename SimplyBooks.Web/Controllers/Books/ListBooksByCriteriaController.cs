@@ -26,15 +26,8 @@ namespace SimplyBooks.Web.Controllers.Books
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByAuthor(int authorId)
         {
-            try
-            {
-                var books = await _listBooksService.ListBooksByAuthorAsync(authorId);
-                return Ok(books);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _listBooksService.ListBooksByAuthorAsync(authorId);
+            return Ok(result);   
         }
 
         // GET: /booklists/by-genre/{genreId}
@@ -43,15 +36,8 @@ namespace SimplyBooks.Web.Controllers.Books
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByGenre(int genreId)
         {
-            try
-            {
-                var books = await _listBooksService.ListBooksByGenreAsync(genreId);
-                return Ok(books);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _listBooksService.ListBooksByGenreAsync(genreId);
+            return Ok(result);
         }
 
         // GET: /booklists/by-nationality/{nationalityId}
@@ -60,15 +46,8 @@ namespace SimplyBooks.Web.Controllers.Books
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByAuthorNationality(int nationalityId)
         {
-            try
-            {
-                var books = await _listBooksService.ListBooksByAuthorNationalityAsync(nationalityId);
-                return Ok(books);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _listBooksService.ListBooksByAuthorNationalityAsync(nationalityId);
+            return Ok(result);
         }
 
         // GET: /booklists/by-yearread/{yearRead}
@@ -78,15 +57,8 @@ namespace SimplyBooks.Web.Controllers.Books
         public async Task<IActionResult> ListBooksByYearRead(string yearRead)
         {
             DateTime year = new DateTime(Convert.ToInt32(yearRead), 1, 1);
-            try
-            {
-                var books = await _listBooksService.ListBooksByYearReadAsync(year);
-                return Ok(books);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _listBooksService.ListBooksByYearReadAsync(year);
+            return Ok(result);
         }
 
         // GET: /booklists/by-yearpublished/{yearPublished}
@@ -96,15 +68,8 @@ namespace SimplyBooks.Web.Controllers.Books
         public async Task<IActionResult> ListBooksByYearPublished(string yearPublished)
         {
             DateTime year = new DateTime(Convert.ToInt32(yearPublished), 1, 1);
-            try
-            {
-                var books = await _listBooksService.ListBooksByYearPublishedAsync(year);
-                return Ok(books);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _listBooksService.ListBooksByYearPublishedAsync(year);
+            return Ok(result);
         }
     }
 }

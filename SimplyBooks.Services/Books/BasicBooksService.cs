@@ -1,21 +1,19 @@
 ﻿using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books
 {
     public interface IBasicBooksService
     {
-        Task<Book> AddBookAsync(Book book);
-        Task<HttpResponseMessage> DeleteBookAsync(int bookId);
-        Task<HttpResponseMessage> UpdateBookAsync(Book book);
-        Task<IList<Book>> ListAllBooksAsync();
-        Task<Book> GetBookAsync(int bookId);
+        Task<Result<List<Book>>> ListAllBooksAsync();
+        Task<Result<Book>> GetBookAsync(int bookId);
+        Task<Result> AddBookAsync(Book book);
+        Task<Result> UpdateBookAsync(Book book);
+        Task<Result> DeleteBookAsync(int bookId);
     }
 
     public class BasicBooksService : IBasicBooksService
@@ -39,74 +37,29 @@ namespace SimplyBooks.Services.Books
             _listAllBooksQuery = listAllBooksQuery;
         }
 
-        public async Task<IList<Book>> ListAllBooksAsync()
+        public async Task<Result<List<Book>>> ListAllBooksAsync()
         {
-            var response = await _listAllBooksQuery.Execute();
-
-            if (!response.Any())
-            {
-                throw new EntityNotFoundException();
-            }
-            else
-            {
-                return response;
-            }
+            return await _listAllBooksQuery.Execute();
         }
 
-        public async Task<Book> GetBookAsync(int bookId)
+        public async Task<Result<Book>> GetBookAsync(int bookId)
         {
-            var response = await _getBookQuery.Execute(bookId);
-
-            if (response == null)
-            {
-                throw new EntityNotFoundException();
-            }
-            else
-            {
-                return response;
-            }
+            return await _getBookQuery.Execute(bookId);
         }
 
-        public async Task<Book> AddBookAsync(Book book)
+        public async Task<Result> AddBookAsync(Book book)
         {
-            var newBook = await _addBookCommand.Execute(book);
-
-            if (newBook != null)
-            {
-                return newBook;
-            }
-            else
-            {
-                throw new EntityAlreadyExistsException(book.Title);
-            }
+            return await _addBookCommand.Execute(book);
         }
 
-        public async Task<HttpResponseMessage> UpdateBookAsync(Book book)
+        public async Task<Result> UpdateBookAsync(Book book)
         {
-            var response = await _updateBookCommand.Execute(book);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                throw new EntityNotFoundException(book.Title);
-            }
+            return await _updateBookCommand.Execute(book);
         }
 
-        public async Task<HttpResponseMessage> DeleteBookAsync(int bookId)
+        public async Task<Result> DeleteBookAsync(int bookId)
         {
-            var response = await _deleteBookCommand.Execute(bookId);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                throw new EntityNotFoundException();
-            }
+            return await _deleteBookCommand.Execute(bookId);
         }
     }
 }

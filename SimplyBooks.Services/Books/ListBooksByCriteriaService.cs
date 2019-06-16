@@ -1,5 +1,6 @@
 ﻿using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Queries.Books;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace SimplyBooks.Services.Books
 {
     public interface IListBooksByCriteriaService
     {
-        Task<IList<Book>> ListBooksByAuthorAsync(int authorId);
-        Task<IList<Book>> ListBooksByGenreAsync(int genreId);
-        Task<IList<Book>> ListBooksByAuthorNationalityAsync(int nationalityId);
-        Task<IList<Book>> ListBooksByYearReadAsync(DateTime yearRead);
-        Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished);
+        Task<Result<IList<Book>>> ListBooksByAuthorAsync(int authorId);
+        Task<Result<IList<Book>>> ListBooksByGenreAsync(int genreId);
+        Task<Result<IList<Book>>> ListBooksByAuthorNationalityAsync(int nationalityId);
+        Task<Result<IList<Book>>> ListBooksByYearReadAsync(DateTime yearRead);
+        Task<Result<IList<Book>>> ListBooksByYearPublishedAsync(DateTime yearPublished);
     }
 
     public class ListBooksByCriteriaService : IListBooksByCriteriaService
@@ -38,58 +39,29 @@ namespace SimplyBooks.Services.Books
             _listByYearReadQuery = listByYearReadQuery;
         }
 
-        public async Task<IList<Book>> ListBooksByAuthorAsync(int authorId)
+        public async Task<Result<IList<Book>>> ListBooksByAuthorAsync(int authorId)
         {
-            var response = await _listByAuthorQuery.Execute(authorId);
-
-            if (!response.Any())
-            {
-                throw new EntityNotFoundException(authorId, typeof(Author).Name);
-            }
-            return response;
+            return await _listByAuthorQuery.Execute(authorId);
         }
 
-        public async Task<IList<Book>> ListBooksByGenreAsync(int genreId)
+        public async Task<Result<IList<Book>>> ListBooksByGenreAsync(int genreId)
         {
-            var response = await _listByGenreQuery.Execute(genreId);
-
-            if (!response.Any())
-            {
-                throw new EntityNotFoundException(genreId, typeof(Genre).Name);
-            }
-            return response;
+            return await _listByGenreQuery.Execute(genreId);
         }
 
-        public async Task<IList<Book>> ListBooksByAuthorNationalityAsync(int nationalityId)
+        public async Task<Result<IList<Book>>> ListBooksByAuthorNationalityAsync(int nationalityId)
         {
-            var response = await _listByAuthorNationalityQuery.Execute(nationalityId);
-
-            if (!response.Any())
-            {
-                throw new EntityNotFoundException(nationalityId, typeof(Nationality).Name);
-            }
-            return response;
+            return await _listByAuthorNationalityQuery.Execute(nationalityId);
         }
 
-
-        public async Task<IList<Book>> ListBooksByYearPublishedAsync(DateTime yearPublished)
+        public async Task<Result<IList<Book>>> ListBooksByYearReadAsync(DateTime yearRead)
         {
-            var response = await _listByYearPublishedQuery.Execute(yearPublished);
-            if (!response.Any())
-            {
-                throw new EntityNotFoundException(yearPublished, typeof(Book).Name);
-            }
-            return response;
+            return await _listByYearReadQuery.Execute(yearRead);
         }
 
-        public async Task<IList<Book>> ListBooksByYearReadAsync(DateTime yearRead)
+        public async Task<Result<IList<Book>>> ListBooksByYearPublishedAsync(DateTime yearPublished)
         {
-            var response = await _listByYearReadQuery.Execute(yearRead);
-            if (!response.Any())
-            {
-                throw new EntityNotFoundException(yearRead, typeof(Book).Name);
-            }
-            return response;
+            return await _listByYearPublishedQuery.Execute(yearPublished);
         }
     }
 }

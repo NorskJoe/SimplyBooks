@@ -1,14 +1,13 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.ResultModels;
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Repository.Commands.Books
 {
     public interface IDeleteBookCommand
     {
-        Task<HttpResponseMessage> Execute(int id);
+        Task<Result> Execute(int id);
     }
 
     public class DeleteBookCommand : IDeleteBookCommand
@@ -20,22 +19,22 @@ namespace SimplyBooks.Repository.Commands.Books
             _context = context;
         }
 
-        public async Task<HttpResponseMessage> Execute(int id)
+        public async Task<Result> Execute(int id)
         {
+            Result result = new Result();
             var book = new Book { BookId = id };
 
             try
             {
-                _context.Book.Attach(book);
                 _context.Book.Remove(book);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO
+                result.AddError($"Exception thrown DeleteBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
             }
-            return new HttpResponseMessage(HttpStatusCode.OK);
 
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using SimplyBooks.Services.Authors;
 using SimplyBooks.Services.Books;
 using SimplyBooks.Services.Genres;
 using SimplyBooks.Services.Nationalities;
+using System;
 
 namespace SimplyBooksApi
 {
@@ -29,15 +31,15 @@ namespace SimplyBooksApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
 
             // Connection string
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<SimplyBooksContext>
                 (options => options.UseSqlServer(connection));
 
-            
+            // Register dependencies
             RegisterServices(services);
             RegisterCommands(services);
             RegisterQueries(services);
