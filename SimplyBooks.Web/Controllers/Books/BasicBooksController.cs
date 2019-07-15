@@ -35,7 +35,6 @@ namespace SimplyBooksApi.Controllers.Books
         // GET: /book/get/{bookId}
         [HttpGet("get/{bookId}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBook(int bookId)
         {
             var result = await _booksService.GetBookAsync(bookId);
@@ -46,7 +45,6 @@ namespace SimplyBooksApi.Controllers.Books
         [HttpPost("add")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> AddBook([FromBody]Book book)
         {
             if (!ModelState.IsValid)
@@ -62,7 +60,6 @@ namespace SimplyBooksApi.Controllers.Books
         [HttpPut("update")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateBook([FromBody]BookDto book)
         {
             Book toUpdate = _mapper.Map<Book>(book);
@@ -79,7 +76,6 @@ namespace SimplyBooksApi.Controllers.Books
         // DELETE: /book/delete/{bookId}
         [HttpDelete("delete/{bookId}")]
         [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBook(int bookId)
         {
             var result = await _booksService.DeleteBookAsync(bookId);

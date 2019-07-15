@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Dtos;
-using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Books;
 using SimplyBooksApi.Controllers.Books;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers
@@ -78,20 +77,21 @@ namespace SimplyBooks.Tests.Controllers
                         YearRead = DateTime.Now
                     }
                 };
+                var result = new Result<List<Book>>(books);
                 BasicBookServiceMock
                     .Setup(x => x.ListAllBooksAsync())
-                    .ReturnsAsync(books);
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListAllBooks();
+                var requestResult = await ControllerUnderTest.ListAllBooks();
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(books, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public void Should_return_not_found()
+            public void Should_return_result_with_error()
             {
                 // Arrange
                 var books = new List<Book>
@@ -115,15 +115,18 @@ namespace SimplyBooks.Tests.Controllers
                         YearRead = DateTime.Now
                     }
                 };
+                var result = new Result<List<Book>>();
+                result.AddError("there was an error");
                 BasicBookServiceMock
                     .Setup(x => x.ListAllBooksAsync())
-                    .ThrowsAsync(new EntityNotFoundException());
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = ControllerUnderTest.ListAllBooks();
+                var requestResult = ControllerUnderTest.ListAllBooks();
 
                 // Assert
-                Assert.IsType<NotFoundResult>(result.Result);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult.Result);
+                Assert.Same(result, okResult.Value);
             }
         }
 
@@ -142,20 +145,20 @@ namespace SimplyBooks.Tests.Controllers
                     YearPublished = new DateTime(1999, 1, 1),
                     YearRead = DateTime.Today
                 };
+                var result = new Result<Book>(book);
                 BasicBookServiceMock
                     .Setup(x => x.GetBookAsync(book.BookId))
-                    .ReturnsAsync(book);
-
+                    .ReturnsAsync(result);
                 // Act
-                var result = await ControllerUnderTest.GetBook(book.BookId);
+                var requestResult = await ControllerUnderTest.GetBook(book.BookId);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(book, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_result_with_error()
             {
                 // Arrange
                 var book = new Book
@@ -167,15 +170,18 @@ namespace SimplyBooks.Tests.Controllers
                     YearPublished = new DateTime(1908, 1, 1),
                     YearRead = DateTime.Today
                 };
+                var result = new Result<Book>();
+                result.Errors.Add("there was an error");
                 BasicBookServiceMock
                     .Setup(x => x.GetBookAsync(book.BookId))
-                    .ThrowsAsync(new EntityNotFoundException());
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.GetBook(book.BookId);
+                var requestResult = await ControllerUnderTest.GetBook(book.BookId);
 
                 // Assert
-                var notFound = Assert.IsType<NotFoundResult>(result);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
         }
@@ -195,16 +201,18 @@ namespace SimplyBooks.Tests.Controllers
                     YearPublished = new DateTime(1, 1, 1),
                     YearRead = DateTime.Today
                 };
+                var result = new Result();
                 BasicBookServiceMock
                     .Setup(x => x.AddBookAsync(book))
-                    .ReturnsAsync(book);
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddBook(book);
+                var requestResult = await ControllerUnderTest.AddBook(book);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(book, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Equal((int)HttpStatusCode.OK, okResult.StatusCode);
+                Assert.Equal(result, okResult.Value);
             }
 
             [Fact]
@@ -223,7 +231,7 @@ namespace SimplyBooks.Tests.Controllers
             }
 
             [Fact]
-            public async void Should_return_conflict_with_message()
+            public async void Should_return_result_with_error_message()
             {
                 // Arrange
                 var book = new Book
@@ -235,16 +243,18 @@ namespace SimplyBooks.Tests.Controllers
                     YearPublished = new DateTime(1919, 1, 1),
                     YearRead = DateTime.Now
                 };
+                var result = new Result();
+                result.Errors.Add("an error happened");
                 BasicBookServiceMock
                     .Setup(x => x.AddBookAsync(book))
-                    .ThrowsAsync(new EntityAlreadyExistsException(book.Title));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddBook(book);
+                var requestResult = await ControllerUnderTest.AddBook(book);
 
                 // Assert
-                var conflict = Assert.IsType<ConflictObjectResult>(result);
-                Assert.Equal($"'{book.Title}' already exists", conflict.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Equal(result, okResult.Value);
             }
 
         }
@@ -252,7 +262,7 @@ namespace SimplyBooks.Tests.Controllers
         public class UpdateBook : BasicBooksControllerTest
         {
             [Fact]
-            public async void Should_ok_with_book()
+            public async void Should_return_ok_with_book()
             {
                 // Arrange
                 var bookDto = new BookDto
@@ -269,17 +279,21 @@ namespace SimplyBooks.Tests.Controllers
                     YearPublished = new DateTime(1970, 1, 1),
                     YearRead = DateTime.Now
                 };
-
+                var toUpdate = MapperMock
+                    .Setup(x => x.Map<Book>(bookDto))
+                    .Returns(book);
+                var result = new Result<Book>(book);
                 BasicBookServiceMock
                     .Setup(x => x.UpdateBookAsync(book))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateBook(bookDto);
+                var requestResult = await ControllerUnderTest.UpdateBook(bookDto);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(book, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Equal((int)HttpStatusCode.OK, okResult.StatusCode);
+                Assert.Equal(result, okResult.Value);
             }
 
             [Fact]
@@ -298,30 +312,39 @@ namespace SimplyBooks.Tests.Controllers
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return__error_with_message()
             {
                 // Arrange
-                var book = new Book
+                var bookDto = new BookDto
                 {
                     Title = "Green Eggs and Ham",
-                    Author = TestAuthorOne,
-                    Genre = TestGenreTwo,
                     Rating = 8.8,
                     YearPublished = new DateTime(1960, 1, 1),
                     YearRead = DateTime.Now
                 };
-                var bookDto = new BookDto();
+                var book = new Book
+                {
+                    Title = "Green Eggs and Ham",
+                    Rating = 8.8,
+                    YearPublished = new DateTime(1960, 1, 1),
+                    YearRead = DateTime.Now
+                };
+                var toUpdate= MapperMock
+                    .Setup(x => x.Map<Book>(bookDto))
+                    .Returns(book);
 
+                var result = new Result();
+                result.AddError("there was an error");
                 BasicBookServiceMock
                     .Setup(x => x.UpdateBookAsync(book))
-                    .ThrowsAsync(new EntityNotFoundException(book.Title));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateBook(bookDto);
+                var requestResult = await ControllerUnderTest.UpdateBook(bookDto);
 
                 // Assert
-                var notFound = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"'{book.Title}' could not be found", notFound.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
         }
@@ -341,31 +364,37 @@ namespace SimplyBooks.Tests.Controllers
                     YearPublished = new DateTime(1939, 1, 1),
                     YearRead = DateTime.Now
                 };
+                var result = new Result();
+                result.Errors.Add("there was an error");
                 BasicBookServiceMock
                     .Setup(x => x.DeleteBookAsync(book.BookId))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.DeleteBook(book.BookId);
+                var requestResult = await ControllerUnderTest.DeleteBook(book.BookId);
 
                 // Assert
-                var okResult = Assert.IsType<OkResult>(result);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_result_with_error()
             {
                 // Arrange
+                var result = new Result();
+                result.Errors.Add("there was an error");
                 var book = new Book();
                 BasicBookServiceMock
                     .Setup(x => x.DeleteBookAsync(book.BookId))
-                    .ThrowsAsync(new EntityNotFoundException());
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.DeleteBook(book.BookId);
+                var requestResult = await ControllerUnderTest.DeleteBook(book.BookId);
 
                 // Assert
-                var notFound = Assert.IsType<NotFoundResult>(result);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
         }

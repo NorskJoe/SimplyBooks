@@ -2,6 +2,7 @@
 using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Books;
 using SimplyBooks.Web.Controllers.Books;
 using System;
@@ -76,20 +77,21 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>(books);
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByAuthorAsync(TestAuthorOne.AuthorId))
-                    .ReturnsAsync(books);
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByAuthor(TestAuthorOne.AuthorId);
+                var requestResult = await ControllerUnderTest.ListBooksByAuthor(TestAuthorOne.AuthorId);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(books, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var books = new List<Book>
@@ -113,16 +115,18 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>();
+                result.AddError("there was an error");
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByAuthorAsync(5))
-                    .ThrowsAsync(new EntityNotFoundException(5, typeof(Author).Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByAuthor(5);
+                var requestResult = await ControllerUnderTest.ListBooksByAuthor(5);
 
                 // Assert
-                var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"A {typeof(Author).Name} with an ID of {5} could not be found", notFoundResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
         }
@@ -154,21 +158,23 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+
+                var result = new Result<IList<Book>>(books);
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByGenreAsync(TestGenreOne.GenreId))
-                    .ReturnsAsync(books);
+                    .ReturnsAsync(result);
 
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByGenre(TestGenreOne.GenreId);
+                var requestResult = await ControllerUnderTest.ListBooksByGenre(TestGenreOne.GenreId);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(books, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var books = new List<Book>
@@ -192,16 +198,18 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>();
+                result.AddError("there was an error");
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByGenreAsync(5))
-                    .ThrowsAsync(new EntityNotFoundException(5, typeof(Genre).Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByGenre(5);
+                var requestResult = await ControllerUnderTest.ListBooksByGenre(5);
 
                 // Assert
-                var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"A {typeof(Genre).Name} with an ID of {5} could not be found", notFoundResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
 
             }
 
@@ -235,20 +243,21 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>(books);
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByAuthorNationalityAsync(TestAuthorOne.Nationality.NationalityId))
-                    .ReturnsAsync(books);
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByAuthorNationality(TestAuthorOne.Nationality.NationalityId);
+                var requestResult = await ControllerUnderTest.ListBooksByAuthorNationality(TestAuthorOne.Nationality.NationalityId);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(books, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var books = new List<Book>
@@ -272,16 +281,18 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>();
+                result.AddError("there was an error");
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByAuthorNationalityAsync(5))
-                    .ThrowsAsync(new EntityNotFoundException(5, typeof(Nationality).Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByAuthorNationality(5);
+                var requestResult = await ControllerUnderTest.ListBooksByAuthorNationality(5);
 
                 // Assert
-                var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"A {typeof(Nationality).Name} with an ID of {5} could not be found", notFoundResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
         }
 
@@ -312,20 +323,21 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>(books);
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByYearReadAsync(new DateTime(2013, 1, 1)))
-                    .ReturnsAsync(books);
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearRead("2013");
+                var requestResult = await ControllerUnderTest.ListBooksByYearRead("2013");
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(books, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var books = new List<Book>
@@ -349,16 +361,18 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>();
+                result.AddError("there was an error");
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByYearReadAsync(new DateTime(2012, 1, 1)))
-                    .ThrowsAsync(new EntityNotFoundException(new DateTime(2012, 1, 1), typeof(Book).Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearRead("2012");
+                var requestResult = await ControllerUnderTest.ListBooksByYearRead("2012");
 
                 // Assert
-                var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"A {typeof(Book).Name} matching the year {new DateTime(2012, 1, 1).Year} could not be found", notFoundResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
         }
 
@@ -389,20 +403,22 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+
+                var result = new Result<IList<Book>>(books);
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByYearPublishedAsync(new DateTime(2012, 1, 1)))
-                    .ReturnsAsync(books);
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearPublished("2012");
+                var requestResult = await ControllerUnderTest.ListBooksByYearPublished("2012");
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(books, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var books = new List<Book>
@@ -426,16 +442,18 @@ namespace SimplyBooks.Tests.Controllers
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
+                var result = new Result<IList<Book>>();
+                result.AddError("there was an error");
                 ListBooksByCriteriaServiceMock
                     .Setup(x => x.ListBooksByYearPublishedAsync(new DateTime(2013, 1, 1)))
-                    .ThrowsAsync(new EntityNotFoundException(new DateTime(2013, 1, 1), typeof(Book).Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.ListBooksByYearPublished("2013");
+                var requestResult = await ControllerUnderTest.ListBooksByYearPublished("2013");
 
                 // Assert
-                var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"A {typeof(Book).Name} matching the year {new DateTime(2013, 1, 1).Year} could not be found", notFoundResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Equal(result, okResult.Value);
             }
         }
     }

@@ -23,7 +23,6 @@ namespace SimplyBooks.Web.Controllers.Books
         // GET: /booklists/by-author/{authorId}
         [HttpGet("by-author/{authorId}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByAuthor(int authorId)
         {
             var result = await _listBooksService.ListBooksByAuthorAsync(authorId);
@@ -33,7 +32,6 @@ namespace SimplyBooks.Web.Controllers.Books
         // GET: /booklists/by-genre/{genreId}
         [HttpGet("by-genre/{genreId}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByGenre(int genreId)
         {
             var result = await _listBooksService.ListBooksByGenreAsync(genreId);
@@ -43,7 +41,6 @@ namespace SimplyBooks.Web.Controllers.Books
         // GET: /booklists/by-nationality/{nationalityId}
         [HttpGet("by-nationality/{nationalityId}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByAuthorNationality(int nationalityId)
         {
             var result = await _listBooksService.ListBooksByAuthorNationalityAsync(nationalityId);
@@ -53,7 +50,6 @@ namespace SimplyBooks.Web.Controllers.Books
         // GET: /booklists/by-yearread/{yearRead}
         [HttpGet("by-yearread/{yearRead}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByYearRead(string yearRead)
         {
             DateTime year = new DateTime(Convert.ToInt32(yearRead), 1, 1);
@@ -64,7 +60,6 @@ namespace SimplyBooks.Web.Controllers.Books
         // GET: /booklists/by-yearpublished/{yearPublished}
         [HttpGet("by-yearpublished/{yearPublished}")]
         [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksByYearPublished(string yearPublished)
         {
             DateTime year = new DateTime(Convert.ToInt32(yearPublished), 1, 1);
