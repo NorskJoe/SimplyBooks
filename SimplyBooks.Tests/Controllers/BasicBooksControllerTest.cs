@@ -262,7 +262,7 @@ namespace SimplyBooks.Tests.Controllers
         public class UpdateBook : BasicBooksControllerTest
         {
             [Fact]
-            public async void Should_return_ok_with_book()
+            public async void Should_return_ok()
             {
                 // Arrange
                 var bookDto = new BookDto
@@ -282,7 +282,7 @@ namespace SimplyBooks.Tests.Controllers
                 var toUpdate = MapperMock
                     .Setup(x => x.Map<Book>(bookDto))
                     .Returns(book);
-                var result = new Result<Book>(book);
+                var result = new Result();
                 BasicBookServiceMock
                     .Setup(x => x.UpdateBookAsync(book))
                     .ReturnsAsync(result);

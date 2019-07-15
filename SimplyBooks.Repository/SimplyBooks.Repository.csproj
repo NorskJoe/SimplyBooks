@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\Authors\" />
     <Folder Include="Queries\Genres\" />
     <Folder Include="Queries\Nationalities\" />
   </ItemGroup>

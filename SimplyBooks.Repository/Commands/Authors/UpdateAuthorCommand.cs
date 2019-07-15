@@ -1,4 +1,5 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.ResultModels;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,12 +8,12 @@ namespace SimplyBooks.Repository.Commands.Authors
 {
     public interface IUpdateAuthorCommand
     {
-        Task<HttpResponseMessage> UpdateAuthor(Author author);
+        Task<Result> Execute(Author author);
     }
 
     public class UpdateAuthorCommand : IUpdateAuthorCommand
     {
-        public Task<HttpResponseMessage> UpdateAuthor(Author author)
+        public Task<Result> Execute(Author author)
         {
             throw new NotImplementedException();
         }
