@@ -1,10 +1,8 @@
 ﻿using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Nationalities;
 using SimplyBooks.Repository.Queries.Nationalities;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Nationalities

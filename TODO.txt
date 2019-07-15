@@ -1,6 +1,11 @@
+Basic Functionality:
  - Write tests for Service layer
- - Implement database mock/fluent data
- - Write tests for repo layer
  - Implement nationality data access
  - Implement author data access
  - Implement genre data access
+ - Implement database mock/fluent data
+ - Write integration tests
+
+Major Improvements:
+ - Add users
+ - Add auth to endpoints

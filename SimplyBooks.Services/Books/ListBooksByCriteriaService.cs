@@ -1,10 +1,8 @@
 ﻿using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Queries.Books;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books

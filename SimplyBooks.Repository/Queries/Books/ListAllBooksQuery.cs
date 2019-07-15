@@ -9,7 +9,7 @@ namespace SimplyBooks.Repository.Queries.Books
 {
     public interface IListAllBooksQuery
     {
-        Task<Result<List<Book>>> Execute();
+        Task<Result<IList<Book>>> Execute();
     }
 
     public class ListAllBooksQuery : IListAllBooksQuery
@@ -21,9 +21,9 @@ namespace SimplyBooks.Repository.Queries.Books
             _context = context;
         }
 
-        public async Task<Result<List<Book>>> Execute()
+        public async Task<Result<IList<Book>>> Execute()
         {
-            Result<List<Book>> result = new Result<List<Book>>();
+            Result<IList<Book>> result = new Result<IList<Book>>();
 
             try
             {

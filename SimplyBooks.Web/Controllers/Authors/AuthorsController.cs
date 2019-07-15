@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Authors;
 
 namespace SimplyBooks.Web.Controllers.Authors
