@@ -1,4 +1,6 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.ResultModels;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,7 +10,7 @@ namespace SimplyBooks.Repository.Commands.Nationalities
 {
     public interface IAddNationalityCommand
     {
-        Task<HttpResponseMessage> AddNationality(Nationality nationality);
+        Task<Result> Execute(Nationality nationality);
     }
 
     public class AddNationalityCommand : IAddNationalityCommand
@@ -20,20 +22,9 @@ namespace SimplyBooks.Repository.Commands.Nationalities
             _context = context;
         }
 
-        public async Task<HttpResponseMessage> AddNationality(Nationality nationality)
+        public async Task<Result> Execute(Nationality nationality)
         {
-            var response = new HttpResponseMessage();
-
-            if (_context.Nationality.Any(x => x.Name == nationality.Name))
-            {
-                response.StatusCode = HttpStatusCode.Conflict;
-            }
-
-            _context.Nationality.Add(nationality);
-            await _context.SaveChangesAsync();
-
-            response.StatusCode = HttpStatusCode.Created;
-            return response;
+            throw new NotImplementedException();
         }
     }
 }

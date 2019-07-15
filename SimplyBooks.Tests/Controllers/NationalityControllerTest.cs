@@ -2,8 +2,10 @@
 using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Nationalities;
 using SimplyBooks.Web.Controllers.Nationalities;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Xunit;
@@ -21,26 +23,87 @@ namespace SimplyBooks.Tests.Controllers
             ControllerUnderTest = new NationalitiesController(NationalityServiceMock.Object);
         }
 
+        public class ListAllNationalities : NationalityControllerTest
+        {
+            [Fact]
+            public async void Should_return_ok_with_nationalities()
+            {
+                // Arrange
+                var nationalities = new List<Nationality>
+                {
+                    new Nationality
+                    {
+                        Name = "English",
+                    },
+                    new Nationality
+                    {
+                        Name = "Irish"
+                    }
+                };
+                var result = new Result<IList<Nationality>>(nationalities);
+                NationalityServiceMock
+                    .Setup(x => x.ListAllNationalitiesAsync())
+                    .ReturnsAsync(result);
+
+                // Act
+                var requestResult = await ControllerUnderTest.ListAllNationalities();
+
+                // Assert
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
+            }
+
+            [Fact]
+            public void Should_return_result_with_error()
+            {
+                // Arrange
+                var nationalities = new List<Nationality>
+                {
+                    new Nationality
+                    {
+                        Name = "English",
+                    },
+                    new Nationality
+                    {
+                        Name = "Irish"
+                    }
+                };
+                var result = new Result<IList<Nationality>>();
+                result.AddError("there was an error");
+                NationalityServiceMock
+                    .Setup(x => x.ListAllNationalitiesAsync())
+                    .ReturnsAsync(result);
+
+                // Act
+                var requestResult = ControllerUnderTest.ListAllNationalities();
+
+                // Assert
+                var okResult = Assert.IsType<OkObjectResult>(requestResult.Result);
+                Assert.Same(result, okResult.Value);
+            }
+        }
+
         public class AddNationality : NationalityControllerTest
         {
             [Fact]
-            public async void Should_return_OK_with_nationality()
+            public async void Should_return_OK()
             {
                 // Arrange
                 var nationality = new Nationality
                 {
                     Name = "England"
                 };
+                var result = new Result();
                 NationalityServiceMock
                     .Setup(x => x.AddNationalityAsync(nationality))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddNationality(nationality);
+                var requestResult = await ControllerUnderTest.AddNationality(nationality);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(nationality, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
@@ -63,66 +126,71 @@ namespace SimplyBooks.Tests.Controllers
             }
 
             [Fact]
-            public async void Should_return_conflict()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var nationality = new Nationality
                 {
                     Name = "Austria"
                 };
+                var result = new Result();
+                result.AddError("there was an error");
                 NationalityServiceMock
                     .Setup(x => x.AddNationalityAsync(nationality))
-                    .ThrowsAsync(new EntityAlreadyExistsException(nationality.Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddNationality(nationality);
+                var requestResult = await ControllerUnderTest.AddNationality(nationality);
 
                 // Assert
-                var conflictResult = Assert.IsType<ConflictObjectResult>(result);
-                Assert.Equal($"'{nationality.Name}' already exists", conflictResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
         }
 
         public class UpdateNationality : NationalityControllerTest
         {
             [Fact]
-            public async void Should_return_OK_with_nationality()
+            public async void Should_return_OK()
             {
                 // Arrange
                 var nationality = new Nationality
                 {
                     Name = "Lithuania"
                 };
+                var result = new Result();
                 NationalityServiceMock
                     .Setup(x => x.UpdateNationalityAsync(nationality))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateNationality(nationality);
+                var requestResult = await ControllerUnderTest.UpdateNationality(nationality);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(nationality, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var nationality = new Nationality
                 {
                     Name = "Australia"
                 };
+                var result = new Result();
+                result.AddError("there was an error");
                 NationalityServiceMock
                     .Setup(x => x.UpdateNationalityAsync(nationality))
-                    .ThrowsAsync(new EntityNotFoundException(nationality.Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateNationality(nationality);
+                var requestResult = await ControllerUnderTest.UpdateNationality(nationality);
 
                 // Assert
-                var notFound = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"'{nationality.Name}' could not be found", notFound.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]

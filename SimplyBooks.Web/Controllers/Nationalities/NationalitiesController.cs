@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
@@ -18,34 +19,33 @@ namespace SimplyBooks.Web.Controllers.Nationalities
             _nationalityService = nationalityService;
         }
 
-        // POST: v1/nationalities/add/{nationality}
+        // GET: /nationalities/list
+        [HttpGet("list")]
+        [ProducesResponseType(typeof(IList<Nationality>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListAllNationalities()
+        {
+            var result = await _nationalityService.ListAllNationalitiesAsync();
+            return Ok(result);
+        }
+
+        // POST: /nationalities/add/{nationality}
         [HttpPost("add{nationality}")]
         [ProducesResponseType(typeof(Nationality), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult> AddNationality([FromBody]Nationality nationality)
+        public async Task<IActionResult> AddNationality([FromBody]Nationality nationality)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                await _nationalityService.AddNationalityAsync(nationality);
-            }
-            catch (EntityAlreadyExistsException ex)
-            {
-                return Conflict(ex.Message);
-            }
-
-            return Ok(nationality);
+            var result = await _nationalityService.AddNationalityAsync(nationality);
+            return Ok(result);
         }
 
-        // PUT: v1/nationalities/update/{nationality}
+        // PUT: /nationalities/update/{nationality}
         [HttpPut("update{nationality}")]
         [ProducesResponseType(typeof(Nationality), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> UpdateNationality(Nationality nationality)
         {
@@ -54,15 +54,8 @@ namespace SimplyBooks.Web.Controllers.Nationalities
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                await _nationalityService.UpdateNationalityAsync(nationality);
-                return Ok(nationality);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _nationalityService.UpdateNationalityAsync(nationality);
+            return Ok(result);
         }
     }
 }

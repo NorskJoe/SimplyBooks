@@ -1,6 +1,9 @@
 ﻿using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Nationalities;
+using SimplyBooks.Repository.Queries.Nationalities;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -8,49 +11,40 @@ namespace SimplyBooks.Services.Nationalities
 {
     public interface INationalityService
     {
-        Task<HttpResponseMessage> AddNationalityAsync(Nationality nationality);
-        Task<HttpResponseMessage> UpdateNationalityAsync(Nationality nationality);
+        Task<Result<IList<Nationality>>> ListAllNationalitiesAsync();
+        Task<Result> AddNationalityAsync(Nationality nationality);
+        Task<Result> UpdateNationalityAsync(Nationality nationality);
     }
 
     public class NationalityService : INationalityService
     {
         private readonly IAddNationalityCommand _addNationalityCommand;
         private readonly IUpdateNationalityCommand _updateNationalityCommand;
+        private readonly IListAllNationalitiesQuery _listAllNationalitiesQuery;
 
         public NationalityService(IAddNationalityCommand addNationalityCommand,
-            IUpdateNationalityCommand updateNationalityCommand)
+            IUpdateNationalityCommand updateNationalityCommand,
+            IListAllNationalitiesQuery listAllNationalitiesQuery)
         {
             _addNationalityCommand = addNationalityCommand;
             _updateNationalityCommand = updateNationalityCommand;
+            _listAllNationalitiesQuery = listAllNationalitiesQuery;
         }
 
-        public async Task<HttpResponseMessage> AddNationalityAsync(Nationality nationality)
+        public async Task<Result<IList<Nationality>>> ListAllNationalitiesAsync()
         {
-            var response = await _addNationalityCommand.AddNationality(nationality);
+            return await _listAllNationalitiesQuery.Execute();
+        }
 
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                throw new EntityAlreadyExistsException(nationality.Name);
-            }
+        public async Task<Result> AddNationalityAsync(Nationality nationality)
+        {
+            return await _addNationalityCommand.Execute(nationality);
             
         }
 
-        public async Task<HttpResponseMessage> UpdateNationalityAsync(Nationality nationality)
+        public async Task<Result> UpdateNationalityAsync(Nationality nationality)
         {
-            var response = await _updateNationalityCommand.UpdateNationality(nationality);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                throw new EntityNotFoundException(nationality.Name);
-            }
+            return await _updateNationalityCommand.Execute(nationality);
         }
     }
 }
