@@ -22,7 +22,7 @@ namespace SimplyBooks.Models.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class General {
+    public class General {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SimplyBooks.Models.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SimplyBooks.Models.Resources.General", typeof(General).Assembly);
@@ -51,7 +51,7 @@ namespace SimplyBooks.Models.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SimplyBooks.Models.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Year Published.
         /// </summary>
-        internal static string YearPublished {
+        public static string YearPublished {
             get {
                 return ResourceManager.GetString("YearPublished", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SimplyBooks.Models.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Year Read.
         /// </summary>
-        internal static string YearRead {
+        public static string YearRead {
             get {
                 return ResourceManager.GetString("YearRead", resourceCulture);
             }

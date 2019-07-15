@@ -2,13 +2,12 @@
 using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
-using SimplyBooks.Services.Authors.Interfaces;
+using SimplyBooks.Models.ResultModels;
+using SimplyBooks.Services.Authors;
 using SimplyBooks.Web.Controllers.Authors;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers
@@ -24,6 +23,70 @@ namespace SimplyBooks.Tests.Controllers
             ControllerUnderTest = new AuthorsController(AuthorServiceMock.Object);
         }
 
+        public class ListAllAuthors : AuthorControllerTest
+        {
+            [Fact]
+            public async void Should_return_ok_with_authors()
+            {
+                // Arrange
+                var authors = new List<Author>
+                {
+                    new Author
+                    {
+                        Name = "Peter Piper",
+                        Nationality = new Nationality { Name = "Austrian" }
+                    },
+                    new Author
+                    {
+                        Name = "Spiderman",
+                        Nationality = new Nationality { Name = "American" }
+                    }
+                };
+                var result = new Result<IList<Author>>(authors);
+                AuthorServiceMock
+                    .Setup(x => x.ListAllAuthorsAsync())
+                    .ReturnsAsync(result);
+
+                // Act
+                var requestResult = await ControllerUnderTest.ListAllAuthors();
+
+                // Assert
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
+            }
+
+            [Fact]
+            public void Should_return_result_with_error()
+            {
+                // Arrange
+                var authors = new List<Author>
+                {
+                    new Author
+                    {
+                        Name = "Peter Piper",
+                        Nationality = new Nationality { Name = "Austrian" }
+                    },
+                    new Author
+                    {
+                        Name = "Spiderman",
+                        Nationality = new Nationality { Name = "American" }
+                    }
+                };
+                var result = new Result<IList<Author>>();
+                result.AddError("there was an error");
+                AuthorServiceMock
+                    .Setup(x => x.ListAllAuthorsAsync())
+                    .ReturnsAsync(result);
+
+                // Act
+                var requestResult = ControllerUnderTest.ListAllAuthors();
+
+                // Assert
+                var okResult = Assert.IsType<OkObjectResult>(requestResult.Result);
+                Assert.Same(result, okResult.Value);
+            }
+        }
+
         public class AddAuthor : AuthorControllerTest
         {
             [Fact]
@@ -35,17 +98,18 @@ namespace SimplyBooks.Tests.Controllers
                     Name = "Katherine Man",
                     Nationality = new Nationality { Name = "Mountains" }
                 };
+                var result = new Result();
 
                 AuthorServiceMock
                     .Setup(x => x.AddAuthorAsync(expectedAuthor))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddAuthor(expectedAuthor);
+                var requestResult = await ControllerUnderTest.AddAuthor(expectedAuthor);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(expectedAuthor, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
@@ -68,7 +132,7 @@ namespace SimplyBooks.Tests.Controllers
             }
 
             [Fact]
-            public async void Should_return_conflict()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var duplicateAuthor = new Author
@@ -76,16 +140,18 @@ namespace SimplyBooks.Tests.Controllers
                     Name = "Katherine Man",
                     Nationality = new Nationality { Name = "Mountains" }
                 };
+                var result = new Result();
+                result.AddError("there was an error");
                 AuthorServiceMock
                     .Setup(x => x.AddAuthorAsync(duplicateAuthor))
-                    .ThrowsAsync(new EntityAlreadyExistsException(duplicateAuthor.Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddAuthor(duplicateAuthor);
+                var requestResult = await ControllerUnderTest.AddAuthor(duplicateAuthor);
 
                 // Assert
-                var conflictResult = Assert.IsType<ConflictObjectResult>(result);
-                Assert.Equal($"'{duplicateAuthor.Name}' already exists in the database", conflictResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
         }
@@ -93,7 +159,7 @@ namespace SimplyBooks.Tests.Controllers
         public class UpdateAuthor : AuthorControllerTest
         {
             [Fact]
-            public async void Should_return_OK_with_author()
+            public async void Should_return_OK()
             {
                 // Arrange
                 var expectedAuthor = new Author
@@ -101,17 +167,17 @@ namespace SimplyBooks.Tests.Controllers
                     Name = "Katherine Man",
                     Nationality = new Nationality { Name = "Mountains" }
                 };
-
+                var result = new Result();
                 AuthorServiceMock
                     .Setup(x => x.UpdateAuthorAsync(expectedAuthor))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateAuthor(expectedAuthor);
+                var requestResult = await ControllerUnderTest.UpdateAuthor(expectedAuthor);
 
                 // Assert
-                var createdResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(expectedAuthor, createdResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
@@ -134,7 +200,7 @@ namespace SimplyBooks.Tests.Controllers
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var authorDoesNotExist = new Author
@@ -142,17 +208,18 @@ namespace SimplyBooks.Tests.Controllers
                     Name = "Schrödinger's Cat",
                     Nationality = new Nationality { Name = "Austria" }
                 };
+                var result = new Result();
+                result.AddError("there was an error");
                 AuthorServiceMock
                     .Setup(x => x.UpdateAuthorAsync(authorDoesNotExist))
-                    .ThrowsAsync(new EntityNotFoundException(authorDoesNotExist.Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateAuthor(authorDoesNotExist);
+                var requestResult = await ControllerUnderTest.UpdateAuthor(authorDoesNotExist);
 
                 // Assert
-                var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"'{authorDoesNotExist.Name}' could not be found",
-                    notFoundResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
         }

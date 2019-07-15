@@ -10,7 +10,7 @@ namespace SimplyBooks.Models.Exceptions
         }
 
         public EntityAlreadyExistsException(string entityName)
-            : base($"'{entityName}' already exists in the database")
+            : base($"'{entityName}' already exists")
         {
 
         }

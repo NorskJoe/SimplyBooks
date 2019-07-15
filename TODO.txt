@@ -1,0 +1,6 @@
+ - Write tests for Service layer
+ - Implement database mock/fluent data
+ - Write tests for repo layer
+ - Implement nationality data access
+ - Implement author data access
+ - Implement genre data access
