@@ -42,7 +42,7 @@ namespace SimplyBooks.Tests.Controllers
                         Nationality = new Nationality { Name = "American" }
                     }
                 };
-                var result = new Result<List<Author>>(authors);
+                var result = new Result<IList<Author>>(authors);
                 AuthorServiceMock
                     .Setup(x => x.ListAllAuthorsAsync())
                     .ReturnsAsync(result);
@@ -72,7 +72,7 @@ namespace SimplyBooks.Tests.Controllers
                         Nationality = new Nationality { Name = "American" }
                     }
                 };
-                var result = new Result<List<Author>>();
+                var result = new Result<IList<Author>>();
                 result.AddError("there was an error");
                 AuthorServiceMock
                     .Setup(x => x.ListAllAuthorsAsync())

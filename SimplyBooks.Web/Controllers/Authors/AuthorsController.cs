@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
@@ -19,6 +20,8 @@ namespace SimplyBooks.Web.Controllers.Authors
         }
 
         // GET: /authors/list
+        [HttpGet("list")]
+        [ProducesResponseType(typeof(IList<Author>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListAllAuthors()
         {
             var result = await _authorsService.ListAllAuthorsAsync();

@@ -1,6 +1,9 @@
 ﻿using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Genres;
+using SimplyBooks.Repository.Queries.Genres;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -8,48 +11,39 @@ namespace SimplyBooks.Services.Genres
 {
     public interface IGenresService
     {
-        Task<HttpResponseMessage> UpdateGenreAsync(Genre genre);
-        Task<HttpResponseMessage> AddGenreAsync(Genre genre);
+        Task<Result<IList<Genre>>> ListAllGenresAsync();
+        Task<Result> UpdateGenreAsync(Genre genre);
+        Task<Result> AddGenreAsync(Genre genre);
     }
 
     public class GenresService : IGenresService
     {
         private readonly IAddGenreCommand _addGenreCommand;
         private readonly IUpdateGenreCommand _updateGenreCommand;
+        private readonly IListAllGenresQuery _listAllGenresQuery;
 
         public GenresService(IAddGenreCommand addGenreCommand,
-            IUpdateGenreCommand updateGenreCommand)
+            IUpdateGenreCommand updateGenreCommand,
+            IListAllGenresQuery listAllGenresQuery)
         {
             _addGenreCommand = addGenreCommand;
             _updateGenreCommand = updateGenreCommand;
+            _listAllGenresQuery = listAllGenresQuery;
         }
 
-        public async Task<HttpResponseMessage> AddGenreAsync(Genre genre)
+        public async Task<Result<IList<Genre>>> ListAllGenresAsync()
         {
-            var response = await _addGenreCommand.AddGenre(genre);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                throw new EntityAlreadyExistsException(genre.Name);
-            }
+            return await _listAllGenresQuery.Execute();
         }
 
-        public async Task<HttpResponseMessage> UpdateGenreAsync(Genre genre)
+        public async Task<Result> AddGenreAsync(Genre genre)
         {
-            var response = await _updateGenreCommand.UpdateGenre(genre);
+            return await _addGenreCommand.Execute(genre);
+        }
 
-            if (response.IsSuccessStatusCode)
-            {
-                return response;
-            }
-            else
-            {
-                throw new EntityNotFoundException(genre.Name);
-            }
+        public async Task<Result> UpdateGenreAsync(Genre genre)
+        {
+            return await _updateGenreCommand.Execute(genre);
         }
     }
 }

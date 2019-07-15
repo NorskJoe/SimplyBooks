@@ -1,4 +1,5 @@
 ﻿using SimplyBooks.Models;
+using SimplyBooks.Models.ResultModels;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,12 +8,12 @@ namespace SimplyBooks.Repository.Commands.Genres
 {
     public interface IUpdateGenreCommand
     {
-        Task<HttpResponseMessage> UpdateGenre(Genre genre);
+        Task<Result> Execute(Genre genre);
     }
 
     public class UpdateGenreCommand : IUpdateGenreCommand
     {
-        public Task<HttpResponseMessage> UpdateGenre(Genre genre)
+        public Task<Result> Execute(Genre genre)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
@@ -18,51 +19,43 @@ namespace SimplyBooks.Web.Controllers.Genres
             _genresService = genresService;
         }
 
-        // POST: v1/genres/add/{genre}
+        // GET: /genres/list
+        [HttpGet("list")]
+        [ProducesResponseType(typeof(IList<Genre>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListAllGenres()
+        {
+            var result = await _genresService.ListAllGenresAsync();
+            return Ok(result);
+        }
+
+        // POST: /genres/add/{genre}
         [HttpPost("add{genre}")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<ActionResult> AddGenre([FromBody]Genre genre)
+        public async Task<IActionResult> AddGenre([FromBody]Genre genre)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                await _genresService.AddGenreAsync(genre);
-            }
-            catch (EntityAlreadyExistsException ex)
-            {
-                return Conflict(ex.Message);
-            }
-
-            return Ok(genre);
+            var result = await _genresService.AddGenreAsync(genre);
+            return Ok(result);
         }
 
-        // PUT: v1/genres/update/{genre}
+        // PUT: /genres/update/{genre}
         [HttpPut("update{genre}")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> UpdateGenre(Genre genre)
+        public async Task<IActionResult> UpdateGenre(Genre genre)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                await _genresService.UpdateGenreAsync(genre);
-                return Ok(genre);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _genresService.UpdateGenreAsync(genre);
+            return Ok(result);
         }
 
     }

@@ -10,7 +10,7 @@ namespace SimplyBooks.Repository.Queries.Authors
 {
     public interface IListAllAuthorsQuery
     {
-        Task<Result<List<Author>>> Execute();
+        Task<Result<IList<Author>>> Execute();
     }
     class ListAllAuthorsQuery : IListAllAuthorsQuery
     {
@@ -21,9 +21,9 @@ namespace SimplyBooks.Repository.Queries.Authors
             _context = context;
         }
 
-        public async Task<Result<List<Author>>> Execute()
+        public async Task<Result<IList<Author>>> Execute()
         {
-            Result<List<Author>> result = new Result<List<Author>>();
+            Result<IList<Author>> result = new Result<IList<Author>>();
 
             try
             {

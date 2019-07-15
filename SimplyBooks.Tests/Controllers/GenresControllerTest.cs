@@ -2,8 +2,10 @@
 using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Exceptions;
+using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Genres;
 using SimplyBooks.Web.Controllers.Genres;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Xunit;
@@ -21,26 +23,87 @@ namespace SimplyBooks.Tests.Controllers
             ControllerUnderTest = new GenresController(GenreServiceMock.Object);
         }
 
+        public class ListAllGenres : GenresControllerTest
+        {
+            [Fact]
+            public async void Should_return_ok_with_genres()
+            {
+                // Arrange
+                var genres = new List<Genre>
+                {
+                    new Genre
+                    {
+                        Name = "Horror"
+                    },
+                    new Genre
+                    {
+                        Name = "Fantasy"
+                    }
+                };
+                var result = new Result<IList<Genre>>(genres);
+                GenreServiceMock
+                    .Setup(x => x.ListAllGenresAsync())
+                    .ReturnsAsync(result);
+
+                // Act
+                var requestResult = await ControllerUnderTest.ListAllGenres();
+
+                // Assert
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
+            }
+
+            [Fact]
+            public void Should_return_result_with_error()
+            {
+                // Arrange
+                var genres = new List<Genre>
+                {
+                    new Genre
+                    {
+                        Name = "Horror"
+                    },
+                    new Genre
+                    {
+                        Name = "Fantasy"
+                    }
+                };
+                var result = new Result<IList<Genre>>();
+                result.AddError("there was an error");
+                GenreServiceMock
+                    .Setup(x => x.ListAllGenresAsync())
+                    .ReturnsAsync(result);
+
+                // Act
+                var requestResult = ControllerUnderTest.ListAllGenres();
+
+                // Assert
+                var okResult = Assert.IsType<OkObjectResult>(requestResult.Result);
+                Assert.Same(result, okResult.Value);
+            }
+        }
+
         public class AddGenre : GenresControllerTest
         {
             [Fact]
-            public async void Should_return_ok_with_genre()
+            public async void Should_return_ok()
             {
                 // Arrange
                 var genre = new Genre
                 {
                     Name = "Horror"
                 };
+                var result = new Result();
                 GenreServiceMock
                     .Setup(x => x.AddGenreAsync(genre))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddGenre(genre);
+                var requestResult = await ControllerUnderTest.AddGenre(genre);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
-                Assert.Same(genre, okResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]
@@ -62,45 +125,48 @@ namespace SimplyBooks.Tests.Controllers
             }
 
             [Fact]
-            public async void Should_return_conflict()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var genre = new Genre
                 {
                     Name = "Fantasy"
                 };
+                var result = new Result();
+                result.AddError("there was an error");
                 GenreServiceMock
                     .Setup(x => x.AddGenreAsync(genre))
-                    .ThrowsAsync(new EntityAlreadyExistsException(genre.Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.AddGenre(genre);
+                var requestResult = await ControllerUnderTest.AddGenre(genre);
 
                 // Assert
-                var conflictResult = Assert.IsType<ConflictObjectResult>(result);
-                Assert.Equal($"'{genre.Name}' already exists", conflictResult.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
         }
 
         public class UpdateGenre : GenresControllerTest
         {
             [Fact]
-            public async void Should_return_ok_with_genre()
+            public async void Should_return_ok()
             {
                 // Arrange
                 var genre = new Genre
                 {
                     Name = "Sci Fi"
                 };
+                var result = new Result();
                 GenreServiceMock
                     .Setup(x => x.UpdateGenreAsync(genre))
-                    .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateGenre(genre);
+                var requestResult = await ControllerUnderTest.UpdateGenre(genre);
 
                 // Assert
-                var okResult = Assert.IsType<OkObjectResult>(result);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
                 Assert.Same(genre, okResult.Value);
             }
 
@@ -123,23 +189,25 @@ namespace SimplyBooks.Tests.Controllers
             }
 
             [Fact]
-            public async void Should_return_not_found()
+            public async void Should_return_error_with_message()
             {
                 // Arrange
                 var genre = new Genre
                 {
                     Name = "Where am I?"
                 };
+                var result = new Result();
+                result.AddError("there was an error");
                 GenreServiceMock
                     .Setup(x => x.UpdateGenreAsync(genre))
-                    .ThrowsAsync(new EntityNotFoundException(genre.Name));
+                    .ReturnsAsync(result);
 
                 // Act
-                var result = await ControllerUnderTest.UpdateGenre(genre);
+                var requestResult = await ControllerUnderTest.UpdateGenre(genre);
 
                 // Assert
-                var notFound = Assert.IsType<NotFoundObjectResult>(result);
-                Assert.Equal($"'{genre.Name}' could not be found", notFound.Value);
+                var okResult = Assert.IsType<OkObjectResult>(requestResult);
+                Assert.Same(result, okResult.Value);
             }
 
 

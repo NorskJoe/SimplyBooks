@@ -1,4 +1,4 @@
+ - Re-write nationality controllers
  - Write tests for Service layer
  - Implement database mock/fluent data
  - Write tests for repo layer
- - Re-write author, genre, and nationality controllers

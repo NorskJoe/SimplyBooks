@@ -11,7 +11,7 @@ namespace SimplyBooks.Services.Authors
 {
     public interface IAuthorsService
     {
-        Task<Result<List<Author>>> ListAllAuthorsAsync();
+        Task<Result<IList<Author>>> ListAllAuthorsAsync();
         Task<Result> AddAuthorAsync(Author author);
         Task<Result> UpdateAuthorAsync(Author author);
     }
@@ -31,7 +31,7 @@ namespace SimplyBooks.Services.Authors
             _updateAuthorCommand = updateAuthorCommand;
         }
 
-        public async Task<Result<List<Author>>> ListAllAuthorsAsync()
+        public async Task<Result<IList<Author>>> ListAllAuthorsAsync()
         {
             return await _listAllAuthorsQuery.Execute();
         }
