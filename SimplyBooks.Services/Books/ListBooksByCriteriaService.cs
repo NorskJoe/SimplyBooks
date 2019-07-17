@@ -59,7 +59,8 @@ namespace SimplyBooks.Services.Books
 
         public async Task<Result<IList<Book>>> ListBooksByYearPublishedAsync(DateTime yearPublished)
         {
-            return await _listByYearPublishedQuery.Execute(yearPublished);
+            var temp = await _listByYearPublishedQuery.Execute(yearPublished);
+            return temp;
         }
     }
 }

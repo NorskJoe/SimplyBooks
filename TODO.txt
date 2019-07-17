@@ -1,5 +1,6 @@
 Basic Functionality:
  - Write tests for Service layer
+ - Add Logging
  - Implement nationality data access
  - Implement author data access
  - Implement genre data access

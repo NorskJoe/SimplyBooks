@@ -4,9 +4,8 @@ using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Services.Books;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using Xunit;
 
 namespace SimplyBooks.Tests.Services
@@ -54,6 +53,7 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult);
             }
 
             [Fact]
@@ -75,6 +75,8 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult);
+                Assert.Equal(result.Errors.First(), serviceResult.Errors.First());
             }
         }
 
@@ -98,6 +100,7 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult);
             }
 
             [Fact]
@@ -119,6 +122,8 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult);
+                Assert.Equal(result.Errors.First(), serviceResult.Errors.First());
             }
         }
 
@@ -142,6 +147,7 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult);
             }
 
             [Fact]
@@ -163,13 +169,15 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult);
+                Assert.Equal(result.Errors.First(), serviceResult.Errors.First());
             }
         }
 
         public class GetBookAsync : BasicBooksServiceTest
         {
             [Fact]
-            public async void Should_return_ok()
+            public async void Should_return_ok_with_book()
             {
                 // Arrange
                 var book = new Book
@@ -186,6 +194,8 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult.Value);
+                Assert.Same(book, serviceResult.Value);
             }
 
             [Fact]
@@ -196,7 +206,7 @@ namespace SimplyBooks.Tests.Services
                 {
                     Title = "Some book",
                 };
-                var result = new Result<Book>(book);
+                var result = new Result<Book>();
                 result.AddError("there was an error");
                 GetBookQueryMock
                     .Setup(x => x.Execute(book.BookId))
@@ -207,13 +217,15 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.Null(serviceResult.Value);
+                Assert.Equal(result.Errors.First(), serviceResult.Errors.First());
             }
         }
 
         public class ListAllBooksAsync : BasicBooksServiceTest
         {
             [Fact]
-            public async void Should_return_ok()
+            public async void Should_return_ok_with_books()
             {
                 // Arrange
                 var books = new List<Book>
@@ -237,6 +249,8 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.NotNull(serviceResult.Value);
+                Assert.Same(books.FirstOrDefault(), serviceResult.Value.FirstOrDefault());
             }
 
             [Fact]
@@ -247,7 +261,7 @@ namespace SimplyBooks.Tests.Services
                 {
                     Title = "Some book",
                 };
-                var result = new Result<Book>(book);
+                var result = new Result<Book>();
                 result.AddError("there was an error");
                 GetBookQueryMock
                     .Setup(x => x.Execute(book.BookId))
@@ -258,6 +272,8 @@ namespace SimplyBooks.Tests.Services
 
                 // Assert
                 Assert.Same(result, serviceResult);
+                Assert.Null(serviceResult.Value);
+                Assert.Equal(result.Errors.First(), serviceResult.Errors.First());
             }
         }
     }
