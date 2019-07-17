@@ -92,7 +92,7 @@ namespace SimplyBooks.Tests.Services
                 var serviceResult = await ServiceUnderTest.ListBooksByAuthorNationalityAsync(TestAuthorOne.Nationality.NationalityId);
 
                 // Assert
-                Assert.Same(result, serviceResult);
+                Assert.Same(books, serviceResult.Value);
                 Assert.NotNull(serviceResult);
                 Assert.Same(books.FirstOrDefault(), serviceResult.Value.FirstOrDefault());
             }
