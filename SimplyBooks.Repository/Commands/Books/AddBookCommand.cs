@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
@@ -14,10 +15,13 @@ namespace SimplyBooks.Repository.Commands.Books
     public class AddBookCommand : IAddBookCommand
     {
         private readonly SimplyBooksContext _context;
+        private readonly ILogger<AddBookCommand> _logger;
 
-        public AddBookCommand(SimplyBooksContext context)
+        public AddBookCommand(SimplyBooksContext context,
+            ILogger<AddBookCommand> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Result> Execute(Book book)
@@ -34,7 +38,9 @@ namespace SimplyBooks.Repository.Commands.Books
             }
             catch (Exception ex)
             {
-                result.AddError($"Exception thrown AddBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
+                var message = $"Exception thrown AddBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
             }
 
             return result;

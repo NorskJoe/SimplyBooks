@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
@@ -16,10 +17,13 @@ namespace SimplyBooks.Repository.Queries.Books
     public class ListBooksByYearPublishedQuery : IListBooksByYearPublishedQuery
     {
         private readonly SimplyBooksContext _context;
+        private readonly ILogger<ListBooksByYearPublishedQuery> _logger;
 
-        public ListBooksByYearPublishedQuery(SimplyBooksContext context)
+        public ListBooksByYearPublishedQuery(SimplyBooksContext context,
+            ILogger<ListBooksByYearPublishedQuery> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Result<IList<Book>>> Execute(DateTime year)
@@ -37,7 +41,9 @@ namespace SimplyBooks.Repository.Queries.Books
             }
             catch (Exception ex)
             {
-                result.AddError($"Exception thrown ListByYearPublished:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
+                var message = $"Exception thrown ListByYearPublished:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
             }
 
             return result;

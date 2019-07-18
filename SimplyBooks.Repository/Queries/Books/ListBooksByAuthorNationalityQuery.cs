@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
@@ -16,10 +17,13 @@ namespace SimplyBooks.Repository.Queries.Books
     public class ListBooksByAuthorNationalityQuery : IListBooksByAuthorNationalityQuery
     {
         private readonly SimplyBooksContext _context;
+        private readonly ILogger<ListBooksByAuthorNationalityQuery> _logger;
 
-        public ListBooksByAuthorNationalityQuery(SimplyBooksContext context)
+        public ListBooksByAuthorNationalityQuery(SimplyBooksContext context,
+            ILogger<ListBooksByAuthorNationalityQuery> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Result<IList<Book>>> Execute(int id)
@@ -37,7 +41,9 @@ namespace SimplyBooks.Repository.Queries.Books
             }
             catch (Exception ex)
             {
-                result.AddError($"Exception thrown ListByNationality:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
+                var message = $"Exception thrown ListByNationality:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
             }
 
             return result;

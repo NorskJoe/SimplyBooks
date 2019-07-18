@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
@@ -16,10 +17,13 @@ namespace SimplyBooks.Repository.Queries.Books
     public class ListBooksByGenreQuery : IListBooksByGenreQuery
     {
         private readonly SimplyBooksContext _context;
+        private readonly ILogger<ListBooksByGenreQuery> _logger;
 
-        public ListBooksByGenreQuery(SimplyBooksContext context)
+        public ListBooksByGenreQuery(SimplyBooksContext context,
+            ILogger<ListBooksByGenreQuery> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
 
@@ -38,7 +42,9 @@ namespace SimplyBooks.Repository.Queries.Books
             }
             catch (Exception ex)
             {
-                result.AddError($"Exception thrown ListByGenre:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
+                var message = $"Exception thrown ListByGenre:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
             }
 
             return result;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
@@ -14,10 +15,13 @@ namespace SimplyBooks.Repository.Queries.Authors
     class ListAllAuthorsQuery : IListAllAuthorsQuery
     {
         private readonly SimplyBooksContext _context;
+        private readonly ILogger<ListAllAuthorsQuery> _logger;
 
-        public ListAllAuthorsQuery(SimplyBooksContext context)
+        public ListAllAuthorsQuery(SimplyBooksContext context,
+            ILogger<ListAllAuthorsQuery> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Result<IList<Author>>> Execute()
@@ -32,7 +36,9 @@ namespace SimplyBooks.Repository.Queries.Authors
             }
             catch (Exception ex)
             {
-                result.AddError($"Exception thrown ListAllAuthors:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
+                var message = $"Exception thrown ListAllAuthors:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
             }
 
             return result;
