@@ -28,7 +28,7 @@ namespace SimplyBooks.Web.Controllers.Nationalities
         }
 
         // POST: /nationalities/add/{nationality}
-        [HttpPost("add{nationality}")]
+        [HttpPost("add")]
         [ProducesResponseType(typeof(Nationality), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddNationality([FromBody]Nationality nationality)
@@ -43,7 +43,7 @@ namespace SimplyBooks.Web.Controllers.Nationalities
         }
 
         // PUT: /nationalities/update/{nationality}
-        [HttpPut("update{nationality}")]
+        [HttpPut("update")]
         [ProducesResponseType(typeof(Nationality), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> UpdateNationality(Nationality nationality)

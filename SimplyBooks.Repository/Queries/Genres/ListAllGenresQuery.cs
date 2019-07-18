@@ -1,4 +1,6 @@
-﻿using SimplyBooks.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
 using System.Collections.Generic;
@@ -13,9 +15,33 @@ namespace SimplyBooks.Repository.Queries.Genres
 
     public class ListAllGenresQuery : IListAllGenresQuery
     {
-        public Task<Result<IList<Genre>>> Execute()
+        private readonly SimplyBooksContext _context;
+        private readonly ILogger<ListAllGenresQuery> _logger;
+
+        public ListAllGenresQuery(SimplyBooksContext context,
+            ILogger<ListAllGenresQuery> logger)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _logger = logger;
+        }
+
+        public async Task<Result<IList<Genre>>> Execute()
+        {
+            Result<IList<Genre>> result = new Result<IList<Genre>>();
+
+            try
+            {
+                result.Value = await _context.Genre
+                            .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                var message = $"Exception thrown ListAllGenress:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
+            }
+
+            return result;
         }
     }
 }

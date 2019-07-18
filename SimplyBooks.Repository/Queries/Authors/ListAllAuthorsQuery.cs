@@ -12,7 +12,7 @@ namespace SimplyBooks.Repository.Queries.Authors
     {
         Task<Result<IList<Author>>> Execute();
     }
-    class ListAllAuthorsQuery : IListAllAuthorsQuery
+    public class ListAllAuthorsQuery : IListAllAuthorsQuery
     {
         private readonly SimplyBooksContext _context;
         private readonly ILogger<ListAllAuthorsQuery> _logger;

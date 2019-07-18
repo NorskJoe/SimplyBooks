@@ -1,8 +1,4 @@
 Basic Functionality:
- - Add Logging
- - Implement nationality data access
- - Implement author data access
- - Implement genre data access
  - Implement database mock/fluent data
  - Write integration tests
 

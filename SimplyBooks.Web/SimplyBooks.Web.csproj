@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SimplyBooks.Services\SimplyBooks.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 </Project>
