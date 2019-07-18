@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Moq;
+﻿using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Queries.Books;
@@ -7,7 +6,6 @@ using SimplyBooks.Services.Books;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace SimplyBooks.Tests.Services

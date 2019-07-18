@@ -1,74 +1,74 @@
 ﻿using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
-using SimplyBooks.Repository.Commands.Authors;
-using SimplyBooks.Repository.Queries.Authors;
-using SimplyBooks.Services.Authors;
+using SimplyBooks.Repository.Commands.Nationalities;
+using SimplyBooks.Repository.Queries.Nationalities;
+using SimplyBooks.Services.Nationalities;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace SimplyBooks.Tests.Services
 {
-    public class AuthorsServiceTest
+    public class NationalityServiceTest
     {
-        protected Mock<IAddAuthorCommand> AddAuthorCommandMock { get; }
-        protected Mock<IUpdateAuthorCommand> UpdateAuthorCommandMock { get; }
-        protected Mock<IListAllAuthorsQuery> ListAllAuthorsQueryMock { get; }
-        protected AuthorsService ServiceUnderTest { get; }
+        protected Mock<IAddNationalityCommand> AddNationalityCommandMock { get; }
+        protected Mock<IUpdateNationalityCommand> UpdateNationalityCommandMock { get; }
+        protected Mock<IListAllNationalitiesQuery> ListAllNationalitiesQueryMock { get; }
+        protected NationalityService ServiceUnderTest { get; }
 
-        public AuthorsServiceTest()
+        public NationalityServiceTest()
         {
-            AddAuthorCommandMock = new Mock<IAddAuthorCommand>();
-            UpdateAuthorCommandMock = new Mock<IUpdateAuthorCommand>();
-            ListAllAuthorsQueryMock = new Mock<IListAllAuthorsQuery>();
-            ServiceUnderTest = new AuthorsService(AddAuthorCommandMock.Object,
-                UpdateAuthorCommandMock.Object,
-                ListAllAuthorsQueryMock.Object);
+            AddNationalityCommandMock = new Mock<IAddNationalityCommand>();
+            UpdateNationalityCommandMock = new Mock<IUpdateNationalityCommand>();
+            ListAllNationalitiesQueryMock = new Mock<IListAllNationalitiesQuery>();
+            ServiceUnderTest = new NationalityService(AddNationalityCommandMock.Object,
+                UpdateNationalityCommandMock.Object,
+                ListAllNationalitiesQueryMock.Object);
         }
 
-        public class ListAllAuthorsAsync : AuthorsServiceTest
+        public class ListAllNationalityAsync : NationalityServiceTest
         {
             [Fact]
-            public async void Should_return_ok_with_authors()
+            public async void Should_return_ok_with_Nationality()
             {
                 // Arrange
-                var authors = new List<Author>
+                var Nationality = new List<Nationality>
                 {
-                    new Author { Name = "Katherine Man" },
-                    new Author { Name = "Matherine Kan" }
+                    new Nationality { Name = "Katherine Man" },
+                    new Nationality { Name = "Matherine Kan" }
                 };
-                var result = new Result<IList<Author>>(authors);
-                ListAllAuthorsQueryMock
+                var result = new Result<IList<Nationality>>(Nationality);
+                ListAllNationalitiesQueryMock
                     .Setup(x => x.Execute())
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.ListAllAuthorsAsync();
+                var serviceResult = await ServiceUnderTest.ListAllNationalitiesAsync();
 
                 // Assert
                 Assert.Same(result, serviceResult);
                 Assert.NotNull(serviceResult.Value);
-                Assert.Same(authors.FirstOrDefault(), serviceResult.Value.FirstOrDefault());
+                Assert.Same(Nationality.FirstOrDefault(), serviceResult.Value.FirstOrDefault());
             }
 
             [Fact]
             public async void Should_return_error_with_message()
             {
                 // Arrange
-                var authors = new List<Author>
+                var Nationality = new List<Nationality>
                 {
-                    new Author { Name = "Katherine Man" },
-                    new Author { Name = "Matherine Kan" }
+                    new Nationality { Name = "Katherine Man" },
+                    new Nationality { Name = "Matherine Kan" }
                 };
-                var result = new Result<IList<Author>>();
+                var result = new Result<IList<Nationality>>();
                 result.AddError("fuck off");
-                ListAllAuthorsQueryMock
+                ListAllNationalitiesQueryMock
                     .Setup(x => x.Execute())
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.ListAllAuthorsAsync();
+                var serviceResult = await ServiceUnderTest.ListAllNationalitiesAsync();
 
                 // Assert
                 Assert.Same(result, serviceResult);
@@ -77,23 +77,23 @@ namespace SimplyBooks.Tests.Services
             }
         }
 
-        public class AddAuthorAsync : AuthorsServiceTest
+        public class AddNationalityAsync : NationalityServiceTest
         {
             [Fact]
             public async void Should_return_ok_with_success()
             {
                 // Arrange
-                var author = new Author
+                var Nationality = new Nationality
                 {
                     Name = "Peter Piper"
                 };
                 var result = new Result();
-                AddAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                AddNationalityCommandMock
+                    .Setup(x => x.Execute(Nationality))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.AddAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.AddNationalityAsync(Nationality);
 
                 // Assert
                 Assert.Same(result, serviceResult);
@@ -104,18 +104,18 @@ namespace SimplyBooks.Tests.Services
             public async void Should_return_error_with_message()
             {
                 // Arrange
-                var author = new Author
+                var Nationality = new Nationality
                 {
                     Name = "Peter Piper"
                 };
                 var result = new Result();
                 result.AddError("no thank you");
-                AddAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                AddNationalityCommandMock
+                    .Setup(x => x.Execute(Nationality))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.AddAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.AddNationalityAsync(Nationality);
 
                 // Assert
                 Assert.Same(result, serviceResult);
@@ -124,23 +124,23 @@ namespace SimplyBooks.Tests.Services
             }
         }
 
-        public class UpdateAuthorAsync : AuthorsServiceTest
+        public class UpdateNationalityAsync : NationalityServiceTest
         {
             [Fact]
             public async void Should_return_ok_with_success()
             {
                 // Arrange
-                var author = new Author
+                var Nationality = new Nationality
                 {
                     Name = "Marshmellow Man"
                 };
                 var result = new Result();
-                UpdateAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                UpdateNationalityCommandMock
+                    .Setup(x => x.Execute(Nationality))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.UpdateAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.UpdateNationalityAsync(Nationality);
 
                 Assert.Same(result, serviceResult);
                 Assert.True(serviceResult.IsSuccess);
@@ -150,18 +150,18 @@ namespace SimplyBooks.Tests.Services
             public async void Should_return_error_with_message()
             {
                 // Arrange
-                var author = new Author
+                var Nationality = new Nationality
                 {
                     Name = "Peter Piper"
                 };
                 var result = new Result();
                 result.AddError("no thank you");
-                UpdateAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                UpdateNationalityCommandMock
+                    .Setup(x => x.Execute(Nationality))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.UpdateAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.UpdateNationalityAsync(Nationality);
 
                 // Assert
                 Assert.Same(result, serviceResult);

@@ -1,74 +1,74 @@
 ﻿using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
-using SimplyBooks.Repository.Commands.Authors;
-using SimplyBooks.Repository.Queries.Authors;
-using SimplyBooks.Services.Authors;
+using SimplyBooks.Repository.Commands.Genres;
+using SimplyBooks.Repository.Queries.Genres;
+using SimplyBooks.Services.Genres;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
 namespace SimplyBooks.Tests.Services
 {
-    public class AuthorsServiceTest
+    public class GenresServiceTest
     {
-        protected Mock<IAddAuthorCommand> AddAuthorCommandMock { get; }
-        protected Mock<IUpdateAuthorCommand> UpdateAuthorCommandMock { get; }
-        protected Mock<IListAllAuthorsQuery> ListAllAuthorsQueryMock { get; }
-        protected AuthorsService ServiceUnderTest { get; }
+        protected Mock<IAddGenreCommand> AddGenreCommandMock { get; }
+        protected Mock<IUpdateGenreCommand> UpdateGenreCommandMock { get; }
+        protected Mock<IListAllGenresQuery> ListAllGenresQueryMock { get; }
+        protected GenresService ServiceUnderTest { get; }
 
-        public AuthorsServiceTest()
+        public GenresServiceTest()
         {
-            AddAuthorCommandMock = new Mock<IAddAuthorCommand>();
-            UpdateAuthorCommandMock = new Mock<IUpdateAuthorCommand>();
-            ListAllAuthorsQueryMock = new Mock<IListAllAuthorsQuery>();
-            ServiceUnderTest = new AuthorsService(AddAuthorCommandMock.Object,
-                UpdateAuthorCommandMock.Object,
-                ListAllAuthorsQueryMock.Object);
+            AddGenreCommandMock = new Mock<IAddGenreCommand>();
+            UpdateGenreCommandMock = new Mock<IUpdateGenreCommand>();
+            ListAllGenresQueryMock = new Mock<IListAllGenresQuery>();
+            ServiceUnderTest = new GenresService(AddGenreCommandMock.Object,
+                UpdateGenreCommandMock.Object,
+                ListAllGenresQueryMock.Object);
         }
 
-        public class ListAllAuthorsAsync : AuthorsServiceTest
+        public class ListAllGnresAsync : GenresServiceTest
         {
             [Fact]
-            public async void Should_return_ok_with_authors()
+            public async void Should_return_ok_with_genres()
             {
                 // Arrange
-                var authors = new List<Author>
+                var genres = new List<Genre>
                 {
-                    new Author { Name = "Katherine Man" },
-                    new Author { Name = "Matherine Kan" }
+                    new Genre { Name = "Katherine Man" },
+                    new Genre { Name = "Matherine Kan" }
                 };
-                var result = new Result<IList<Author>>(authors);
-                ListAllAuthorsQueryMock
+                var result = new Result<IList<Genre>>(genres);
+                ListAllGenresQueryMock
                     .Setup(x => x.Execute())
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.ListAllAuthorsAsync();
+                var serviceResult = await ServiceUnderTest.ListAllGenresAsync();
 
                 // Assert
                 Assert.Same(result, serviceResult);
                 Assert.NotNull(serviceResult.Value);
-                Assert.Same(authors.FirstOrDefault(), serviceResult.Value.FirstOrDefault());
+                Assert.Same(genres.FirstOrDefault(), serviceResult.Value.FirstOrDefault());
             }
 
             [Fact]
             public async void Should_return_error_with_message()
             {
                 // Arrange
-                var authors = new List<Author>
+                var genres = new List<Genre>
                 {
-                    new Author { Name = "Katherine Man" },
-                    new Author { Name = "Matherine Kan" }
+                    new Genre { Name = "Katherine Man" },
+                    new Genre { Name = "Matherine Kan" }
                 };
-                var result = new Result<IList<Author>>();
+                var result = new Result<IList<Genre>>();
                 result.AddError("fuck off");
-                ListAllAuthorsQueryMock
+                ListAllGenresQueryMock
                     .Setup(x => x.Execute())
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.ListAllAuthorsAsync();
+                var serviceResult = await ServiceUnderTest.ListAllGenresAsync();
 
                 // Assert
                 Assert.Same(result, serviceResult);
@@ -77,23 +77,23 @@ namespace SimplyBooks.Tests.Services
             }
         }
 
-        public class AddAuthorAsync : AuthorsServiceTest
+        public class AddGenreAsync : GenresServiceTest
         {
             [Fact]
             public async void Should_return_ok_with_success()
             {
                 // Arrange
-                var author = new Author
+                var genre = new Genre
                 {
                     Name = "Peter Piper"
                 };
                 var result = new Result();
-                AddAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                AddGenreCommandMock
+                    .Setup(x => x.Execute(genre))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.AddAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.AddGenreAsync(genre);
 
                 // Assert
                 Assert.Same(result, serviceResult);
@@ -104,18 +104,18 @@ namespace SimplyBooks.Tests.Services
             public async void Should_return_error_with_message()
             {
                 // Arrange
-                var author = new Author
+                var genre = new Genre
                 {
                     Name = "Peter Piper"
                 };
                 var result = new Result();
                 result.AddError("no thank you");
-                AddAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                AddGenreCommandMock
+                    .Setup(x => x.Execute(genre))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.AddAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.AddGenreAsync(genre);
 
                 // Assert
                 Assert.Same(result, serviceResult);
@@ -124,23 +124,23 @@ namespace SimplyBooks.Tests.Services
             }
         }
 
-        public class UpdateAuthorAsync : AuthorsServiceTest
+        public class UpdateGenreAsync : GenresServiceTest
         {
             [Fact]
             public async void Should_return_ok_with_success()
             {
                 // Arrange
-                var author = new Author
+                var genre = new Genre
                 {
                     Name = "Marshmellow Man"
                 };
                 var result = new Result();
-                UpdateAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                UpdateGenreCommandMock
+                    .Setup(x => x.Execute(genre))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.UpdateAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.UpdateGenreAsync(genre);
 
                 Assert.Same(result, serviceResult);
                 Assert.True(serviceResult.IsSuccess);
@@ -150,18 +150,18 @@ namespace SimplyBooks.Tests.Services
             public async void Should_return_error_with_message()
             {
                 // Arrange
-                var author = new Author
+                var genre = new Genre
                 {
                     Name = "Peter Piper"
                 };
                 var result = new Result();
                 result.AddError("no thank you");
-                UpdateAuthorCommandMock
-                    .Setup(x => x.Execute(author))
+                UpdateGenreCommandMock
+                    .Setup(x => x.Execute(genre))
                     .ReturnsAsync(result);
 
                 // Act
-                var serviceResult = await ServiceUnderTest.UpdateAuthorAsync(author);
+                var serviceResult = await ServiceUnderTest.UpdateGenreAsync(genre);
 
                 // Assert
                 Assert.Same(result, serviceResult);
