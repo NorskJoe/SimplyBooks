@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Books;
 using SimplyBooks.Web.Controllers.Books;

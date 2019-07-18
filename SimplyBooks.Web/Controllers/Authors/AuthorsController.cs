@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Authors;
 
 namespace SimplyBooks.Web.Controllers.Authors
@@ -29,7 +28,7 @@ namespace SimplyBooks.Web.Controllers.Authors
         }
 
         // POST: /authors/add/{author}
-        [HttpPost("add{author}")]
+        [HttpPost("add")]
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAuthor([FromBody]Author author)
@@ -44,7 +43,7 @@ namespace SimplyBooks.Web.Controllers.Authors
         }
 
         // PUT: /authors/update/{author}
-        [HttpPut("update{author}")]
+        [HttpPut("update")]
         [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAuthor(Author author)

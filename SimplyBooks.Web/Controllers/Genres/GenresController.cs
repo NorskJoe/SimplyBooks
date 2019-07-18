@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Services.Genres;
 
 namespace SimplyBooks.Web.Controllers.Genres
@@ -29,7 +28,7 @@ namespace SimplyBooks.Web.Controllers.Genres
         }
 
         // POST: /genres/add/{genre}
-        [HttpPost("add{genre}")]
+        [HttpPost("add")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddGenre([FromBody]Genre genre)
@@ -44,7 +43,7 @@ namespace SimplyBooks.Web.Controllers.Genres
         }
 
         // PUT: /genres/update/{genre}
-        [HttpPut("update{genre}")]
+        [HttpPut("update")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateGenre(Genre genre)

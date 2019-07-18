@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Genres;
 using SimplyBooks.Web.Controllers.Genres;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers
@@ -167,7 +164,7 @@ namespace SimplyBooks.Tests.Controllers
 
                 // Assert
                 var okResult = Assert.IsType<OkObjectResult>(requestResult);
-                Assert.Same(genre, okResult.Value);
+                Assert.Same(result, okResult.Value);
             }
 
             [Fact]

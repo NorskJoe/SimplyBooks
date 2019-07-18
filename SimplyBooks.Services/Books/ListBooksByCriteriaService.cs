@@ -1,10 +1,8 @@
 ﻿using SimplyBooks.Models;
-using SimplyBooks.Models.Exceptions;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Queries.Books;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books
@@ -61,7 +59,8 @@ namespace SimplyBooks.Services.Books
 
         public async Task<Result<IList<Book>>> ListBooksByYearPublishedAsync(DateTime yearPublished)
         {
-            return await _listByYearPublishedQuery.Execute(yearPublished);
+            var temp = await _listByYearPublishedQuery.Execute(yearPublished);
+            return temp;
         }
     }
 }

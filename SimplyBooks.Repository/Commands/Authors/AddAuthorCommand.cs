@@ -1,7 +1,8 @@
-﻿using SimplyBooks.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Repository.Commands.Authors
@@ -13,9 +14,34 @@ namespace SimplyBooks.Repository.Commands.Authors
 
     public class AddAuthorCommand : IAddAuthorCommand
     {
-        public Task<Result> Execute(Author author)
+        private readonly SimplyBooksContext _context;
+        private readonly ILogger<AddAuthorCommand> _logger;
+
+        public AddAuthorCommand(SimplyBooksContext context,
+            ILogger<AddAuthorCommand> logger)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _logger = logger;
+        }
+
+        public async Task<Result> Execute(Author author)
+        {
+            Result result = new Result();
+            try
+            {
+                // Do not save Nationality when adding Author
+                _context.Entry(author.Nationality).State = EntityState.Unchanged;
+                _context.Author.Add(author);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                var message = $"Exception thrown AddAuthor:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
+            }
+
+            return result;
         }
     }
 }

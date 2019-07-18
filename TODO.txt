@@ -1,6 +1,10 @@
- - Write tests for Service layer
+Basic Functionality:
  - Implement database mock/fluent data
- - Write tests for repo layer
- - Implement nationality data access
- - Implement author data access
- - Implement genre data access
+ - Write integration tests
+
+Major Improvements:
+ - Add users
+ - Add auth to endpoints
+
+Minor Improvements:
+ - Add unique event ID to errors, send back with result to UI and add to logging entry

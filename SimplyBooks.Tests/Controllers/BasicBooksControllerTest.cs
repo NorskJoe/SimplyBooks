@@ -77,7 +77,7 @@ namespace SimplyBooks.Tests.Controllers
                         YearRead = DateTime.Now
                     }
                 };
-                var result = new Result<List<Book>>(books);
+                var result = new Result<IList<Book>>(books);
                 BasicBookServiceMock
                     .Setup(x => x.ListAllBooksAsync())
                     .ReturnsAsync(result);
@@ -115,7 +115,7 @@ namespace SimplyBooks.Tests.Controllers
                         YearRead = DateTime.Now
                     }
                 };
-                var result = new Result<List<Book>>();
+                var result = new Result<IList<Book>>();
                 result.AddError("there was an error");
                 BasicBookServiceMock
                     .Setup(x => x.ListAllBooksAsync())

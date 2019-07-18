@@ -1,4 +1,5 @@
-﻿using SimplyBooks.Models;
+﻿using Microsoft.Extensions.Logging;
+using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
 using System.Threading.Tasks;
@@ -13,10 +14,13 @@ namespace SimplyBooks.Repository.Commands.Books
     public class UpdateBookCommand : IUpdateBookCommand
     {
         private readonly SimplyBooksContext _context;
+        private readonly ILogger<UpdateBookCommand> _logger;
 
-        public UpdateBookCommand(SimplyBooksContext context)
+        public UpdateBookCommand(SimplyBooksContext context,
+            ILogger<UpdateBookCommand> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Result> Execute(Book book)
@@ -29,7 +33,9 @@ namespace SimplyBooks.Repository.Commands.Books
             }
             catch (Exception ex)
             {
-                result.AddError($"Exception thrown UpdateBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}");
+                var message = $"Exception thrown UpdateBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                result.AddError(message);
+                _logger.LogError(message);
             }
 
             return result;

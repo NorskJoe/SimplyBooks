@@ -9,7 +9,7 @@ namespace SimplyBooks.Services.Books
 {
     public interface IBasicBooksService
     {
-        Task<Result<List<Book>>> ListAllBooksAsync();
+        Task<Result<IList<Book>>> ListAllBooksAsync();
         Task<Result<Book>> GetBookAsync(int bookId);
         Task<Result> AddBookAsync(Book book);
         Task<Result> UpdateBookAsync(Book book);
@@ -37,7 +37,7 @@ namespace SimplyBooks.Services.Books
             _listAllBooksQuery = listAllBooksQuery;
         }
 
-        public async Task<Result<List<Book>>> ListAllBooksAsync()
+        public async Task<Result<IList<Book>>> ListAllBooksAsync()
         {
             return await _listAllBooksQuery.Execute();
         }

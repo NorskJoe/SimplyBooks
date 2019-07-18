@@ -5,12 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SimplyBooks.Models;
 using SimplyBooks.Repository.Commands.Authors;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Commands.Genres;
 using SimplyBooks.Repository.Commands.Nationalities;
+using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Repository.Queries.Books;
+using SimplyBooks.Repository.Queries.Genres;
+using SimplyBooks.Repository.Queries.Nationalities;
 using SimplyBooks.Services.Authors;
 using SimplyBooks.Services.Books;
 using SimplyBooks.Services.Genres;
@@ -45,9 +49,32 @@ namespace SimplyBooksApi
             RegisterQueries(services);
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            ILoggerFactory loggerFactory)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseMvc();
+
+            // I will handle any info / error logs manually.  Auto log critical crashes
+            loggerFactory.AddFile("Logs/logs.txt", LogLevel.Critical);
+        }
+
         private void RegisterQueries(IServiceCollection services)
         {
             // Authors
+            services.AddTransient<IListAllAuthorsQuery, ListAllAuthorsQuery>();
 
             // Books
             services.AddTransient<IGetBookQuery, GetBookQuery>();
@@ -59,8 +86,10 @@ namespace SimplyBooksApi
             services.AddTransient<IListBooksByYearReadQuery, ListBooksByYearReadQuery>();
 
             // Genres
+            services.AddTransient<IListAllGenresQuery, ListAllGenresQuery>();
 
             //Nationalities
+            services.AddTransient<IListAllNationalitiesQuery, ListAllNationalitiesQuery>();
         }
 
         private void RegisterCommands(IServiceCollection services)
@@ -97,23 +126,6 @@ namespace SimplyBooksApi
 
             // Nationalities
             services.AddTransient<INationalityService, NationalityService>();
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseMvc();
         }
     }
 }
