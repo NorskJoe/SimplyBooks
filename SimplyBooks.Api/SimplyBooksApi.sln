@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Repository", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Tests", "SimplyBooks.Tests\SimplyBooks.Tests.csproj", "{D7B0A15D-0165-42A3-88A1-4430AE3AF517}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D6F8CD4A-5740-4B29-BB2E-E10AB86F390A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D7B0A15D-0165-42A3-88A1-4430AE3AF517} = {D6F8CD4A-5740-4B29-BB2E-E10AB86F390A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A62CBD50-B865-41E7-986A-7B4C88854E6A}
