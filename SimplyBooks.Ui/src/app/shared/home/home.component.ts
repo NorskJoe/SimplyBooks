@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from 'src/app/services/shared/home/home.service';
+import { HomePageList } from './models/home-page-list.model';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  listItems: HomePageList;
+
+  constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
+    this.homeService.getRecentlyRead().subscribe(result => {
+      this.listItems = result;
+    });
   }
 
 }
