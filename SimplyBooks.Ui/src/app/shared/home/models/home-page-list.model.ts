@@ -1,9 +1,9 @@
-export class HomePageList {
-  public items: HomePageListItem[];
+export class RecentBooksList {
+    public items: HomePageItem[];
 }
 
-export class HomePageListItem {
-  public bookTitle: string;
-  public author: string;
-  public rating: string;
+export class HomePageItem {
+    public bookTitle: string;
+    public author: string;
+    public rating: string;
 }

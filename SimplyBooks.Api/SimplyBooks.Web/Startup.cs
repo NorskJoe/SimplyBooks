@@ -15,10 +15,12 @@ using SimplyBooks.Repository.Commands.Nationalities;
 using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Repository.Queries.Genres;
+using SimplyBooks.Repository.Queries.Home;
 using SimplyBooks.Repository.Queries.Nationalities;
 using SimplyBooks.Services.Authors;
 using SimplyBooks.Services.Books;
 using SimplyBooks.Services.Genres;
+using SimplyBooks.Services.Home;
 using SimplyBooks.Services.Nationalities;
 
 namespace SimplyBooks.Web
@@ -91,8 +93,11 @@ namespace SimplyBooks.Web
             // Genres
             services.AddTransient<IListAllGenresQuery, ListAllGenresQuery>();
 
-            //Nationalities
+            // Nationalities
             services.AddTransient<IListAllNationalitiesQuery, ListAllNationalitiesQuery>();
+
+            // Home
+            services.AddTransient<IListRecentBooksQuery, ListRecentBooksQuery>();
         }
 
         private void RegisterCommands(IServiceCollection services)
@@ -129,6 +134,9 @@ namespace SimplyBooks.Web
 
             // Nationalities
             services.AddTransient<INationalityService, NationalityService>();
+
+            // Home
+            services.AddTransient<IHomeService, HomeService>();
         }
     }
 }

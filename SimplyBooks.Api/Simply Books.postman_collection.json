@@ -1,0 +1,523 @@
+{
+	"info": {
+		"_postman_id": "936317a1-7413-45e5-82da-43552f48b2c3",
+		"name": "Simply Books",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Basic Book Controller",
+			"item": [
+				{
+					"name": "Delete Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/book/delete/83",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"book",
+								"delete",
+								"83"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": 83,\r\n  \"title\": \"Lord of Chaos\",\r\n  \"rating\": 7.5,\r\n  \"yearRead\": \"2019-01-01T00:00:00\",\r\n  \"yearPublished\": \"1994-01-01T00:00:00\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:40001/book/update/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"book",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/book/get/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"book",
+								"get",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Lord of Chaos\",\r\n  \"genre\": {\r\n        \"genreId\": 3,\r\n        \"name\": \"Fantasy\"\r\n    },\r\n  \"author\": {\r\n        \"authorId\": 14,\r\n        \"name\": \"Robert Jordan\",\r\n        \"nationality\": {\r\n            \"nationalityId\": 1,\r\n            \"name\": \"American\"\r\n        }\r\n    },\r\n  \"rating\": 7.5,\r\n  \"yearRead\": \"2019-01-01T00:00:00\",\r\n  \"yearPublished\": \"1994-01-01T00:00:00\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:40001/book/add/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"book",
+								"add",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/book/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"book",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "List Books By Criteria Controller",
+			"item": [
+				{
+					"name": "List by AuthorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/booklists/by-author/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"booklists",
+								"by-author",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List by GenreId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/booklists/by-genre/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"booklists",
+								"by-genre",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List by NationalityId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/booklists/by-nationality/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"booklists",
+								"by-nationality",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List by Year Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/booklists/by-yearread/2012",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"booklists",
+								"by-yearread",
+								"2012"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List by Year Published",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/booklists/by-yearpublished/1990",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"booklists",
+								"by-yearpublished",
+								"1990"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NationalityController",
+			"item": [
+				{
+					"name": "Add Nationality",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Hungarian\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:40001/nationalities/add/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"nationalities",
+								"add",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Nationality",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nationalityId\": 9,\n\t\"name\": \"Austrian\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:40001/nationalities/update/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"nationalities",
+								"update",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Nationalities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/nationalities/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"nationalities",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genre Controller",
+			"item": [
+				{
+					"name": "Add Genre",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"BLAH\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:40001/genres/add/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"genres",
+								"add",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Genre",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"genreId\": 20,\n\t\"name\": \"TO DELETE\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:40001/genres/update/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"genres",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/genres/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"genres",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Author Controller",
+			"item": [
+				{
+					"name": "Add Author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"DELETE THIS\",\n\t\"nationality\": {\n\t\t\"nationalityId\": 5,\n\t\t\"name\": \"Scottish\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:40001/authors/add/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"authors",
+								"add",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"authorId\": 47,\n\t\"name\": \"PLEASE DELETE THIS2\",\n\t\"nationality\": {\n\t\t\"nationalityId\": 6,\n\t\t\"name\": \"Polish\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:40001/authors/update/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"authors",
+								"update",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "HomeController",
+			"item": [
+				{
+					"name": "List Recent Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:40001/home/list-recent",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "40001",
+							"path": [
+								"home",
+								"list-recent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
