@@ -14,6 +14,7 @@ namespace SimplyBooks.Models.Migrations
             INSERT INTO Nationality(Name) VALUES('Scottish')
             INSERT INTO Nationality(Name) VALUES('Polish')
             INSERT INTO Nationality(Name) VALUES('Israeli')
+            INSERT INTO Nationality(Name) VALUES('Canadian')
             ");
         }
 

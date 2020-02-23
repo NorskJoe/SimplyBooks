@@ -22,19 +22,19 @@ namespace SimplyBooks.Services.Books
         private readonly IListBooksByAuthorQuery _listByAuthorQuery;
         private readonly IListBooksByGenreQuery _listByGenreQuery;
         private readonly IListBooksByYearPublishedQuery _listByYearPublishedQuery;
-        private readonly IListBooksByYearReadQuery _listByYearReadQuery;
+        private readonly IListBooksByDateReadQuery _listByDateReadQuery;
 
         public ListBooksByCriteriaService(IListBooksByAuthorNationalityQuery listByAuthorNationalityQuery,
             IListBooksByAuthorQuery listByAuthorQuery,
             IListBooksByGenreQuery listByGenreQuery,
             IListBooksByYearPublishedQuery listByYearPublishedQuery,
-            IListBooksByYearReadQuery listByYearReadQuery)
+            IListBooksByDateReadQuery listByDateReadQuery)
         {
             _listByAuthorNationalityQuery = listByAuthorNationalityQuery;
             _listByAuthorQuery = listByAuthorQuery;
             _listByGenreQuery = listByGenreQuery;
             _listByYearPublishedQuery = listByYearPublishedQuery;
-            _listByYearReadQuery = listByYearReadQuery;
+            _listByDateReadQuery = listByDateReadQuery;
         }
 
         public async Task<Result<IList<Book>>> ListBooksByAuthorAsync(int authorId)
@@ -54,7 +54,7 @@ namespace SimplyBooks.Services.Books
 
         public async Task<Result<IList<Book>>> ListBooksByYearReadAsync(DateTime yearRead)
         {
-            return await _listByYearReadQuery.Execute(yearRead);
+            return await _listByDateReadQuery.Execute(yearRead);
         }
 
         public async Task<Result<IList<Book>>> ListBooksByYearPublishedAsync(DateTime yearPublished)

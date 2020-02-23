@@ -63,7 +63,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -72,7 +72,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -101,7 +101,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -110,7 +110,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -144,7 +144,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -153,7 +153,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.5,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -184,7 +184,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -193,7 +193,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -229,7 +229,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -238,7 +238,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -267,7 +267,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -276,7 +276,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = DateTime.Now,
+                        DateRead = DateTime.Now,
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -309,7 +309,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -318,7 +318,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -347,7 +347,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -356,7 +356,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -389,7 +389,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -398,7 +398,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };
@@ -428,7 +428,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreOne,
                         Rating = 2.2,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     },
                     new Book
@@ -437,7 +437,7 @@ namespace SimplyBooks.Tests.Controllers
                         Author = TestAuthorOne,
                         Genre = TestGenreTwo,
                         Rating = 2.5,
-                        YearRead = new DateTime(2013, 1, 1),
+                        DateRead = new DateTime(2013, 1, 1),
                         YearPublished = new DateTime(2012, 1, 1)
                     }
                 };

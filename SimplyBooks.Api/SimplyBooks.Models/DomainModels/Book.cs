@@ -19,8 +19,9 @@ namespace SimplyBooks.Models
 
         public double Rating { get; set; }
 
+        [Required]
         [Display(ResourceType = typeof(Resources.General), Name ="YearRead")]
-        public DateTime YearRead { get; set; }
+        public DateTime DateRead { get; set; }
 
         [Required]
         [Display(ResourceType = typeof(Resources.General), Name = "YearPublished")]

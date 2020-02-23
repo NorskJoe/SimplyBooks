@@ -65,7 +65,7 @@ namespace SimplyBooks.Tests.Controllers
                         Genre = TestGenreOne,
                         Rating = 9.9,
                         YearPublished = new DateTime(2010, 1, 1),
-                        YearRead = DateTime.Today
+                        DateRead = DateTime.Today
                     },
                     new Book
                     {
@@ -74,7 +74,7 @@ namespace SimplyBooks.Tests.Controllers
                         Genre = TestGenreTwo,
                         Rating = 10.0,
                         YearPublished = new DateTime(1945, 1, 1),
-                        YearRead = DateTime.Now
+                        DateRead = DateTime.Now
                     }
                 };
                 var result = new Result<IList<Book>>(books);
@@ -103,7 +103,7 @@ namespace SimplyBooks.Tests.Controllers
                         Genre = TestGenreTwo,
                         Rating = 9.8,
                         YearPublished = new DateTime(2013, 1, 1),
-                        YearRead = DateTime.Today
+                        DateRead = DateTime.Today
                     },
                     new Book
                     {
@@ -112,7 +112,7 @@ namespace SimplyBooks.Tests.Controllers
                         Genre = TestGenreTwo,
                         Rating = 8,
                         YearPublished = new DateTime(2011, 1, 1),
-                        YearRead = DateTime.Now
+                        DateRead = DateTime.Now
                     }
                 };
                 var result = new Result<IList<Book>>();
@@ -143,7 +143,7 @@ namespace SimplyBooks.Tests.Controllers
                     Genre = TestGenreOne,
                     Rating = 8.8,
                     YearPublished = new DateTime(1999, 1, 1),
-                    YearRead = DateTime.Today
+                    DateRead = DateTime.Today
                 };
                 var result = new Result<Book>(book);
                 BasicBookServiceMock
@@ -168,7 +168,7 @@ namespace SimplyBooks.Tests.Controllers
                     Genre = TestGenreTwo,
                     Rating = 7.7,
                     YearPublished = new DateTime(1908, 1, 1),
-                    YearRead = DateTime.Today
+                    DateRead = DateTime.Today
                 };
                 var result = new Result<Book>();
                 result.Errors.Add("there was an error");
@@ -199,7 +199,7 @@ namespace SimplyBooks.Tests.Controllers
                     Genre = TestGenreOne,
                     Rating = 0,
                     YearPublished = new DateTime(1, 1, 1),
-                    YearRead = DateTime.Today
+                    DateRead = DateTime.Today
                 };
                 var result = new Result();
                 BasicBookServiceMock
@@ -241,7 +241,7 @@ namespace SimplyBooks.Tests.Controllers
                     Genre = TestGenreTwo,
                     Rating = 4.4,
                     YearPublished = new DateTime(1919, 1, 1),
-                    YearRead = DateTime.Now
+                    DateRead = DateTime.Now
                 };
                 var result = new Result();
                 result.Errors.Add("an error happened");
@@ -277,7 +277,7 @@ namespace SimplyBooks.Tests.Controllers
                     Title = "The Wind in the Willows",
                     Rating = 5.8,
                     YearPublished = new DateTime(1970, 1, 1),
-                    YearRead = DateTime.Now
+                    DateRead = DateTime.Now
                 };
                 var toUpdate = MapperMock
                     .Setup(x => x.Map<Book>(bookDto))
@@ -327,7 +327,7 @@ namespace SimplyBooks.Tests.Controllers
                     Title = "Green Eggs and Ham",
                     Rating = 8.8,
                     YearPublished = new DateTime(1960, 1, 1),
-                    YearRead = DateTime.Now
+                    DateRead = DateTime.Now
                 };
                 var toUpdate= MapperMock
                     .Setup(x => x.Map<Book>(bookDto))
@@ -362,7 +362,7 @@ namespace SimplyBooks.Tests.Controllers
                     Genre = TestGenreTwo,
                     Rating = 6.6,
                     YearPublished = new DateTime(1939, 1, 1),
-                    YearRead = DateTime.Now
+                    DateRead = DateTime.Now
                 };
                 var result = new Result();
                 result.Errors.Add("there was an error");

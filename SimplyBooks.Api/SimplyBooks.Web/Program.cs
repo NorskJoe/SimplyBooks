@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace SimplyBooksApi
+namespace SimplyBooks.Web
 {
     public class Program
     {

@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Repository.Queries.Books
 {
-    public interface IListBooksByYearReadQuery
+    public interface IListBooksByDateReadQuery
     {
         Task<Result<IList<Book>>> Execute(DateTime year);
     }
 
-    public class ListBooksByYearReadQuery : IListBooksByYearReadQuery
+    public class ListBooksByDateReadQuery : IListBooksByDateReadQuery
     {
         private readonly SimplyBooksContext _context;
-        private readonly ILogger<ListBooksByYearReadQuery> _logger;
+        private readonly ILogger<ListBooksByDateReadQuery> _logger;
 
-        public ListBooksByYearReadQuery(SimplyBooksContext context,
-            ILogger<ListBooksByYearReadQuery> logger)
+        public ListBooksByDateReadQuery(SimplyBooksContext context,
+            ILogger<ListBooksByDateReadQuery> logger)
         {
             _context = context;
             _logger = logger;
@@ -36,7 +36,7 @@ namespace SimplyBooks.Repository.Queries.Books
                             .Include(b => b.Author)
                                 .ThenInclude(a => a.Nationality)
                             .Include(b => b.Genre)
-                            .Where(b => b.YearRead.Year == year.Year)
+                            .Where(b => b.DateRead.Year == year.Year)
                             .ToListAsync();
             }
             catch (Exception ex)

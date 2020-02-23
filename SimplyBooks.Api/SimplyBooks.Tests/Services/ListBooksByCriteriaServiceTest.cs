@@ -16,7 +16,7 @@ namespace SimplyBooks.Tests.Services
         protected Mock<IListBooksByAuthorQuery> ListBooksByAuthorQueryMock { get; }
         protected Mock<IListBooksByGenreQuery> ListBooksByGenreQueryMock { get; }
         protected Mock<IListBooksByYearPublishedQuery> ListBooksByYearPublishedQueryMock { get; }
-        protected Mock<IListBooksByYearReadQuery> ListBooksByYearReadQueryMock { get; }
+        protected Mock<IListBooksByDateReadQuery> ListBooksByYearReadQueryMock { get; }
         protected ListBooksByCriteriaService ServiceUnderTest { get; }
         public Genre TestGenreOne { get; private set; }
         public Genre TestGenreTwo { get; private set; }
@@ -30,7 +30,7 @@ namespace SimplyBooks.Tests.Services
             ListBooksByAuthorQueryMock = new Mock<IListBooksByAuthorQuery>();
             ListBooksByGenreQueryMock = new Mock<IListBooksByGenreQuery>();
             ListBooksByYearPublishedQueryMock = new Mock<IListBooksByYearPublishedQuery>();
-            ListBooksByYearReadQueryMock = new Mock<IListBooksByYearReadQuery>();
+            ListBooksByYearReadQueryMock = new Mock<IListBooksByDateReadQuery>();
             ServiceUnderTest = new ListBooksByCriteriaService(ListBooksByAuthorNationalityQueryMock.Object,
                 ListBooksByAuthorQueryMock.Object,
                 ListBooksByGenreQueryMock.Object,
@@ -337,12 +337,12 @@ namespace SimplyBooks.Tests.Services
                     new Book
                     {
                         Title = "Away with the meeples",
-                        YearRead = new DateTime(2013, 1, 1)
+                        DateRead = new DateTime(2013, 1, 1)
                     },
                     new Book
                     {
                         Title = "Explained: Meeples",
-                        YearRead = new DateTime(2013, 1, 1)
+                        DateRead = new DateTime(2013, 1, 1)
                     }
                 };
                 var result = new Result<IList<Book>>(books);
@@ -368,12 +368,12 @@ namespace SimplyBooks.Tests.Services
                     new Book
                     {
                         Title = "Away with the meeples",
-                        YearRead = new DateTime(2013, 1, 1)
+                        DateRead = new DateTime(2013, 1, 1)
                     },
                     new Book
                     {
                         Title = "Explained: Meeples",
-                        YearRead = new DateTime(2013, 1, 1)
+                        DateRead = new DateTime(2013, 1, 1)
                     }
                 };
                 var result = new Result<IList<Book>>();

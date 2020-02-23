@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimplyBooks.Models;
 
 namespace SimplyBooks.Models.Migrations
 {
     [DbContext(typeof(SimplyBooksContext))]
-    partial class SimplyBooksContextModelSnapshot : ModelSnapshot
+    [Migration("20200223232032_UpdateYearReadToDateRead")]
+    partial class UpdateYearReadToDateRead
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

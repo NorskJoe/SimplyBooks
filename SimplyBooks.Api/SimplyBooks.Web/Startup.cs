@@ -1,7 +1,10 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Data.Common;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +22,8 @@ using SimplyBooks.Services.Authors;
 using SimplyBooks.Services.Books;
 using SimplyBooks.Services.Genres;
 using SimplyBooks.Services.Nationalities;
-using System;
 
-namespace SimplyBooksApi
+namespace SimplyBooks.Web
 {
     public class Startup
     {
@@ -36,12 +38,13 @@ namespace SimplyBooksApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // Connection string
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<SimplyBooksContext>
-                (options => options.UseSqlServer(connection));
+            services
+                .AddDbContext<SimplyBooksContext>(options => options.UseSqlServer(connection));
+                //.AddScoped<DbConnection>(serviceProvider => new SqlConnection(connection));
 
             // Register dependencies
             RegisterServices(services);
@@ -83,7 +86,7 @@ namespace SimplyBooksApi
             services.AddTransient<IListBooksByAuthorQuery, ListBooksByAuthorQuery>();
             services.AddTransient<IListBooksByGenreQuery, ListBooksByGenreQuery>();
             services.AddTransient<IListBooksByYearPublishedQuery, ListBooksByYearPublishedQuery>();
-            services.AddTransient<IListBooksByYearReadQuery, ListBooksByYearReadQuery>();
+            services.AddTransient<IListBooksByDateReadQuery, ListBooksByDateReadQuery>();
 
             // Genres
             services.AddTransient<IListAllGenresQuery, ListAllGenresQuery>();
