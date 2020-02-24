@@ -39,7 +39,7 @@ namespace SimplyBooks.Models.ResultModels
 
     public class Result<T> : Result
     {
-        public T Value;
+        public T Value { get; set; }
 
         public Result()
         {
