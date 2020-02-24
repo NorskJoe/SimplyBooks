@@ -5,6 +5,7 @@ using SimplyBooks.Services.Authors;
 using SimplyBooks.Web.Controllers.Authors;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using SimplyBooks.Repository.Queries.Authors;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers
@@ -26,20 +27,20 @@ namespace SimplyBooks.Tests.Controllers
             public async void Should_return_ok_with_authors()
             {
                 // Arrange
-                var authors = new List<Author>
+                var authors = new List<AuthorListItem>
                 {
-                    new Author
+                    new AuthorListItem
                     {
                         Name = "Peter Piper",
-                        Nationality = new Nationality { Name = "Austrian" }
+                        Nationality =  "Austrian" 
                     },
-                    new Author
+                    new AuthorListItem
                     {
                         Name = "Spiderman",
-                        Nationality = new Nationality { Name = "American" }
+                        Nationality = "American" 
                     }
                 };
-                var result = new Result<IList<Author>>(authors);
+                var result = new Result<IList<AuthorListItem>>(authors);
                 AuthorServiceMock
                     .Setup(x => x.ListAllAuthorsAsync())
                     .ReturnsAsync(result);
@@ -56,20 +57,20 @@ namespace SimplyBooks.Tests.Controllers
             public void Should_return_result_with_error()
             {
                 // Arrange
-                var authors = new List<Author>
+                var authors = new List<AuthorListItem>
                 {
-                    new Author
+                    new AuthorListItem
                     {
                         Name = "Peter Piper",
-                        Nationality = new Nationality { Name = "Austrian" }
+                        Nationality =  "Austrian" 
                     },
-                    new Author
+                    new AuthorListItem
                     {
                         Name = "Spiderman",
-                        Nationality = new Nationality { Name = "American" }
+                        Nationality = "American" 
                     }
                 };
-                var result = new Result<IList<Author>>();
+                var result = new Result<IList<AuthorListItem>>();
                 result.AddError("there was an error");
                 AuthorServiceMock
                     .Setup(x => x.ListAllAuthorsAsync())

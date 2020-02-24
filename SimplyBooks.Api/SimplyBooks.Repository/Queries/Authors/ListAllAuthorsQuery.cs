@@ -4,6 +4,7 @@ using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SimplyBooks.Models.Extensions;
 
@@ -11,7 +12,7 @@ namespace SimplyBooks.Repository.Queries.Authors
 {
     public interface IListAllAuthorsQuery
     {
-        Task<Result<IList<Author>>> Execute();
+        Task<Result<IList<AuthorListItem>>> Execute();
     }
     public class ListAllAuthorsQuery : IListAllAuthorsQuery
     {
@@ -25,15 +26,23 @@ namespace SimplyBooks.Repository.Queries.Authors
             _logger = logger;
         }
 
-        public async Task<Result<IList<Author>>> Execute()
+        public async Task<Result<IList<AuthorListItem>>> Execute()
         {
-            Result<IList<Author>> result = new Result<IList<Author>>();
+            Result<IList<AuthorListItem>> result = new Result<IList<AuthorListItem>>();
 
             try
             {
                 result.Value = await _context.Author
-                            .Include(a => a.Nationality)
-                            .ToListAsync();
+                    .Join(_context.Nationality,
+                        a => a.Nationality.NationalityId,
+                        n => n.NationalityId,
+                        (a, n) => new {a, n})
+                    .Select(x => new AuthorListItem
+                    {
+                        Name = x.a.Name,
+                        Nationality = x.n.Name
+                    })
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -44,5 +53,11 @@ namespace SimplyBooks.Repository.Queries.Authors
 
             return result;
         }
+
+    }
+    public class AuthorListItem
+    {
+        public string Name { get; set; }
+        public string Nationality { get; set; }
     }
 }

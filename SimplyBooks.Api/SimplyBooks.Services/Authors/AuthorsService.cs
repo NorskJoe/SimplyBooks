@@ -9,7 +9,7 @@ namespace SimplyBooks.Services.Authors
 {
     public interface IAuthorsService
     {
-        Task<Result<IList<Author>>> ListAllAuthorsAsync();
+        Task<Result<IList<AuthorListItem>>> ListAllAuthorsAsync();
         Task<Result> AddAuthorAsync(Author author);
         Task<Result> UpdateAuthorAsync(Author author);
     }
@@ -29,7 +29,7 @@ namespace SimplyBooks.Services.Authors
             _updateAuthorCommand = updateAuthorCommand;
         }
 
-        public async Task<Result<IList<Author>>> ListAllAuthorsAsync()
+        public async Task<Result<IList<AuthorListItem>>> ListAllAuthorsAsync()
         {
             return await _listAllAuthorsQuery.Execute();
         }

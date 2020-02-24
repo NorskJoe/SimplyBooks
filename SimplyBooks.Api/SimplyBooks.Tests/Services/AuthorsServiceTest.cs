@@ -33,12 +33,20 @@ namespace SimplyBooks.Tests.Services
             public async void Should_return_ok_with_authors()
             {
                 // Arrange
-                var authors = new List<Author>
+                var authors = new List<AuthorListItem>
                 {
-                    new Author { Name = "Katherine Man" },
-                    new Author { Name = "Matherine Kan" }
+                    new AuthorListItem
+                    {
+                        Name = "Peter Piper",
+                        Nationality =  "Austrian" 
+                    },
+                    new AuthorListItem
+                    {
+                        Name = "Spiderman",
+                        Nationality = "American" 
+                    }
                 };
-                var result = new Result<IList<Author>>(authors);
+                var result = new Result<IList<AuthorListItem>>(authors);
                 ListAllAuthorsQueryMock
                     .Setup(x => x.Execute())
                     .ReturnsAsync(result);
@@ -56,12 +64,20 @@ namespace SimplyBooks.Tests.Services
             public async void Should_return_error_with_message()
             {
                 // Arrange
-                var authors = new List<Author>
+                var authors = new List<AuthorListItem>
                 {
-                    new Author { Name = "Katherine Man" },
-                    new Author { Name = "Matherine Kan" }
+                    new AuthorListItem
+                    {
+                        Name = "Peter Piper",
+                        Nationality =  "Austrian" 
+                    },
+                    new AuthorListItem
+                    {
+                        Name = "Spiderman",
+                        Nationality = "American" 
+                    }
                 };
-                var result = new Result<IList<Author>>();
+                var result = new Result<IList<AuthorListItem>>();
                 result.AddError("fuck off");
                 ListAllAuthorsQueryMock
                     .Setup(x => x.Execute())
