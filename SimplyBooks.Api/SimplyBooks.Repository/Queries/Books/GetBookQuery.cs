@@ -5,6 +5,7 @@ using SimplyBooks.Models.ResultModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using SimplyBooks.Models.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Books
 {
@@ -40,9 +41,9 @@ namespace SimplyBooks.Repository.Queries.Books
             }
             catch (Exception ex)
             {
-                var message = $"Exception thrown GetBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                var eventId = _logger.LogErrorWithEventId(ex);
+                var message = $"An unhandled exception occured.  An error has been logged with id: {eventId}";
                 result.AddError(message);
-                _logger.LogError(message);
             }
 
             return result;

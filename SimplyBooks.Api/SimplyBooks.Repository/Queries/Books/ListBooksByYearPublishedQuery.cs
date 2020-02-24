@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SimplyBooks.Models.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Books
 {
@@ -37,13 +38,14 @@ namespace SimplyBooks.Repository.Queries.Books
                                 .ThenInclude(a => a.Nationality)
                             .Include(b => b.Genre)
                             .Where(b => b.YearPublished.Year == year.Year)
+                            .OrderByDescending(b => b.DateRead)
                             .ToListAsync();
             }
             catch (Exception ex)
             {
-                var message = $"Exception thrown ListByYearPublished:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                var id = _logger.LogErrorWithEventId(ex);
+                var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
                 result.AddError(message);
-                _logger.LogError(message);
             }
 
             return result;

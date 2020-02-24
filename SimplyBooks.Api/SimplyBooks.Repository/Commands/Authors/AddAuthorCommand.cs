@@ -4,6 +4,7 @@ using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
 using System.Threading.Tasks;
+using SimplyBooks.Models.Extensions;
 
 namespace SimplyBooks.Repository.Commands.Authors
 {
@@ -36,9 +37,9 @@ namespace SimplyBooks.Repository.Commands.Authors
             }
             catch (Exception ex)
             {
-                var message = $"Exception thrown AddAuthor:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                var id = _logger.LogErrorWithEventId(ex);
+                var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
                 result.AddError(message);
-                _logger.LogError(message);
             }
 
             return result;

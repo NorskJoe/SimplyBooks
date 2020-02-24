@@ -3,6 +3,7 @@ using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
 using System.Threading.Tasks;
+using SimplyBooks.Models.Extensions;
 
 namespace SimplyBooks.Repository.Commands.Books
 {
@@ -35,9 +36,9 @@ namespace SimplyBooks.Repository.Commands.Books
             }
             catch (Exception ex)
             {
-                var message = $"Exception thrown DeleteBook:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                var eventId = _logger.LogErrorWithEventId(ex);
+                var message = $"An unhandled exception occured.  An error has been logged with id: {eventId}";
                 result.AddError(message);
-                _logger.LogError(message);
             }
 
             return result;
