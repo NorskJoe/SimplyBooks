@@ -4,14 +4,14 @@ using SimplyBooks.Models.ResultModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using SimplyBooks.Models.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Home
 {
     public interface IListRecentBooksQuery
     {
-        Result<IList<RecentBookItem>> Execute();
+        Task<Result<IList<RecentBookItem>>> Execute();
     }
 
     public class ListRecentBooksQuery : IListRecentBooksQuery
@@ -26,29 +26,32 @@ namespace SimplyBooks.Repository.Queries.Home
             _logger = logger;
         }
 
-        public Result<IList<RecentBookItem>> Execute()
+        public async Task<Result<IList<RecentBookItem>>> Execute()
         {
             var result = new Result<IList<RecentBookItem>>();
 
             try
             {
-                var recent = from b in _context.Book
-                           join a in _context.Author on b.Author.AuthorId equals a.AuthorId
-                           where b.YearRead.Month > DateTime.Now.AddMonths(-6).Month
-                           select new RecentBookItem
-                           {
-                               BookTitle = b.Title,
-                               Author = a.Name,
-                               Rating = b.Rating
-                           };
-
-                result.Value = recent.ToList();
+                result.Value = _context.Book
+                    .Join(_context.Author,
+                        b => b.Author.AuthorId,
+                        a => a.AuthorId,
+                        (b, a) => new {b, a})
+                    .OrderByDescending(x => x.b.DateRead)
+                    .Select(x => new RecentBookItem
+                    {
+                        BookTitle = x.b.Title,
+                        Author = x.a.Name,
+                        Rating = x.b.Rating
+                    })
+                    .Take(10)
+                    .ToList();
             }
             catch (Exception ex)
             {
-                var message = $"Exception thrown ListRecentBooks:\n Message: {ex.Message}.\n Stacktrace: {ex.StackTrace}";
+                var id = _logger.LogErrorWithEventId(ex);
+                var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
                 result.AddError(message);
-                _logger.LogError(message);
             }
 
 

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Dtos;
+using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Services.Books;
 
 namespace SimplyBooksApi.Controllers.Books
@@ -25,16 +25,16 @@ namespace SimplyBooksApi.Controllers.Books
 
         // GET: /book/list
         [HttpGet("list")]
-        [ProducesResponseType(typeof(IList<Book>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListAllBooks()
+        [ProducesResponseType(typeof(BookList), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListAllBooks([FromBody]BookListCriteria criteria)
         {
-            var result = await _booksService.ListAllBooksAsync();
+            var result = await _booksService.ListAllBooksAsync(criteria);
             return Ok(result);
         }
 
         // GET: /book/get/{bookId}
         [HttpGet("get/{bookId}")]
-        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BookItem), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetBook(int bookId)
         {
             var result = await _booksService.GetBookAsync(bookId);

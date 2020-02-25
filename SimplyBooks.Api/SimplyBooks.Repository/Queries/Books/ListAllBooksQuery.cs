@@ -4,6 +4,7 @@ using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SimplyBooks.Models.Extensions;
 
@@ -11,7 +12,7 @@ namespace SimplyBooks.Repository.Queries.Books
 {
     public interface IListAllBooksQuery
     {
-        Task<Result<IList<Book>>> Execute();
+        Task<Result<IList<BookListItem>>> Execute(BookListCriteria criteria);
     }
 
     public class ListAllBooksQuery : IListAllBooksQuery
@@ -26,17 +27,63 @@ namespace SimplyBooks.Repository.Queries.Books
             _logger = logger;
         }
 
-        public async Task<Result<IList<Book>>> Execute()
+        public async Task<Result<IList<BookListItem>>> Execute(BookListCriteria criteria)
         {
-            Result<IList<Book>> result = new Result<IList<Book>>();
+            var result = new Result<IList<BookListItem>>();
 
             try
             {
-                result.Value = await _context.Book
-                            .Include(b => b.Author)
-                                .ThenInclude(a => a.Nationality)
-                            .Include(b => b.Genre)
-                            .ToListAsync();
+                var query = _context.Book
+                    .Join(_context.Author,
+                        b => b.Author.AuthorId,
+                        a => a.AuthorId,
+                        (b, a) => new {b, a})
+                    .Join(_context.Nationality,
+                        x => x.a.Nationality.NationalityId,
+                        n => n.NationalityId,
+                        (x, n) => new {x.b, x.a, n})
+                    .Join(_context.Genre,
+                        x => x.b.Genre.GenreId,
+                        g => g.GenreId,
+                        (x, g) => new {x.b, x.a, x.n, g});
+
+                    if (criteria.AuthorId.HasValue)
+                    {
+                        query = query.Where(x => x.a.AuthorId == criteria.AuthorId);
+                    }
+
+                    if (criteria.GenreId.HasValue)
+                    {
+                        query = query.Where(x => x.g.GenreId == criteria.GenreId);
+                    }
+
+                    if (criteria.NationalityId.HasValue)
+                    {
+                        query = query.Where(x => x.n.NationalityId == criteria.NationalityId);
+                    }
+
+                    if (criteria.DateRead.HasValue)
+                    {
+                        query = query.Where(x => x.b.DateRead == criteria.DateRead);
+                    }
+
+                    if (criteria.YearPublished.HasValue)
+                    {
+                        query = query.Where(x => x.b.YearPublished == criteria.YearPublished);
+                    }
+
+                    result.Value = await query
+                                    .Select(x => new BookListItem
+                                    {
+                                        Title = x.b.Title,
+                                        Author = x.a.Name,
+                                        Nationality = x.n.Name,
+                                        Genre = x.g.Name,
+                                        Rating = x.b.Rating,
+                                        DateRead = x.b.DateRead.ToShortDateString(),
+                                        YearPublished = x.b.YearPublished.Year.ToString()
+                                    })
+                                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -47,5 +94,25 @@ namespace SimplyBooks.Repository.Queries.Books
 
             return result;
         }
+    }
+
+    public class BookListCriteria
+    {
+        public int? NationalityId { get; set; }
+        public int? AuthorId { get; set; }
+        public int? GenreId { get; set; }
+        public DateTime? DateRead { get; set; }
+        public DateTime? YearPublished { get; set; }
+    }
+
+    public class BookListItem
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Nationality { get; set; }
+        public string Genre { get; set; }
+        public double Rating { get; set; }
+        public string DateRead { get; set; }
+        public string YearPublished { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Services.Home;
 
@@ -18,9 +19,9 @@ namespace SimplyBooks.Web.Controllers.Home
         // GET: /home/list-recent
         [HttpGet("list-recent")]
         [ProducesResponseType(typeof(RecentBooksList), StatusCodes.Status200OK)]
-        public IActionResult ListRecentBooks()
+        public async Task<IActionResult> ListRecentBooks()
         {
-            return Ok(_homeService.GetRecentBooks());
+            return Ok(await _homeService.GetRecentBooks());
         }
     }
 }

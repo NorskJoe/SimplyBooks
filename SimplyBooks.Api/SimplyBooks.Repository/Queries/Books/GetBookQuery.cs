@@ -11,7 +11,7 @@ namespace SimplyBooks.Repository.Queries.Books
 {
     public interface IGetBookQuery
     {
-        Task<Result<Book>> Execute(int id);
+        Task<Result<BookItem>> Execute(int id);
     }
 
     public class GetBookQuery : IGetBookQuery
@@ -26,18 +26,32 @@ namespace SimplyBooks.Repository.Queries.Books
             _logger = logger;
         }
 
-        public async Task<Result<Book>> Execute(int id)
+        public async Task<Result<BookItem>> Execute(int id)
         {
-            Result<Book> result = new Result<Book>();
+            var result = new Result<BookItem>();
 
             try
             {
                 result.Value = await _context.Book
-                            .Include(b => b.Author)
-                                .ThenInclude(a => a.Nationality)
-                            .Include(b => b.Genre)
-                            .Where(b => b.BookId == id)
-                            .FirstOrDefaultAsync();
+                    .Join(_context.Author,
+                        b => b.Author.AuthorId,
+                        a => a.AuthorId,
+                        (b, a) => new { b, a })
+                    .Join(_context.Nationality,
+                        x => x.a.Nationality.NationalityId,
+                        n => n.NationalityId,
+                        (x, n) => new { x.b, x.a, n })
+                    .Where(x => x.b.BookId == id)
+                    .Select(x => new BookItem
+                    {
+                        Title = x.b.Title,
+                        Author = x.a.Name,
+                        AuthorNationality = x.n.Name,
+                        Rating = x.b.Rating,
+                        DateRead = x.b.DateRead.ToShortDateString(),
+                        YearPublished = x.b.YearPublished.Year.ToString()
+                    })
+                    .FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
@@ -48,5 +62,15 @@ namespace SimplyBooks.Repository.Queries.Books
 
             return result;
         }
+    }
+
+    public class BookItem
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string AuthorNationality { get; set; }
+        public double Rating { get; set; }
+        public string DateRead { get; set; }
+        public string YearPublished { get; set; }
     }
 }

@@ -9,8 +9,8 @@ namespace SimplyBooks.Services.Books
 {
     public interface IBasicBooksService
     {
-        Task<Result<IList<Book>>> ListAllBooksAsync();
-        Task<Result<Book>> GetBookAsync(int bookId);
+        Task<Result<BookList>> ListAllBooksAsync(BookListCriteria criteria);
+        Task<Result<BookItem>> GetBookAsync(int bookId);
         Task<Result> AddBookAsync(Book book);
         Task<Result> UpdateBookAsync(Book book);
         Task<Result> DeleteBookAsync(int bookId);
@@ -37,12 +37,28 @@ namespace SimplyBooks.Services.Books
             _listAllBooksQuery = listAllBooksQuery;
         }
 
-        public async Task<Result<IList<Book>>> ListAllBooksAsync()
+        public async Task<Result<BookList>> ListAllBooksAsync(BookListCriteria criteria)
         {
-            return await _listAllBooksQuery.Execute();
+            var result = new Result<BookList>();
+
+            var queryResult = await _listAllBooksQuery.Execute(criteria);
+
+            if (queryResult.IsSuccess)
+            {
+                result.Value = new BookList
+                {
+                    Items = queryResult.Value
+                };
+            }
+            else
+            {
+                result.Errors = queryResult.Errors;
+            }
+
+            return result;
         }
 
-        public async Task<Result<Book>> GetBookAsync(int bookId)
+        public async Task<Result<BookItem>> GetBookAsync(int bookId)
         {
             return await _getBookQuery.Execute(bookId);
         }
@@ -61,5 +77,10 @@ namespace SimplyBooks.Services.Books
         {
             return await _deleteBookCommand.Execute(bookId);
         }
+    }
+
+    public class BookList
+    {
+        public IList<BookListItem> Items { get; set; }
     }
 }

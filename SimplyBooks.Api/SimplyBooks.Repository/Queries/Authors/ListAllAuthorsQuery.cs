@@ -12,7 +12,7 @@ namespace SimplyBooks.Repository.Queries.Authors
 {
     public interface IListAllAuthorsQuery
     {
-        Task<Result<IList<AuthorListItem>>> Execute();
+        Task<Result<IList<AuthorItem>>> Execute();
     }
     public class ListAllAuthorsQuery : IListAllAuthorsQuery
     {
@@ -26,9 +26,9 @@ namespace SimplyBooks.Repository.Queries.Authors
             _logger = logger;
         }
 
-        public async Task<Result<IList<AuthorListItem>>> Execute()
+        public async Task<Result<IList<AuthorItem>>> Execute()
         {
-            Result<IList<AuthorListItem>> result = new Result<IList<AuthorListItem>>();
+            Result<IList<AuthorItem>> result = new Result<IList<AuthorItem>>();
 
             try
             {
@@ -37,7 +37,7 @@ namespace SimplyBooks.Repository.Queries.Authors
                         a => a.Nationality.NationalityId,
                         n => n.NationalityId,
                         (a, n) => new {a, n})
-                    .Select(x => new AuthorListItem
+                    .Select(x => new AuthorItem
                     {
                         Name = x.a.Name,
                         Nationality = x.n.Name
@@ -55,7 +55,7 @@ namespace SimplyBooks.Repository.Queries.Authors
         }
 
     }
-    public class AuthorListItem
+    public class AuthorItem
     {
         public string Name { get; set; }
         public string Nationality { get; set; }

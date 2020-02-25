@@ -3,13 +3,14 @@ using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Authors;
 using SimplyBooks.Repository.Queries.Authors;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Authors
 {
     public interface IAuthorsService
     {
-        Task<Result<IList<AuthorListItem>>> ListAllAuthorsAsync();
+        Task<Result<AuthorList>> ListAllAuthorsAsync();
         Task<Result> AddAuthorAsync(Author author);
         Task<Result> UpdateAuthorAsync(Author author);
     }
@@ -29,9 +30,26 @@ namespace SimplyBooks.Services.Authors
             _updateAuthorCommand = updateAuthorCommand;
         }
 
-        public async Task<Result<IList<AuthorListItem>>> ListAllAuthorsAsync()
+        public async Task<Result<AuthorList>> ListAllAuthorsAsync()
         {
-            return await _listAllAuthorsQuery.Execute();
+            var result = new Result<AuthorList>();
+
+            var queryResult = await _listAllAuthorsQuery.Execute();
+
+            if (queryResult.IsSuccess)
+            {
+                result.Value = new AuthorList
+                {
+                    Items = queryResult.Value
+                };
+            }
+            else
+            {
+                result.Errors = queryResult.Errors;
+            }
+
+            return result;
+
         }
 
         public async Task<Result> AddAuthorAsync(Author author)
@@ -43,5 +61,10 @@ namespace SimplyBooks.Services.Authors
         {
             return await _updateAuthorCommand.Execute(author);
         }
+    }
+
+    public class AuthorList
+    {
+        public IList<AuthorItem> Items { get; set; }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Queries.Home;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Home
 {
     public interface IHomeService
     {
-        Result<RecentBooksList> GetRecentBooks();
+        Task<Result<RecentBooksList>> GetRecentBooks();
     }
 
     public class HomeService : IHomeService
@@ -18,11 +19,11 @@ namespace SimplyBooks.Services.Home
             _listRecentBooksQuery = listRecentBooksQuery;
         }
 
-        public Result<RecentBooksList> GetRecentBooks()
+        public async Task<Result<RecentBooksList>> GetRecentBooks()
         {
             var result = new Result<RecentBooksList>();
 
-            var queryResult = _listRecentBooksQuery.Execute();
+            var queryResult = await _listRecentBooksQuery.Execute();
 
             if (queryResult.IsSuccess)
             {
