@@ -5,10 +5,10 @@ using SimplyBooks.Models;
 using SimplyBooks.Models.Dtos;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Books;
-using SimplyBooksApi.Controllers.Books;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using SimplyBooks.Web.Controllers.Books;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers

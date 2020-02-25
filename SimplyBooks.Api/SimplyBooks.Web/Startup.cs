@@ -83,7 +83,7 @@ namespace SimplyBooks.Web
 
             // Books
             services.AddTransient<IGetBookQuery, GetBookQuery>();
-            services.AddTransient<IListAllBooksQuery, ListAllBooksQuery>();
+            services.AddTransient<IListAllBooksQuery, ListBooksQuery>();
 
             // Genres
             services.AddTransient<IListAllGenresQuery, ListAllGenresQuery>();

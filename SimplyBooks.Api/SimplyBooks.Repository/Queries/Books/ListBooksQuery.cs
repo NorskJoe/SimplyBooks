@@ -15,13 +15,13 @@ namespace SimplyBooks.Repository.Queries.Books
         Task<Result<IList<BookListItem>>> Execute(BookListCriteria criteria);
     }
 
-    public class ListAllBooksQuery : IListAllBooksQuery
+    public class ListBooksQuery : IListAllBooksQuery
     {
         private readonly SimplyBooksContext _context;
-        private readonly ILogger<ListAllBooksQuery> _logger;
+        private readonly ILogger<ListBooksQuery> _logger;
 
-        public ListAllBooksQuery(SimplyBooksContext context,
-            ILogger<ListAllBooksQuery> logger)
+        public ListBooksQuery(SimplyBooksContext context,
+            ILogger<ListBooksQuery> logger)
         {
             _context = context;
             _logger = logger;

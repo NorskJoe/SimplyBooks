@@ -7,7 +7,7 @@ using SimplyBooks.Models.Dtos;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Services.Books;
 
-namespace SimplyBooksApi.Controllers.Books
+namespace SimplyBooks.Web.Controllers.Books
 {
     [Route("book")]
     [ApiController]

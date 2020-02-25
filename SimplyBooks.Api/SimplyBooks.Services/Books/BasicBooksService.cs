@@ -22,26 +22,26 @@ namespace SimplyBooks.Services.Books
         private readonly IUpdateBookCommand _updateBookCommand;
         private readonly IDeleteBookCommand _deleteBookCommand;
         private readonly IGetBookQuery _getBookQuery;
-        private readonly IListAllBooksQuery _listAllBooksQuery;
+        private readonly IListAllBooksQuery _listBooksQuery;
 
         public BasicBooksService(IAddBookCommand addBookCommand,
             IUpdateBookCommand updateBookCommand,
             IDeleteBookCommand deleteBookCommand,
             IGetBookQuery getBookQuery,
-            IListAllBooksQuery listAllBooksQuery)
+            IListAllBooksQuery listBooksQuery)
         {
             _addBookCommand = addBookCommand;
             _updateBookCommand = updateBookCommand;
             _deleteBookCommand = deleteBookCommand;
             _getBookQuery = getBookQuery;
-            _listAllBooksQuery = listAllBooksQuery;
+            _listBooksQuery = listBooksQuery;
         }
 
         public async Task<Result<BookList>> ListAllBooksAsync(BookListCriteria criteria)
         {
             var result = new Result<BookList>();
 
-            var queryResult = await _listAllBooksQuery.Execute(criteria);
+            var queryResult = await _listBooksQuery.Execute(criteria);
 
             if (queryResult.IsSuccess)
             {
