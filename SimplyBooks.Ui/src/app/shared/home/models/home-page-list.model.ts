@@ -6,4 +6,5 @@ export class HomePageItem {
     public bookTitle: string;
     public author: string;
     public rating: string;
+    public dateRead: Date;
 }

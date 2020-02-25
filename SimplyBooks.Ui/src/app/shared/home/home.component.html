@@ -1,1 +1,11 @@
-<p>home works!</p>
+<h1>Recently Read</h1>
+<kendo-grid [data]="listItems">
+    <kendo-grid-column field="bookTitle" title="Title"></kendo-grid-column>
+    <kendo-grid-column field="author" title="Author"></kendo-grid-column>
+    <kendo-grid-column field="rating" title="Rating"></kendo-grid-column>
+    <kendo-grid-column field="dateRead" title="Date Read">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.dateRead | date: 'dd/MM/yyyy' }}
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>

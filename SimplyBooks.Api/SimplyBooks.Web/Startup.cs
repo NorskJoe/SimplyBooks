@@ -45,6 +45,8 @@ namespace SimplyBooks.Web
             services
                 .AddDbContext<SimplyBooksContext>(options => options.UseSqlServer(connection));
 
+            
+
             // Register dependencies
             RegisterServices(services);
             RegisterCommands(services);
@@ -69,6 +71,8 @@ namespace SimplyBooks.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 

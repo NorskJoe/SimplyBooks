@@ -15,6 +15,7 @@ import { HomeService } from './services/shared/home/home.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NotificationService } from './services/notification.service';
 
+
 @NgModule({
     declarations: [
         AppComponent
@@ -27,14 +28,14 @@ import { NotificationService } from './services/notification.service';
         AuthorsModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot({ closeButton: true})
+        ToastrModule.forRoot({ closeButton: true })
     ],
     providers: [
-      ConstantsService,
-      HttpClientService,
-      HomeService,
-      NotificationService,
-      { provide: ErrorHandler, useClass: SimplyBooksErrorHandler }
+        ConstantsService,
+        HttpClientService,
+        HomeService,
+        NotificationService,
+        { provide: ErrorHandler, useClass: SimplyBooksErrorHandler }
     ],
     bootstrap: [AppComponent]
 })

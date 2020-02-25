@@ -9,8 +9,8 @@ export class SimplyBooksErrorHandler implements ErrorHandler {
     }
 
     private get notificationService(): NotificationService {
-      return this.injector.get(NotificationService);
-  }
+        return this.injector.get(NotificationService);
+    }
 
     handleError(error: Error | HttpErrorResponse) {
         if (error instanceof HttpErrorResponse) {
@@ -19,7 +19,7 @@ export class SimplyBooksErrorHandler implements ErrorHandler {
             } else {
                 switch (error.status) {
                     case 404:
-                        // create not found page
+                    // create not found page
                     case 500:
                         if (error.error.message) {
                             this.notificationService
@@ -27,7 +27,7 @@ export class SimplyBooksErrorHandler implements ErrorHandler {
                         } else {
                             this.notificationService
                                 .error('Something went wrong. Please try again.', null,
-                                  { toastLife: 30000, showCloseButton: true, onActivateTick: true });
+                                    { toastLife: 30000, showCloseButton: true, onActivateTick: true });
                         }
                         break;
                     default:

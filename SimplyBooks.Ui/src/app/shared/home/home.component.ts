@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from 'src/app/services/shared/home/home.service';
-import { RecentBooksList } from './models/home-page-list.model';
+import { HomePageItem } from './models/home-page-list.model';
 
 @Component({
     selector: 'app-home',
@@ -9,14 +9,19 @@ import { RecentBooksList } from './models/home-page-list.model';
 })
 export class HomeComponent implements OnInit {
 
-    listItems: RecentBooksList;
+    listItems: HomePageItem[];
+    public columns: any[] = [{ field: "bookTitle" }, { field: "author" }, { field: "Rating" }];
 
     constructor(private homeService: HomeService) { }
 
     ngOnInit(): void {
         // https://www.ag-grid.com/angular-grid/#getting-started
         this.homeService.getRecentlyRead().subscribe(result => {
-            this.listItems = result;
+            // this.listItems = result;
+            if (result.isSuccess) {
+                this.listItems = result.value.items;
+            }
+
         });
     }
 

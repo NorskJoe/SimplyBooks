@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 
 
@@ -10,7 +11,8 @@ import { RouterModule } from '@angular/router';
     declarations: [NavigationComponent, HomeComponent],
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        GridModule
     ],
     exports: [
         NavigationComponent

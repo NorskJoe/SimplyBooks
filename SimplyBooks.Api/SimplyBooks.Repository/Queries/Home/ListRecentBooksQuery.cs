@@ -42,7 +42,8 @@ namespace SimplyBooks.Repository.Queries.Home
                     {
                         BookTitle = x.b.Title,
                         Author = x.a.Name,
-                        Rating = x.b.Rating
+                        Rating = x.b.Rating,
+                        DateRead = x.b.DateRead
                     })
                     .Take(10)
                     .ToList();
@@ -64,5 +65,6 @@ namespace SimplyBooks.Repository.Queries.Home
         public string BookTitle { get; set; }
         public string Author { get; set; }
         public double Rating { get; set; }
+        public DateTime DateRead { get; set; }
     }
 }
