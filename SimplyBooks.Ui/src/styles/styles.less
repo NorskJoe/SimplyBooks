@@ -1,1 +1,38 @@
 @import './vendor/kendo.grid.less';
+@import './variables.less';
+
+
+.filter-box
+{
+    background: @filter-backgroudcolor-end; /* For browsers that do not support gradients */
+   
+    background: linear-gradient(to bottom right, @filter-backgroudcolor-start, @filter-backgroudcolor-end);
+
+    border: 1px solid @filter-border-color;
+    padding-top: 10px;
+    
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    .filter-box-header 
+    {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 3px;
+        cursor: pointer;
+    }
+
+    .filter-box-form
+    {
+        margin-bottom: 10px;
+
+        .action-buttons {
+            text-align: right;
+        }
+    }
+}

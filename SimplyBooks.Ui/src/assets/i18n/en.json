@@ -10,5 +10,6 @@
     "_Genre": "Genre",
     "_Rating": "Rating",
     "_DateRead": "Date Read",
-    "_DatePublished": "Date Published"
+    "_DatePublished": "Date Published",
+    "_Filter": "Filter"
 }
