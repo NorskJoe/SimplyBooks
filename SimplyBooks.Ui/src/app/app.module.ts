@@ -5,16 +5,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RoutingModule } from './routing/routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
 import { BooksModule } from './books/books.module';
 import { AuthorsModule } from './authors/authors.module';
 import { ConstantsService } from './services/constants.service';
 import { HttpClientService } from './services/http.service';
 import { SimplyBooksErrorHandler } from './services/error-handler.service';
-import { HomeService } from './services/shared/home/home.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NotificationService } from './services/notification.service';
 import { NavigationModule } from './navigation/navigation.module';
+import { HomeModule } from './home/home.module';
+import { HomeService } from './services/home.service';
 
 
 @NgModule({
@@ -24,11 +24,11 @@ import { NavigationModule } from './navigation/navigation.module';
     imports: [
         BrowserModule,
         RoutingModule,
-        SharedModule,
         BooksModule,
         AuthorsModule,
         NavigationModule,
         HttpClientModule,
+        HomeModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot({ closeButton: true })
     ],
