@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -9,12 +10,14 @@ import { GridModule } from '@progress/kendo-angular-grid';
     imports: [
         CommonModule,
         RouterModule,
-        GridModule
+        GridModule,
+        TranslateModule
     ],
     exports: [
         CommonModule,
         RouterModule,
-        GridModule
+        GridModule,
+        TranslateModule
     ]
 })
 export class SharedModule { }

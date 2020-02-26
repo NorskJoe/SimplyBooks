@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { RoutingModule } from './routing/routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,9 @@ import { NavigationModule } from './navigation/navigation.module';
 import { HomeModule } from './home/home.module';
 import { HomeService } from './services/home.service';
 
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
     declarations: [
@@ -30,7 +35,14 @@ import { HomeService } from './services/home.service';
         HttpClientModule,
         HomeModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot({ closeButton: true })
+        ToastrModule.forRoot({ closeButton: true }),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
     ],
     providers: [
         ConstantsService,
@@ -39,6 +51,9 @@ import { HomeService } from './services/home.service';
         NotificationService,
         { provide: ErrorHandler, useClass: SimplyBooksErrorHandler }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    exports: [
+        TranslateModule
+    ]
 })
 export class AppModule { }

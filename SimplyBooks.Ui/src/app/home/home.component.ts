@@ -10,7 +10,7 @@ import { HomeService } from '../services/home.service';
 export class HomeComponent implements OnInit {
 
     listItems: HomePageItem[];
-    public columns: any[] = [{ field: "bookTitle" }, { field: "author" }, { field: "Rating" }];
+    public columns: any[] = [{ field: 'bookTitle' }, { field: 'author' }, { field: 'Rating' }];
 
     constructor(private homeService: HomeService) { }
 
