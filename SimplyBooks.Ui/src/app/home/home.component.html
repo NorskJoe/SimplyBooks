@@ -1,5 +1,5 @@
 <h3>{{ 'Home_RecentlyRead_Heading' | translate }}</h3>
-<kendo-grid [data]="listItems">
+<kendo-grid [data]="listItems" [scrollable]="'none'">
     <kendo-grid-column field="bookTitle" title="{{ '_Title' | translate }}"></kendo-grid-column>
     <kendo-grid-column field="author" title="{{ '_Author' | translate }}"></kendo-grid-column>
     <kendo-grid-column field="rating" title="{{ '_Rating' | translate }}"></kendo-grid-column>
