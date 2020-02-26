@@ -14,6 +14,7 @@ import { SimplyBooksErrorHandler } from './services/error-handler.service';
 import { HomeService } from './services/shared/home/home.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NotificationService } from './services/notification.service';
+import { NavigationModule } from './navigation/navigation.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { NotificationService } from './services/notification.service';
         SharedModule,
         BooksModule,
         AuthorsModule,
+        NavigationModule,
         HttpClientModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot({ closeButton: true })
