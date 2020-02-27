@@ -3,7 +3,7 @@ import { ConstantsService } from './constants.service';
 import { HttpClientService } from './http.service';
 import { Observable } from 'rxjs';
 import { ResultValue } from '../shared/models/result.model';
-import { GenreSelectList } from '../books/book/book-filter/models/book-filter.model';
+import { GenreSelectList } from '../books/book-filter/models/book-filter.model';
 
 @Injectable()
 export class GenreService {
