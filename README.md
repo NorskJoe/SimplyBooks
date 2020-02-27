@@ -8,8 +8,8 @@ A basic application that stores books a user has read along with their author an
 - Angular UI
 
 ### Technologies Used
-- .Net Core
-- Angular 7
+- .Net Core 3.1
+- Angular 9
 - Entity Framework
 - Sql Server
 
