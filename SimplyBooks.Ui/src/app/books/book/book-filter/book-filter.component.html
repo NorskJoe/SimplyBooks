@@ -1,10 +1,41 @@
-<div class="filter-box col-xs-12 book-filter-container">
-    <div class="filter-box-header col-xs-12" data-toggle="collapse" data-target="#filter-form">
-        <div class="col-xs-12">
-            <span>{{'_Filter' | translate }}</span>
-        </div>
-    </div>
-    <div class="col-xs-12 filter-box-form collapse in" id="filter-form">
-
-    </div>
+<div class="filter-box book-filter-container">
+	<form novalidate (submit)="applyFilter()">
+		<div class="filter-box-header col-xs-12">
+			<div class="col-xs-12">
+				<span>{{'_Filter' | translate }}</span>
+			</div>
+		</div>
+		<div class="col-xs-12 filter-box-form" id="filter-form">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="title">
+							{{ '_Title' | translate }}
+						</label>
+						<input type="text" class="form-control" id="title">
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="author">
+							{{ '_Author' | translate }}
+						</label>
+						<kendo-combobox class="form-control" [data]="authorList" [textField]="'name'" [valueField]="'authorId'"
+							[value]="model.authorId">
+						</kendo-combobox>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="genre">
+							{{ '_Genre' | translate }}
+						</label>
+						<kendo-combobox class="form-control" [data]="genreList" [textField]="'name'" [valueField]="'genreId'"
+							[value]="model.genreId">
+						</kendo-combobox>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>

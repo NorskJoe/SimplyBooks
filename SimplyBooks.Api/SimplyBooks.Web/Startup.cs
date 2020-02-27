@@ -84,6 +84,7 @@ namespace SimplyBooks.Web
         {
             // Authors
             services.AddTransient<IListAllAuthorsQuery, ListAllAuthorsQuery>();
+            services.AddTransient<IAuthorSelectListQuery, AuthorSelectListQuery>();
 
             // Books
             services.AddTransient<IGetBookQuery, GetBookQuery>();
@@ -91,6 +92,7 @@ namespace SimplyBooks.Web
 
             // Genres
             services.AddTransient<IListAllGenresQuery, ListAllGenresQuery>();
+            services.AddTransient<IGenreSelectListQuery, GenreSelectListQuery>();
 
             // Nationalities
             services.AddTransient<IListAllNationalitiesQuery, ListAllNationalitiesQuery>();
@@ -125,7 +127,7 @@ namespace SimplyBooks.Web
             services.AddTransient<IAuthorsService, AuthorsService>();
 
             // Books
-            services.AddTransient<IBasicBooksService, BasicBooksService>();
+            services.AddTransient<IBooksService, BooksService>();
 
             // Genres
             services.AddTransient<IGenresService, GenresService>();

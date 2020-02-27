@@ -17,7 +17,7 @@ namespace SimplyBooks.Tests.Services
         protected Mock<IUpdateBookCommand> UpdateBookCommandMock { get; }
         protected Mock<IGetBookQuery> GetBookQueryMock { get; }
         protected Mock<IListAllBooksQuery> ListAllBooksQueryMock { get; }
-        protected BasicBooksService ServiceUnderTest { get; }
+        protected BooksService ServiceUnderTest { get; }
 
         public BasicBooksServiceTest()
         {
@@ -26,7 +26,7 @@ namespace SimplyBooks.Tests.Services
             UpdateBookCommandMock = new Mock<IUpdateBookCommand>();
             GetBookQueryMock = new Mock<IGetBookQuery>();
             ListAllBooksQueryMock = new Mock<IListAllBooksQuery>();
-            ServiceUnderTest = new BasicBooksService(AddBookCommandMock.Object,
+            ServiceUnderTest = new BooksService(AddBookCommandMock.Object,
                 UpdateBookCommandMock.Object,
                 DeleteBookCommandMock.Object,
                 GetBookQueryMock.Object,

@@ -22,8 +22,15 @@ namespace SimplyBooks.Web.Controllers.Authors
         [ProducesResponseType(typeof(AuthorList), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListAllAuthors()
         {
-            var result = await _authorsService.ListAllAuthorsAsync();
-            return Ok(result);
+            return Ok(await _authorsService.ListAllAuthorsAsync());
+        }
+
+        // GET: /authors/select-list
+        [HttpGet("select-list")]
+        [ProducesResponseType(typeof(AuthorSelectList), StatusCodes.Status200OK)]
+        public async Task<IActionResult> SelectList()
+        {
+            return Ok(await _authorsService.SelectList());
         }
 
         // POST: /authors/add/{author}

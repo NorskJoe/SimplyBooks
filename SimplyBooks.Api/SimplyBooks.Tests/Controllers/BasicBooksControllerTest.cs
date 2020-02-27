@@ -15,9 +15,9 @@ namespace SimplyBooks.Tests.Controllers
 {
     public class BasicBooksControllerTest
     {
-        protected Mock<IBasicBooksService> BasicBookServiceMock { get; }
+        protected Mock<IBooksService> BasicBookServiceMock { get; }
         protected Mock<IMapper> MapperMock { get; }
-        protected BasicBooksController ControllerUnderTest { get; }
+        protected BooksController ControllerUnderTest { get; }
         protected Genre TestGenreOne { get; }
         protected Genre TestGenreTwo { get; }
         protected Author TestAuthorOne { get; }
@@ -25,9 +25,9 @@ namespace SimplyBooks.Tests.Controllers
 
         public BasicBooksControllerTest()
         {
-            BasicBookServiceMock = new Mock<IBasicBooksService>();
+            BasicBookServiceMock = new Mock<IBooksService>();
             MapperMock = new Mock<IMapper>();
-            ControllerUnderTest = new BasicBooksController(BasicBookServiceMock.Object, MapperMock.Object);
+            ControllerUnderTest = new BooksController(BasicBookServiceMock.Object, MapperMock.Object);
 
             TestGenreOne = new Genre
             {

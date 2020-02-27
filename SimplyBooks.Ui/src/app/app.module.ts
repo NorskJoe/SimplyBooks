@@ -17,43 +17,48 @@ import { NotificationService } from './services/notification.service';
 import { NavigationModule } from './navigation/navigation.module';
 import { HomeModule } from './home/home.module';
 import { HomeService } from './services/home.service';
+import { AuthorService } from './services/authors.service';
+import { GenreService } from './services/genres.service';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+	return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        RoutingModule,
-        BooksModule,
-        AuthorsModule,
-        NavigationModule,
-        HttpClientModule,
-        HomeModule,
-        BrowserAnimationsModule,
-        ToastrModule.forRoot({ closeButton: true }),
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        })
-    ],
-    providers: [
-        ConstantsService,
-        HttpClientService,
-        HomeService,
-        NotificationService,
-        { provide: ErrorHandler, useClass: SimplyBooksErrorHandler }
-    ],
-    bootstrap: [AppComponent],
-    exports: [
-        TranslateModule
-    ]
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		RoutingModule,
+		BooksModule,
+		AuthorsModule,
+		NavigationModule,
+		HttpClientModule,
+		HomeModule,
+		BrowserAnimationsModule,
+		ToastrModule.forRoot({ closeButton: true }),
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient]
+			}
+		})
+	],
+	providers: [
+		ConstantsService,
+		HttpClientService,
+		HomeService,
+		NotificationService,
+		AuthorService,
+		GenreService,
+		{ provide: ErrorHandler, useClass: SimplyBooksErrorHandler }
+	],
+	bootstrap: [AppComponent],
+	exports: [
+		TranslateModule
+	]
 })
 export class AppModule { }

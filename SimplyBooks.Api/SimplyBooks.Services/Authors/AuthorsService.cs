@@ -3,7 +3,6 @@ using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Authors;
 using SimplyBooks.Repository.Queries.Authors;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Authors
@@ -11,6 +10,7 @@ namespace SimplyBooks.Services.Authors
     public interface IAuthorsService
     {
         Task<Result<AuthorList>> ListAllAuthorsAsync();
+        Task<Result<AuthorSelectList>> SelectList();
         Task<Result> AddAuthorAsync(Author author);
         Task<Result> UpdateAuthorAsync(Author author);
     }
@@ -20,14 +20,17 @@ namespace SimplyBooks.Services.Authors
         private readonly IAddAuthorCommand _addAuthorCommand;
         private readonly IUpdateAuthorCommand _updateAuthorCommand;
         private readonly IListAllAuthorsQuery _listAllAuthorsQuery;
+        private readonly IAuthorSelectListQuery _authorSelectListQuery;
 
         public AuthorsService(IAddAuthorCommand addAuthorCommand,
             IUpdateAuthorCommand updateAuthorCommand,
-            IListAllAuthorsQuery listAllAuthorsQuery)
+            IListAllAuthorsQuery listAllAuthorsQuery,
+            IAuthorSelectListQuery authorSelectListQuery)
         {
             _listAllAuthorsQuery = listAllAuthorsQuery;
             _addAuthorCommand = addAuthorCommand;
             _updateAuthorCommand = updateAuthorCommand;
+            _authorSelectListQuery = authorSelectListQuery;
         }
 
         public async Task<Result<AuthorList>> ListAllAuthorsAsync()
@@ -52,6 +55,28 @@ namespace SimplyBooks.Services.Authors
 
         }
 
+        public async Task<Result<AuthorSelectList>> SelectList()
+        {
+            var result = new Result<AuthorSelectList>();
+
+            var queryResult = await _authorSelectListQuery.Execute();
+
+            if (queryResult.IsSuccess)
+            {
+                result.Value = new AuthorSelectList
+                {
+                    Items = queryResult.Value
+                };
+            }
+            else
+            {
+                result.Errors = queryResult.Errors;
+            }
+
+            return result;
+        }
+
+
         public async Task<Result> AddAuthorAsync(Author author)
         {
             return await _addAuthorCommand.Execute(author);
@@ -66,5 +91,10 @@ namespace SimplyBooks.Services.Authors
     public class AuthorList
     {
         public IList<AuthorItem> Items { get; set; }
+    }
+
+    public class AuthorSelectList
+    {
+        public IList<AuthorSelectListItem> Items { get; set; }
     }
 }

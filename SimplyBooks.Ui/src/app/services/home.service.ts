@@ -7,13 +7,13 @@ import { HttpClientService } from './http.service';
 
 @Injectable()
 export class HomeService {
-    constructor(private constants: ConstantsService,
-        private http: HttpClientService) { }
+	constructor(private constants: ConstantsService,
+		private http: HttpClientService) { }
 
 
-    public getRecentlyRead(): Observable<ResultValue<RecentBooksList>> {
-        const url = `${this.constants.baseApiUrl}/home/list-recent`;
+	public getRecentlyRead(): Observable<ResultValue<RecentBooksList>> {
+		const url = `${this.constants.baseApiUrl}/home/list-recent`;
 
-        return this.http.get<ResultValue<RecentBooksList>>(url);
-    }
+		return this.http.get<ResultValue<RecentBooksList>>(url);
+	}
 }

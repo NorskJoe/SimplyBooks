@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimplyBooks.Services.Books
 {
-    public interface IBasicBooksService
+    public interface IBooksService
     {
         Task<Result<BookList>> ListAllBooksAsync(BookListCriteria criteria);
         Task<Result<BookItem>> GetBookAsync(int bookId);
@@ -16,7 +16,7 @@ namespace SimplyBooks.Services.Books
         Task<Result> DeleteBookAsync(int bookId);
     }
 
-    public class BasicBooksService : IBasicBooksService
+    public class BooksService : IBooksService
     {
         private readonly IAddBookCommand _addBookCommand;
         private readonly IUpdateBookCommand _updateBookCommand;
@@ -24,7 +24,7 @@ namespace SimplyBooks.Services.Books
         private readonly IGetBookQuery _getBookQuery;
         private readonly IListAllBooksQuery _listBooksQuery;
 
-        public BasicBooksService(IAddBookCommand addBookCommand,
+        public BooksService(IAddBookCommand addBookCommand,
             IUpdateBookCommand updateBookCommand,
             IDeleteBookCommand deleteBookCommand,
             IGetBookQuery getBookQuery,

@@ -27,6 +27,14 @@ namespace SimplyBooks.Web.Controllers.Genres
             return Ok(result);
         }
 
+        // GET: /genres/select-list
+        [HttpGet("select-list")]
+        [ProducesResponseType(typeof(GenreSelectList), StatusCodes.Status200OK)]
+        public async Task<IActionResult> SelectList()
+        {
+            return Ok(await _genresService.SelectList());
+        }
+
         // POST: /genres/add/{genre}
         [HttpPost("add")]
         [ProducesResponseType(typeof(Genre), StatusCodes.Status200OK)]

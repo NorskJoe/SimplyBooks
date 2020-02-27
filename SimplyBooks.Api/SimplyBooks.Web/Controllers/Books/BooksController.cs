@@ -11,12 +11,12 @@ namespace SimplyBooks.Web.Controllers.Books
 {
     [Route("book")]
     [ApiController]
-    public class BasicBooksController : ControllerBase
+    public class BooksController : ControllerBase
     {
-        private readonly IBasicBooksService _booksService;
+        private readonly IBooksService _booksService;
         private readonly IMapper _mapper;
 
-        public BasicBooksController(IBasicBooksService booksService,
+        public BooksController(IBooksService booksService,
             IMapper mapper)
         {
             _booksService = booksService;
