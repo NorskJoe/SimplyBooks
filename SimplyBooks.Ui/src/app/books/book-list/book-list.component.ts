@@ -6,14 +6,10 @@ import { GridDataResult } from '@progress/kendo-angular-grid';
 	templateUrl: './book-list.component.html',
 	styleUrls: ['./book-list.component.less']
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent {
 
 	@Input() list: GridDataResult;
 
 	constructor() { }
-
-	ngOnInit(): void {
-		console.log(this.list);
-	}
 
 }

@@ -7,16 +7,21 @@ namespace SimplyBooks.Models.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // Table/column changes
-            migrationBuilder.DropColumn(
-                name: "YearRead",
-                table: "Book");
-
+            // Add new column
             migrationBuilder.AddColumn<DateTime>(
                 name: "DateRead",
                 table: "Book",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            // Copy old values
+            migrationBuilder.Sql("UPDATE Book SET DateRead = YearRead");
+
+            // Table/column changes
+            migrationBuilder.DropColumn(
+                name: "YearRead",
+                table: "Book");
+
 
             // Data migration changes - applied to top 10 recent books only
             migrationBuilder.Sql(@"

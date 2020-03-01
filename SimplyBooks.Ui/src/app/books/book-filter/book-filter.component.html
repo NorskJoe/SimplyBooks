@@ -44,8 +44,8 @@
 						<label class="control-label" for="yearRead">
 							{{ '_DateRead' | translate }}
 						</label>
-						<kendo-datepicker class="form-control" [(value)]="model.yearRead" [format]="'dd/MM/yyyy'"
-							placeholder="" id="yearRead">
+						<kendo-datepicker class="form-control" [(value)]="model.yearRead" [format]="'yyyy'"
+							[bottomView]="'year'" placeholder="" id="yearRead">
 						</kendo-datepicker>
 					</div>
 				</div>
@@ -54,8 +54,8 @@
 						<label class="control-label" for="yearPublished">
 							{{ '_DatePublished' | translate }}
 						</label>
-						<kendo-datepicker class="form-control" [(value)]="model.yearPublished" [format]="'dd/MM/yyyy'"
-							placeholder="" id="yearPublished">
+						<kendo-datepicker class="form-control" [(value)]="model.yearPublished" [format]="'yyyy'"
+							[bottomView]="'year'" placeholder="" id="yearPublished">
 						</kendo-datepicker>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 					{{ 'Filter_ClearFilter' | translate }}
 				</button>
 
-				<button type="button" type="submit" class="btn apply-filter">
+				<button type="button" type="submit" class="btn apply-filter" (click)="cancel()">
 					{{ 'Filter_ApplyFilter' | translate }}
 				</button>
 			</div>

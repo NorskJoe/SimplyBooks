@@ -29,11 +29,11 @@ export class BookService {
 		}
 
 		if (criteria.yearRead) {
-			params = params.set('yearRead', criteria.yearRead.toString());
+			params = params.set('yearRead', criteria.yearRead.toDateString());
 		}
 
 		if (criteria.yearPublished) {
-			params = params.set('yearPublished', criteria.yearPublished.toString());
+			params = params.set('yearPublished', criteria.yearPublished.toDateString());
 		}
 
 		return this.http.get<ResultValue<BookList>>(url, params);

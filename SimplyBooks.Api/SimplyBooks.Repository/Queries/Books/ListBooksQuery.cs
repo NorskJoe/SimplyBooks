@@ -64,12 +64,12 @@ namespace SimplyBooks.Repository.Queries.Books
 
                     if (criteria.YearRead.HasValue)
                     {
-                        query = query.Where(x => x.b.DateRead == criteria.YearRead);
+                        query = query.Where(x => x.b.DateRead.Year == criteria.YearRead.Value.Year);
                     }
 
                     if (criteria.YearPublished.HasValue)
                     {
-                        query = query.Where(x => x.b.YearPublished == criteria.YearPublished);
+                        query = query.Where(x => x.b.YearPublished.Year == criteria.YearPublished.Value.Year);
                     }
 
                     result.Value = await query
@@ -80,8 +80,8 @@ namespace SimplyBooks.Repository.Queries.Books
                                         Nationality = x.n.Name,
                                         Genre = x.g.Name,
                                         Rating = x.b.Rating,
-                                        DateRead = x.b.DateRead.ToShortDateString(),
-                                        YearPublished = x.b.YearPublished.Year.ToString()
+                                        DateRead = x.b.DateRead,
+                                        YearPublished = x.b.YearPublished
                                     })
                                     .ToListAsync();
             }
@@ -112,7 +112,7 @@ namespace SimplyBooks.Repository.Queries.Books
         public string Nationality { get; set; }
         public string Genre { get; set; }
         public double Rating { get; set; }
-        public string DateRead { get; set; }
-        public string YearPublished { get; set; }
+        public DateTime DateRead { get; set; }
+        public DateTime YearPublished { get; set; }
     }
 }

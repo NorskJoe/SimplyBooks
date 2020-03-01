@@ -43,4 +43,8 @@ export class BookComponent implements OnInit {
 		});
 	}
 
+	clear() {
+		this.data = null;
+	}
+
 }

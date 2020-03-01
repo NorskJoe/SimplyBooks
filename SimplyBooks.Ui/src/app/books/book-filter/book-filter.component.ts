@@ -11,6 +11,7 @@ import { GenreService } from 'src/app/services/genres.service';
 export class BookFilterComponent implements OnInit {
 
 	@Output() filter = new EventEmitter<BookListFilter>();
+	@Output() clear = new EventEmitter();
 	genreList: GenreListItem[];
 	authorList: AuthorListItem[];
 	model: BookListFilter;
@@ -38,5 +39,10 @@ export class BookFilterComponent implements OnInit {
 			yearRead: this.model.yearRead,
 			yearPublished: this.model.yearPublished
 		});
+	}
+
+	cancel() {
+		this.model = new BookListFilter();
+		this.clear.emit();
 	}
 }
