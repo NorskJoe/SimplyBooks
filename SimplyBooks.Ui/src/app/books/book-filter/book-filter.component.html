@@ -12,7 +12,7 @@
 						<label class="control-label" for="title">
 							{{ '_Title' | translate }}
 						</label>
-						<input type="text" class="form-control" id="title">
+						<input type="text" class="form-control" id="title" [(ngModel)]="model.title" name="title">
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -20,8 +20,9 @@
 						<label class="control-label" for="author">
 							{{ '_Author' | translate }}
 						</label>
-						<kendo-combobox class="form-control" [data]="authorList" [textField]="'name'" [valueField]="'authorId'"
-							[value]="model.authorId">
+						<kendo-combobox class="form-control" [data]="authorList" [textField]="'name'"
+							[valueField]="'authorId'" [valuePrimitive]="true" [(ngModel)]="model.authorId"
+							name="authorId" id="author">
 						</kendo-combobox>
 					</div>
 				</div>
@@ -30,11 +31,43 @@
 						<label class="control-label" for="genre">
 							{{ '_Genre' | translate }}
 						</label>
-						<kendo-combobox class="form-control" [data]="genreList" [textField]="'name'" [valueField]="'genreId'"
-							[value]="model.genreId">
+						<kendo-combobox class="form-control" [data]="genreList" [textField]="'name'"
+							[valueField]="'genreId'" [valuePrimitive]="true" [(ngModel)]="model.genreId" name="genreId"
+							id="genre">
 						</kendo-combobox>
 					</div>
 				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="yearRead">
+							{{ '_DateRead' | translate }}
+						</label>
+						<kendo-datepicker class="form-control" [(value)]="model.yearRead" [format]="'dd/MM/yyyy'"
+							placeholder="" id="yearRead">
+						</kendo-datepicker>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="yearPublished">
+							{{ '_DatePublished' | translate }}
+						</label>
+						<kendo-datepicker class="form-control" [(value)]="model.yearPublished" [format]="'dd/MM/yyyy'"
+							placeholder="" id="yearPublished">
+						</kendo-datepicker>
+					</div>
+				</div>
+			</div>
+			<div class="action-buttons">
+				<button type="button" class="btn cancel">
+					{{ 'Filter_ClearFilter' | translate }}
+				</button>
+
+				<button type="button" type="submit" class="btn apply-filter">
+					{{ 'Filter_ApplyFilter' | translate }}
+				</button>
 			</div>
 		</div>
 	</form>

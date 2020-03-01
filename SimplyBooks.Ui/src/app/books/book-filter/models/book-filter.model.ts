@@ -17,6 +17,7 @@ export class AuthorListItem {
 }
 
 export class BookListFilter {
+	public title: string;
 	public authorId: number;
 	public genreId: number;
 	public yearRead: Date;

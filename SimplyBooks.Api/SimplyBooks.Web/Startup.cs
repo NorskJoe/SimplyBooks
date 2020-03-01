@@ -45,7 +45,11 @@ namespace SimplyBooks.Web
             services
                 .AddDbContext<SimplyBooksContext>(options => options.UseSqlServer(connection));
 
-            
+            // Localisation
+            services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
 
             // Register dependencies
             RegisterServices(services);

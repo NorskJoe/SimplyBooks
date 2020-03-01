@@ -1,4 +1,5 @@
-﻿using SimplyBooks.Models;
+﻿using Microsoft.Extensions.Localization;
+using SimplyBooks.Models;
 using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
@@ -23,18 +24,21 @@ namespace SimplyBooks.Services.Books
         private readonly IDeleteBookCommand _deleteBookCommand;
         private readonly IGetBookQuery _getBookQuery;
         private readonly IListAllBooksQuery _listBooksQuery;
+        private readonly IStringLocalizer<BooksService> _localiser;
 
         public BooksService(IAddBookCommand addBookCommand,
             IUpdateBookCommand updateBookCommand,
             IDeleteBookCommand deleteBookCommand,
             IGetBookQuery getBookQuery,
-            IListAllBooksQuery listBooksQuery)
+            IListAllBooksQuery listBooksQuery,
+            IStringLocalizer<BooksService> localiser)
         {
             _addBookCommand = addBookCommand;
             _updateBookCommand = updateBookCommand;
             _deleteBookCommand = deleteBookCommand;
             _getBookQuery = getBookQuery;
             _listBooksQuery = listBooksQuery;
+            _localiser = localiser;
         }
 
         public async Task<Result<BookList>> ListAllBooksAsync(BookListCriteria criteria)
@@ -49,6 +53,11 @@ namespace SimplyBooks.Services.Books
                 {
                     Items = queryResult.Value
                 };
+
+                if (queryResult.Value.Count == 0)
+                {
+                    result.Warnings.Add(_localiser["NoBooksFound"]);
+                }
             }
             else
             {

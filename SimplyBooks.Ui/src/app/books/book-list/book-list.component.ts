@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { GridDataResult } from '@progress/kendo-angular-grid';
 
 @Component({
-  selector: 'app-book-list',
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.less']
+	selector: 'app-book-list',
+	templateUrl: './book-list.component.html',
+	styleUrls: ['./book-list.component.less']
 })
 export class BookListComponent implements OnInit {
 
-  constructor() { }
+	@Input() list: GridDataResult;
 
-  ngOnInit(): void {
-  }
+	constructor() { }
+
+	ngOnInit(): void {
+		console.log(this.list);
+	}
 
 }

@@ -26,7 +26,7 @@ namespace SimplyBooks.Web.Controllers.Books
         // GET: /book/list
         [HttpGet("list")]
         [ProducesResponseType(typeof(BookList), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListAllBooks([FromBody]BookListCriteria criteria)
+        public async Task<IActionResult> ListAllBooks([FromQuery]BookListCriteria criteria)
         {
             var result = await _booksService.ListAllBooksAsync(criteria);
             return Ok(result);

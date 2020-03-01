@@ -57,14 +57,14 @@ namespace SimplyBooks.Repository.Queries.Books
                         query = query.Where(x => x.g.GenreId == criteria.GenreId);
                     }
 
-                    if (criteria.NationalityId.HasValue)
+                    if (!string.IsNullOrWhiteSpace(criteria.BookTitle))
                     {
-                        query = query.Where(x => x.n.NationalityId == criteria.NationalityId);
+                        query = query.Where(x => EF.Functions.Like(x.b.Title, $"%{criteria.BookTitle}%"));
                     }
 
-                    if (criteria.DateRead.HasValue)
+                    if (criteria.YearRead.HasValue)
                     {
-                        query = query.Where(x => x.b.DateRead == criteria.DateRead);
+                        query = query.Where(x => x.b.DateRead == criteria.YearRead);
                     }
 
                     if (criteria.YearPublished.HasValue)
@@ -98,10 +98,10 @@ namespace SimplyBooks.Repository.Queries.Books
 
     public class BookListCriteria
     {
-        public int? NationalityId { get; set; }
+        public string BookTitle { get; set; }
         public int? AuthorId { get; set; }
         public int? GenreId { get; set; }
-        public DateTime? DateRead { get; set; }
+        public DateTime? YearRead { get; set; }
         public DateTime? YearPublished { get; set; }
     }
 

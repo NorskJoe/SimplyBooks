@@ -120,10 +120,4 @@
   <data name="NoBooksFound" xml:space="preserve">
     <value>No books were found matching that criteria</value>
   </data>
-  <data name="YearPublished" xml:space="preserve">
-    <value>Year Published</value>
-  </data>
-  <data name="YearRead" xml:space="preserve">
-    <value>Year Read</value>
-  </data>
 </root>
