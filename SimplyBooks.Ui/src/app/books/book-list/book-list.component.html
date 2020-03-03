@@ -1,0 +1,18 @@
+<kendo-grid [data]="list" [pageable]="{ pageSizes: state.pageSizes }"
+[pageSize]="state.pageSize" [skip]="state.skip" (dataStateChange)="dataStateChanged($event)" [scrollable]="'none'">
+	<kendo-grid-column field="title" title="{{ '_Title' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="author" title="{{ '_Author' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="genre" title="{{ '_Genre' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="nationality" title="{{ '_Nationality' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="rating" title="{{ '_Rating' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="dateRead" title="{{ '_DateRead' | translate }}">
+		<ng-template kendoGridCellTemplate let-dataItem>
+			{{ dataItem.dateRead | date: 'dd/MM/yyyy' }}
+		</ng-template>
+	</kendo-grid-column>
+	<kendo-grid-column field="yearPublished" title="{{ '_DatePublished' | translate }}">
+		<ng-template kendoGridCellTemplate let-dataItem>
+			{{ dataItem.yearPublished | date: 'yyyy' }}
+		</ng-template>
+	</kendo-grid-column>
+</kendo-grid>
