@@ -1,16 +1,17 @@
 ﻿using Microsoft.Extensions.Localization;
 using SimplyBooks.Models;
-using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using SimplyBooks.Models.QueryModels;
 
 namespace SimplyBooks.Services.Books
 {
     public interface IBooksService
     {
-        Task<Result<BookList>> ListAllBooksAsync(BookListCriteria criteria);
+        Task<Result<PagedResult<BookListItem>>> ListAllBooksAsync(BookListCriteria criteria);
         Task<Result<BookItem>> GetBookAsync(int bookId);
         Task<Result> AddBookAsync(Book book);
         Task<Result> UpdateBookAsync(Book book);
@@ -41,17 +42,24 @@ namespace SimplyBooks.Services.Books
             _localiser = localiser;
         }
 
-        public async Task<Result<BookList>> ListAllBooksAsync(BookListCriteria criteria)
+        public async Task<Result<PagedResult<BookListItem>>> ListAllBooksAsync(BookListCriteria criteria)
         {
-            var result = new Result<BookList>();
+            var result = new Result<PagedResult<BookListItem>>();
 
             var queryResult = await _listBooksQuery.Execute(criteria);
 
             if (queryResult.IsSuccess)
             {
-                result.Value = new BookList
+                var rowItems = queryResult.Value
+                    .Skip(criteria.FirstRecord)
+                    .Take(criteria.PageSize)
+                    .ToList();
+
+                result.Value = new PagedResult<BookListItem>
                 {
-                    Items = queryResult.Value
+                    Items = rowItems,
+                    PageIndex = criteria.PageIndex,
+                    Total = queryResult.Value.Count
                 };
 
                 if (queryResult.Value.Count == 0)
@@ -86,10 +94,5 @@ namespace SimplyBooks.Services.Books
         {
             return await _deleteBookCommand.Execute(bookId);
         }
-    }
-
-    public class BookList
-    {
-        public IList<BookListItem> Items { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-export class BookListCriteria {
+import { ListCriteria } from 'src/app/shared/models/list.model';
+
+export class BookListCriteria extends ListCriteria {
 	public bookTitle: string;
 	public authorId: number;
 	public genreId: number;

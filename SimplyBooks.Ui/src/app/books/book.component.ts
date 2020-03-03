@@ -5,19 +5,22 @@ import { BookService } from '../services/books.service';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { NotificationService } from '../services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
+import { List } from '../shared/models/list.model';
 
 @Component({
 	templateUrl: './book.component.html',
 	styleUrls: ['./book.component.less']
 })
-export class BookComponent implements OnInit {
+export class BookComponent extends List implements OnInit {
 
 	filter: BookListFilter;
 	data: GridDataResult;
 
 	constructor(private bookService: BookService,
 		private notificationService: NotificationService,
-		private translateService: TranslateService) { }
+		private translateService: TranslateService) {
+		super();
+	}
 
 	ngOnInit(): void {
 	}
@@ -28,8 +31,14 @@ export class BookComponent implements OnInit {
 		this.load();
 	}
 
+	stateChanged() {
+		this.load();
+	}
+
 	load() {
 		const criteria = {
+			pageSize: this.state.pageSize,
+			page: this.state.page,
 			bookTitle: this.filter.title ? this.filter.title : null,
 			authorId: this.filter.authorId ? this.filter.authorId : null,
 			genreId: this.filter.genreId ? this.filter.genreId : null,
@@ -39,7 +48,10 @@ export class BookComponent implements OnInit {
 
 		this.bookService.listBooks(criteria).subscribe(result => {
 			this.notificationService.warnings(result.warnings, this.translateService.instant('_Warning'));
-			this.data = { data: result.value.items, total: result.value.items.length } as GridDataResult;
+			this.data = {
+				data: result.value.items,
+				total: result.value.total
+			} as GridDataResult;
 		});
 	}
 

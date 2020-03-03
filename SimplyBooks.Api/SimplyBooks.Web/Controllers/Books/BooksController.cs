@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Dtos;
+using SimplyBooks.Models.QueryModels;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Services.Books;
 
@@ -25,7 +26,7 @@ namespace SimplyBooks.Web.Controllers.Books
 
         // GET: /book/list
         [HttpGet("list")]
-        [ProducesResponseType(typeof(BookList), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedResult<BookListItem>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListAllBooks([FromQuery]BookListCriteria criteria)
         {
             var result = await _booksService.ListAllBooksAsync(criteria);

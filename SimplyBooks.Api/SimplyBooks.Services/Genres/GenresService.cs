@@ -3,7 +3,7 @@ using SimplyBooks.Repository.Commands.Genres;
 using SimplyBooks.Repository.Queries.Genres;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SimplyBooks.Models.ResultModels;
+using SimplyBooks.Models.QueryModels;
 
 namespace SimplyBooks.Services.Genres
 {

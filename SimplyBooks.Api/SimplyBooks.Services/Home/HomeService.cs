@@ -1,7 +1,7 @@
-﻿using SimplyBooks.Models.ResultModels;
-using SimplyBooks.Repository.Queries.Home;
+﻿using SimplyBooks.Repository.Queries.Home;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SimplyBooks.Models.QueryModels;
 
 namespace SimplyBooks.Services.Home
 {

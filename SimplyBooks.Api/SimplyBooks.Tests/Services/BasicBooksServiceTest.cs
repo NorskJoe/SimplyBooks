@@ -1,11 +1,11 @@
 ﻿using Moq;
 using SimplyBooks.Models;
-using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Services.Books;
 using System.Collections.Generic;
 using System.Linq;
+using SimplyBooks.Models.QueryModels;
 using Xunit;
 
 namespace SimplyBooks.Tests.Services

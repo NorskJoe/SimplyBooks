@@ -1,9 +1,9 @@
 ﻿using SimplyBooks.Models;
-using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Repository.Commands.Nationalities;
 using SimplyBooks.Repository.Queries.Nationalities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SimplyBooks.Models.QueryModels;
 
 namespace SimplyBooks.Services.Nationalities
 {

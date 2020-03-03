@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SimplyBooks.Models;
 using SimplyBooks.Models.Dtos;
-using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Books;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using SimplyBooks.Models.QueryModels;
 using SimplyBooks.Web.Controllers.Books;
 using Xunit;
 

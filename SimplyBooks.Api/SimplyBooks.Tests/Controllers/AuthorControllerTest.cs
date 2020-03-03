@@ -1,10 +1,10 @@
 ﻿using Moq;
 using SimplyBooks.Models;
-using SimplyBooks.Models.ResultModels;
 using SimplyBooks.Services.Authors;
 using SimplyBooks.Web.Controllers.Authors;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using SimplyBooks.Models.QueryModels;
 using SimplyBooks.Repository.Queries.Authors;
 using Xunit;
 

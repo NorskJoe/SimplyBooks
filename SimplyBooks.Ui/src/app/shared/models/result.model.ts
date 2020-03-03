@@ -8,3 +8,8 @@ export class Result {
 export class ResultValue<T> extends Result {
   public value: T;
 }
+
+export class PagedResult<T> {
+	total: number;
+	items: T[];
+}

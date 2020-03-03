@@ -32,6 +32,7 @@ export class BookFilterComponent implements OnInit {
 	}
 
 	applyFilter() {
+
 		this.filter.emit({
 			title: this.model.title,
 			authorId: this.model.authorId,

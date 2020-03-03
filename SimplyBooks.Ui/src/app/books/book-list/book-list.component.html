@@ -1,4 +1,5 @@
-<kendo-grid [data]="list">
+<kendo-grid [data]="list" [pageable]="{ pageSizes: state.pageSizes }"
+[pageSize]="state.pageSize" [skip]="state.skip" (dataStateChange)="dataStateChanged($event)" [scrollable]="'none'">
 	<kendo-grid-column field="title" title="{{ '_Title' | translate }}"></kendo-grid-column>
 	<kendo-grid-column field="author" title="{{ '_Author' | translate }}"></kendo-grid-column>
 	<kendo-grid-column field="genre" title="{{ '_Genre' | translate }}"></kendo-grid-column>

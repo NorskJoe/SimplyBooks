@@ -61,11 +61,11 @@
 				</div>
 			</div>
 			<div class="action-buttons">
-				<button type="button" class="btn cancel">
+				<button type="button" class="btn cancel" (click)="cancel()">
 					{{ 'Filter_ClearFilter' | translate }}
 				</button>
 
-				<button type="button" type="submit" class="btn apply-filter" (click)="cancel()">
+				<button type="button" type="submit" class="btn apply-filter">
 					{{ 'Filter_ApplyFilter' | translate }}
 				</button>
 			</div>

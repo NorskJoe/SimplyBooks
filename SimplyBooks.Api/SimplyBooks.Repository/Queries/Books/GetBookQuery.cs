@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SimplyBooks.Models;
-using SimplyBooks.Models.ResultModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using SimplyBooks.Models.Extensions;
+using SimplyBooks.Models.QueryModels;
 
 namespace SimplyBooks.Repository.Queries.Books
 {
