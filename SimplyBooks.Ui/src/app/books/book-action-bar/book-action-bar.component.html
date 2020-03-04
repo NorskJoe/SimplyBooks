@@ -1,1 +1,6 @@
-<p>book-action-bar works!</p>
+<div class="action-bar-container">
+	<button class="btn" (click)="openDialog()">{{ 'Book_ActionBar_AddNew' | translate }}</button>
+	<kendo-dialog *ngIf="opened" title="{{ 'Book_ActionBar_AddNew' | translate }}" (close)="close()" [width]="'60%'" [height]="'80%'">
+		<app-book-add></app-book-add>
+	</kendo-dialog>
+</div>

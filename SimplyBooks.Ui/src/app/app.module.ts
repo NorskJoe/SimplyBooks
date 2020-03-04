@@ -19,9 +19,8 @@ import { HomeModule } from './home/home.module';
 import { HomeService } from './services/home.service';
 import { AuthorService } from './services/authors.service';
 import { GenreService } from './services/genres.service';
-import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
-import { FormsModule } from '@angular/forms';
 import { BookService } from './services/books.service';
+
 
 
 

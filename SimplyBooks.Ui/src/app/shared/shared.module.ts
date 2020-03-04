@@ -6,8 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { FormsModule } from '@angular/forms';
-
-
+import { DialogsModule } from '@progress/kendo-angular-dialog';
 
 @NgModule({
 	imports: [
@@ -17,7 +16,8 @@ import { FormsModule } from '@angular/forms';
 		TranslateModule,
 		DropDownsModule,
 		DateInputsModule,
-		FormsModule
+		FormsModule,
+		DialogsModule
 	],
 	exports: [
 		CommonModule,
@@ -26,7 +26,8 @@ import { FormsModule } from '@angular/forms';
 		TranslateModule,
 		DropDownsModule,
 		DateInputsModule,
-		FormsModule
+		FormsModule,
+		DialogsModule
 	]
 })
 export class SharedModule { }

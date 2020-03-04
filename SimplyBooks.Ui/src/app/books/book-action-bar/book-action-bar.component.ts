@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookActionBarComponent implements OnInit {
 
-  constructor() { }
+	opened = false;
 
-  ngOnInit(): void {
-  }
+	constructor() { }
 
+	ngOnInit(): void {
+	}
+
+	openDialog() {
+		this.opened = true;
+	}
+
+	close() {
+		this.opened = false;
+	}
 }

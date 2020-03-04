@@ -14,5 +14,6 @@
     "_Nationality": "Nationality",
     "_Rating": "Rating",
     "_Title": "Title",
-    "_Warning": "Warning"
+	"_Warning": "Warning",
+	"Book_ActionBar_AddNew": "Add New Book"
 }
