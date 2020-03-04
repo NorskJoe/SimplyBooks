@@ -5,14 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './book-action-bar.component.html',
   styleUrls: ['./book-action-bar.component.less']
 })
-export class BookActionBarComponent implements OnInit {
+export class BookActionBarComponent {
 
 	opened = false;
 
 	constructor() { }
-
-	ngOnInit(): void {
-	}
 
 	openDialog() {
 		this.opened = true;
