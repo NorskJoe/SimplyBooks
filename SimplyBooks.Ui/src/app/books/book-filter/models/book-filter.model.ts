@@ -20,6 +20,6 @@ export class BookListFilter {
 	public title: string;
 	public authorId: number;
 	public genreId: number;
-	public yearRead: Date;
-	public yearPublished: Date;
+	public yearRead: number;
+	public yearPublished: number;
 }

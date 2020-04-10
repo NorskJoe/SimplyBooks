@@ -15,6 +15,7 @@ export class BookFilterComponent implements OnInit {
 	genreList: GenreListItem[];
 	authorList: AuthorListItem[];
 	model: BookListFilter;
+	yearList: number[] = [];
 
 	constructor(private authorService: AuthorService,
 		private genreService: GenreService) { }
@@ -29,10 +30,15 @@ export class BookFilterComponent implements OnInit {
 		this.genreService.selectList().subscribe(result => {
 			this.genreList = result.value.items;
 		});
+
+		const startYear = 1900;
+		let currentYear = new Date().getFullYear();
+		while (startYear <= currentYear) {
+			this.yearList.push(currentYear--);
+		}
 	}
 
 	applyFilter() {
-
 		this.filter.emit({
 			title: this.model.title,
 			authorId: this.model.authorId,

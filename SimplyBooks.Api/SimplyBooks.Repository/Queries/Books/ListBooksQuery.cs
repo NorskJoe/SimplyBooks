@@ -64,12 +64,12 @@ namespace SimplyBooks.Repository.Queries.Books
 
                     if (criteria.YearRead.HasValue)
                     {
-                        query = query.Where(x => x.b.DateRead.Year == criteria.YearRead.Value.Year);
+                        query = query.Where(x => x.b.DateRead.Year == criteria.YearRead);
                     }
 
                     if (criteria.YearPublished.HasValue)
                     {
-                        query = query.Where(x => x.b.YearPublished.Year == criteria.YearPublished.Value.Year);
+                        query = query.Where(x => x.b.YearPublished.Year == criteria.YearPublished);
                     }
 
                     result.Value = await query
@@ -101,8 +101,8 @@ namespace SimplyBooks.Repository.Queries.Books
         public string BookTitle { get; set; }
         public int? AuthorId { get; set; }
         public int? GenreId { get; set; }
-        public DateTime? YearRead { get; set; }
-        public DateTime? YearPublished { get; set; }
+        public int? YearRead { get; set; }
+        public int? YearPublished { get; set; }
     }
 
     public class BookListItem

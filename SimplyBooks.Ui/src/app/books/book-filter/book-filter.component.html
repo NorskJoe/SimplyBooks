@@ -42,11 +42,11 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label class="control-label" for="yearRead">
-							{{ '_DateRead' | translate }}
+							{{ 'Filter_YearRead' | translate }}
 						</label>
-						<kendo-datepicker class="form-control" [(value)]="model.yearRead" [format]="'yyyy'"
-							[bottomView]="'year'" placeholder="" id="yearRead">
-						</kendo-datepicker>
+						<kendo-dropdownlist class="form-control" id="yearRead" [data]="yearList"
+							[(ngModel)]="model.yearRead" name="yearRead">
+						</kendo-dropdownlist>
 					</div>
 				</div>
 				<div class="col-sm-4">
@@ -54,9 +54,8 @@
 						<label class="control-label" for="yearPublished">
 							{{ '_DatePublished' | translate }}
 						</label>
-						<kendo-datepicker class="form-control" [(value)]="model.yearPublished" [format]="'yyyy'"
-							[bottomView]="'year'" placeholder="" id="yearPublished">
-						</kendo-datepicker>
+						<kendo-dropdownlist class="form-control" id="yearPublished" [data]="yearList"
+							[(ngModel)]="model.yearPublished" name="yearPublished"></kendo-dropdownlist>
 					</div>
 				</div>
 			</div>

@@ -1,7 +1,7 @@
 <div class="book-list-container">
 	<app-book-filter (filter)="applyFilter($event)" (clear)="clear()"></app-book-filter>
-	<app-book-action-bar></app-book-action-bar>
-	<div *ngIf="data">
-		<app-book-list [list]="data" [(state)]="state" (stateChange)="stateChanged()"></app-book-list>
+	<div>
+		<app-book-action-bar></app-book-action-bar>
 	</div>
+	<app-book-list [list]="data" [(state)]="state" (stateChange)="stateChanged()"></app-book-list>
 </div>

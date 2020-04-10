@@ -4,8 +4,8 @@ export class BookListCriteria extends ListCriteria {
 	public bookTitle: string;
 	public authorId: number;
 	public genreId: number;
-	public yearRead: Date;
-	public yearPublished: Date;
+	public yearRead: number;
+	public yearPublished: number;
 }
 
 export class BookList {
