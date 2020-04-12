@@ -21,8 +21,7 @@ import { AuthorService } from './services/authors.service';
 import { GenreService } from './services/genres.service';
 import { BookService } from './services/books.service';
 import { NationalityService } from './services/nationality.service';
-
-
+import { TooltipModule } from '@progress/kendo-angular-tooltip';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 				useFactory: HttpLoaderFactory,
 				deps: [HttpClient]
 			}
-		})
+		}),
+		TooltipModule
 	],
 	providers: [
 		ConstantsService,

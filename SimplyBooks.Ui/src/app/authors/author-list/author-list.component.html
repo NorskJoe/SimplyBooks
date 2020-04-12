@@ -5,7 +5,11 @@
 	<kendo-grid-column field="booksRead" title="{{ 'AuthorList_BooksRead' | translate }}"></kendo-grid-column>
 	<kendo-grid-column field="averageRating" title="{{ 'AuthorList_AverageRating' | translate }}">
 		<ng-template kendoGridCellTemplate let-dataItem>
-			{{ dataItem.averageRating | number:'1.2-2' }}
+			<div class="star-rating">
+				<ngx-stars [readonly]="true" [maxStars]="10" [initialStars]="dataItem.averageRating"
+					[color]="'#550022'">
+				</ngx-stars>
+			</div>
 		</ng-template>
 	</kendo-grid-column>
 </kendo-grid>

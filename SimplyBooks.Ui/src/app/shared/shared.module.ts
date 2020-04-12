@@ -7,6 +7,8 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { FormsModule } from '@angular/forms';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
+import { TooltipModule } from '@progress/kendo-angular-tooltip';
+import { NgxStarsModule, NgxStarsComponent } from 'ngx-stars';
 
 @NgModule({
 	imports: [
@@ -17,9 +19,12 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 		DropDownsModule,
 		DateInputsModule,
 		FormsModule,
-		DialogsModule
+		DialogsModule,
+		TooltipModule,
+		NgxStarsModule
 	],
 	exports: [
+		// Modules
 		CommonModule,
 		RouterModule,
 		GridModule,
@@ -27,7 +32,10 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 		DropDownsModule,
 		DateInputsModule,
 		FormsModule,
-		DialogsModule
+		DialogsModule,
+		TooltipModule,
+		// Components
+		NgxStarsComponent,
 	]
 })
 export class SharedModule { }
