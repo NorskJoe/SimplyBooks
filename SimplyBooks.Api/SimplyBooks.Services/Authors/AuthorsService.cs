@@ -4,12 +4,14 @@ using SimplyBooks.Repository.Queries.Authors;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SimplyBooks.Models.QueryModels;
+using System.Linq;
+using Microsoft.Extensions.Localization;
 
 namespace SimplyBooks.Services.Authors
 {
     public interface IAuthorsService
     {
-        Task<Result<AuthorList>> ListAllAuthorsAsync();
+        Task<Result<PagedResult<AuthorListItem>>> ListAuthorsAsync(AuthorListCriteria criteria);
         Task<Result<AuthorSelectList>> SelectList();
         Task<Result> AddAuthorAsync(Author author);
         Task<Result> UpdateAuthorAsync(Author author);
@@ -19,32 +21,47 @@ namespace SimplyBooks.Services.Authors
     {
         private readonly IAddAuthorCommand _addAuthorCommand;
         private readonly IUpdateAuthorCommand _updateAuthorCommand;
-        private readonly IListAllAuthorsQuery _listAllAuthorsQuery;
+        private readonly IListAuthorsQuery _listAuthorsQuery;
         private readonly IAuthorSelectListQuery _authorSelectListQuery;
+        private readonly IStringLocalizer<AuthorsService> _localiser;
 
         public AuthorsService(IAddAuthorCommand addAuthorCommand,
             IUpdateAuthorCommand updateAuthorCommand,
-            IListAllAuthorsQuery listAllAuthorsQuery,
-            IAuthorSelectListQuery authorSelectListQuery)
+            IListAuthorsQuery listAuthorsQuery,
+            IAuthorSelectListQuery authorSelectListQuery,
+            IStringLocalizer<AuthorsService> localiser)
         {
-            _listAllAuthorsQuery = listAllAuthorsQuery;
+            _listAuthorsQuery = listAuthorsQuery;
             _addAuthorCommand = addAuthorCommand;
             _updateAuthorCommand = updateAuthorCommand;
             _authorSelectListQuery = authorSelectListQuery;
+            _localiser = localiser;
         }
 
-        public async Task<Result<AuthorList>> ListAllAuthorsAsync()
+        public async Task<Result<PagedResult<AuthorListItem>>> ListAuthorsAsync(AuthorListCriteria criteria)
         {
-            var result = new Result<AuthorList>();
+            var result = new Result<PagedResult<AuthorListItem>>();
 
-            var queryResult = await _listAllAuthorsQuery.Execute();
+            var queryResult = await _listAuthorsQuery.Execute(criteria);
 
             if (queryResult.IsSuccess)
             {
-                result.Value = new AuthorList
+                var rowItems = queryResult.Value
+                    .Skip(criteria.FirstRecord)
+                    .Take(criteria.PageSize)
+                    .ToList();
+
+                result.Value = new PagedResult<AuthorListItem>
                 {
-                    Items = queryResult.Value
+                    Items = rowItems,
+                    PageIndex = criteria.PageIndex,
+                    Total = queryResult.Value.Count
                 };
+
+                if (queryResult.Value.Count == 0)
+                {
+                    result.Warnings.Add(_localiser["NoAuthorsFound"]);
+                }
             }
             else
             {
@@ -86,11 +103,6 @@ namespace SimplyBooks.Services.Authors
         {
             return await _updateAuthorCommand.Execute(author);
         }
-    }
-
-    public class AuthorList
-    {
-        public IList<AuthorItem> Items { get; set; }
     }
 
     public class AuthorSelectList

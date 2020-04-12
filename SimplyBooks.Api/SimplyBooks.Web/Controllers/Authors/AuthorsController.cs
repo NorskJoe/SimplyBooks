@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Services.Authors;
 
 namespace SimplyBooks.Web.Controllers.Authors
@@ -19,10 +21,10 @@ namespace SimplyBooks.Web.Controllers.Authors
 
         // GET: /authors/list
         [HttpGet("list")]
-        [ProducesResponseType(typeof(AuthorList), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListAllAuthors()
+        [ProducesResponseType(typeof(PagedResult<AuthorListItem>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListAuthors([FromQuery]AuthorListCriteria criteria)
         {
-            return Ok(await _authorsService.ListAllAuthorsAsync());
+            return Ok(await _authorsService.ListAuthorsAsync(criteria));
         }
 
         // GET: /authors/select-list

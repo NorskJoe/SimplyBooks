@@ -20,6 +20,7 @@ import { HomeService } from './services/home.service';
 import { AuthorService } from './services/authors.service';
 import { GenreService } from './services/genres.service';
 import { BookService } from './services/books.service';
+import { NationalityService } from './services/nationality.service';
 
 
 
@@ -58,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		AuthorService,
 		GenreService,
 		BookService,
+		NationalityService,
 		{ provide: ErrorHandler, useClass: SimplyBooksErrorHandler }
 	],
 	bootstrap: [AppComponent],

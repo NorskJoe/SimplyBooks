@@ -15,6 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Authors\AuthorsService.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AuthorsService.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Books\BooksService.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -23,6 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Authors\AuthorsService.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AuthorsService.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Books\BooksService.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BooksService.Designer.cs</LastGenOutput>

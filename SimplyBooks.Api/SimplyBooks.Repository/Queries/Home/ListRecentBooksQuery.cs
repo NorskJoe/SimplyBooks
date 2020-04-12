@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SimplyBooks.Models.Extensions;
 using SimplyBooks.Models.QueryModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace SimplyBooks.Repository.Queries.Home
 {
@@ -32,7 +33,7 @@ namespace SimplyBooks.Repository.Queries.Home
 
             try
             {
-                result.Value = _context.Book
+                result.Value = await _context.Book
                     .Join(_context.Author,
                         b => b.Author.AuthorId,
                         a => a.AuthorId,
@@ -46,7 +47,7 @@ namespace SimplyBooks.Repository.Queries.Home
                         DateRead = x.b.DateRead
                     })
                     .Take(10)
-                    .ToList();
+                    .ToListAsync();
             }
             catch (Exception ex)
             {

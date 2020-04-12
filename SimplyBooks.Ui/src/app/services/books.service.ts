@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConstantsService } from './constants.service';
 import { HttpClientService } from './http.service';
 import { Observable } from 'rxjs';
-import { BookListCriteria, BookList } from '../books/book-filter/models/book-service.model';
+import { BookListCriteria, BookList } from '../books/models/book-service.model';
 import { ResultValue, PagedResult } from '../shared/models/result.model';
 import { HttpParams } from '@angular/common/http';
 

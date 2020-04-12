@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AuthorListItem, GenreListItem, BookListFilter } from './models/book-filter.model';
+import { AuthorListItem, GenreListItem, BookListFilter } from '../models/book-filter.model';
 import { AuthorService } from 'src/app/services/authors.service';
 import { GenreService } from 'src/app/services/genres.service';
 

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { BookListFilter } from './book-filter/models/book-filter.model';
-import { BookListCriteria } from './book-filter/models/book-service.model';
+import { Component } from '@angular/core';
+import { BookListFilter } from './models/book-filter.model';
+import { BookListCriteria } from './models/book-service.model';
 import { BookService } from '../services/books.service';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { NotificationService } from '../services/notification.service';
@@ -11,7 +11,7 @@ import { List } from '../shared/models/list.model';
 	templateUrl: './book.component.html',
 	styleUrls: ['./book.component.less']
 })
-export class BookComponent extends List implements OnInit {
+export class BookComponent extends List {
 
 	filter: BookListFilter;
 	data: GridDataResult;
@@ -20,9 +20,6 @@ export class BookComponent extends List implements OnInit {
 		private notificationService: NotificationService,
 		private translateService: TranslateService) {
 		super();
-	}
-
-	ngOnInit(): void {
 	}
 
 	applyFilter(filter: BookListFilter) {

@@ -1,0 +1,11 @@
+<kendo-grid [data]="list" [pageable]="{ pageSizes: state.pageSizes }" [pageSize]="state.pageSize" [skip]="state.skip"
+	(dataStateChange)="dataStateChanged($event)" [scrollable]="'none'">
+	<kendo-grid-column field="name" title="{{ '_Name' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="nationality" title="{{ '_Nationality' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="booksRead" title="{{ 'AuthorList_BooksRead' | translate }}"></kendo-grid-column>
+	<kendo-grid-column field="averageRating" title="{{ 'AuthorList_AverageRating' | translate }}">
+		<ng-template kendoGridCellTemplate let-dataItem>
+			{{ dataItem.averageRating | number:'1.2-2' }}
+		</ng-template>
+	</kendo-grid-column>
+</kendo-grid>

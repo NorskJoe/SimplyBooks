@@ -12,6 +12,7 @@ namespace SimplyBooks.Services.Nationalities
         Task<Result<IList<Nationality>>> ListAllNationalitiesAsync();
         Task<Result> AddNationalityAsync(Nationality nationality);
         Task<Result> UpdateNationalityAsync(Nationality nationality);
+        Task<Result<NationalitySelectList>> SelectList(); 
     }
 
     public class NationalityService : INationalityService
@@ -19,19 +20,43 @@ namespace SimplyBooks.Services.Nationalities
         private readonly IAddNationalityCommand _addNationalityCommand;
         private readonly IUpdateNationalityCommand _updateNationalityCommand;
         private readonly IListAllNationalitiesQuery _listAllNationalitiesQuery;
+        private readonly INationalitySelectListQuery _nationalitySelectListQuery;
 
         public NationalityService(IAddNationalityCommand addNationalityCommand,
             IUpdateNationalityCommand updateNationalityCommand,
-            IListAllNationalitiesQuery listAllNationalitiesQuery)
+            IListAllNationalitiesQuery listAllNationalitiesQuery,
+            INationalitySelectListQuery nationalitySelectListQuery)
         {
             _addNationalityCommand = addNationalityCommand;
             _updateNationalityCommand = updateNationalityCommand;
             _listAllNationalitiesQuery = listAllNationalitiesQuery;
+            _nationalitySelectListQuery = nationalitySelectListQuery;
         }
 
         public async Task<Result<IList<Nationality>>> ListAllNationalitiesAsync()
         {
             return await _listAllNationalitiesQuery.Execute();
+        }
+
+        public async Task<Result<NationalitySelectList>> SelectList()
+        {
+            var result = new Result<NationalitySelectList>();
+
+            var queryResult = await _nationalitySelectListQuery.Execute();
+
+            if (queryResult.IsSuccess)
+            {
+                result.Value = new NationalitySelectList
+                {
+                    Items = queryResult.Value
+                };
+            }
+            else
+            {
+                result.Errors = queryResult.Errors;
+            }
+
+            return result;
         }
 
         public async Task<Result> AddNationalityAsync(Nationality nationality)
@@ -44,5 +69,10 @@ namespace SimplyBooks.Services.Nationalities
         {
             return await _updateNationalityCommand.Execute(nationality);
         }
+    }
+
+    public class NationalitySelectList
+    {
+        public IList<NationalitySelectListItem> Items { get; set; }
     }
 }

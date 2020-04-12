@@ -1,0 +1,41 @@
+<div class="filter-box book-filter-container">
+	<form novalidate (submit)="applyFilter()">
+		<div class="filter-box-header col-xs-12">
+			<div class="col-xs-12">
+				<span>{{'_Filter' | translate }}</span>
+			</div>
+		</div>
+		<div class="col-xs-12 filter-box-form" id="filter-form">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="name">
+							{{ '_Name' | translate }}
+						</label>
+						<input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name">
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="author">
+							{{ '_Nationality' | translate }}
+						</label>
+						<kendo-combobox class="form-control" [data]="nationalityList" [textField]="'name'"
+							[valueField]="'nationalityId'" [valuePrimitive]="true" [(ngModel)]="model.nationalityId"
+							name="nationalityId" id="nationality">
+						</kendo-combobox>
+					</div>
+				</div>
+			</div>
+			<div class="action-buttons">
+				<button type="button" class="btn cancel" (click)="cancel()">
+					{{ 'Filter_ClearFilter' | translate }}
+				</button>
+
+				<button type="button" type="submit" class="btn apply-filter">
+					{{ 'Filter_ApplyFilter' | translate }}
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

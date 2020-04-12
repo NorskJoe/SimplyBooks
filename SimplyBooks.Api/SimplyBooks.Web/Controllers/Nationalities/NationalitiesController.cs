@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Models;
+using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Services.Nationalities;
 
 namespace SimplyBooks.Web.Controllers.Nationalities
@@ -25,6 +26,14 @@ namespace SimplyBooks.Web.Controllers.Nationalities
         {
             var result = await _nationalityService.ListAllNationalitiesAsync();
             return Ok(result);
+        }
+
+        // GET: /nationalities/select-list
+        [HttpGet("select-list")]
+        [ProducesResponseType(typeof(NationalitySelectList), StatusCodes.Status200OK)]
+        public async Task<IActionResult> SelectList()
+        {
+            return Ok(await _nationalityService.SelectList());
         }
 
         // POST: /nationalities/add/{nationality}

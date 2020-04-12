@@ -87,7 +87,7 @@ namespace SimplyBooks.Web
         private void RegisterQueries(IServiceCollection services)
         {
             // Authors
-            services.AddTransient<IListAllAuthorsQuery, ListAllAuthorsQuery>();
+            services.AddTransient<IListAuthorsQuery, ListAuthorsQuery>();
             services.AddTransient<IAuthorSelectListQuery, AuthorSelectListQuery>();
 
             // Books
@@ -100,6 +100,7 @@ namespace SimplyBooks.Web
 
             // Nationalities
             services.AddTransient<IListAllNationalitiesQuery, ListAllNationalitiesQuery>();
+            services.AddTransient<INationalitySelectListQuery, NationalitySelectListQuery>();
 
             // Home
             services.AddTransient<IListRecentBooksQuery, ListRecentBooksQuery>();
