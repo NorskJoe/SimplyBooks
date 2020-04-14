@@ -1,5 +1,81 @@
 <div class="add-book-container">
-	<form (submit)="addBook()">
-		<!-- https://angular.io/guide/forms -->
-	</form>>
+	<form class="add-book-form" (submit)="addBook()">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="title">
+					{{ '_Title' | translate }}
+				</label>
+				<input type="text" class="form-control" id="title" [(ngModel)]="model.title" name="title">
+			</div>
+		</div>
+		<div class="column-row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="control-label" for="author">
+						{{ '_Author' | translate }}
+					</label>
+					<kendo-combobox class="form-control" [data]="authorList" [textField]="'name'"
+						[valueField]="'authorId'" [valuePrimitive]="true" [(ngModel)]="authorId" name="authorId"
+						id="author">
+					</kendo-combobox>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<button type="button" class="btn add-new">
+					{{ 'Book_AddNew_AddNewButton' | translate }}
+				</button>
+			</div>
+		</div>
+		<div class="column-row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="control-label" for="genre">
+						{{ '_Genre' | translate }}
+					</label>
+					<kendo-combobox class="form-control" [data]="genreList" [textField]="'name'"
+						[valueField]="'genreId'" [valuePrimitive]="true" [(ngModel)]="genreId" name="genreId"
+						id="genre">
+					</kendo-combobox>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<button type="button" class="btn add-new">
+					{{ 'Book_AddNew_AddNewButton' | translate }}
+				</button>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="rating">
+					{{ '_Rating' | translate }}
+				</label>
+				<ngx-stars [maxStars]="10" [color]="'#550022'" (ratingOutput)="ratingClicked($event)"></ngx-stars>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="dateRead">
+					{{ '_DateRead' | translate }}
+				</label>
+				<kendo-datepicker class="form-control" [(ngModel)]="model.dateRead" [format]="'dd/MM/yyyy'"
+					placeholder="" name="dateRead" id="dateRead">
+				</kendo-datepicker>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="datePublished">
+					{{ '_DatePublished' | translate }}
+				</label>
+				<kendo-datepicker class="form-control" [(ngModel)]="model.datePublished" [format]="'dd/MM/yyyy'"
+					placeholder="" name="datePublished" id="datePublished">
+				</kendo-datepicker>
+			</div>
+		</div>
+		<div class="text-right">
+			<button kendoButton type="button" type="submit" class="btn submit">
+				{{ 'Book_AddNew_Submit' | translate }}
+			</button>
+		</div>
+	</form>
 </div>

@@ -1,6 +1,7 @@
 <div class="action-bar-container">
 	<button class="btn" (click)="openDialog()">{{ 'Book_ActionBar_AddNew' | translate }}</button>
-	<kendo-dialog *ngIf="opened" title="{{ 'Book_ActionBar_AddNew' | translate }}" (close)="close()" [width]="'60%'" [height]="'80%'">
+	<kendo-window *ngIf="opened" title="{{ 'Book_ActionBar_AddNew' | translate }}" (close)="close()" [minWidth]="450"
+		[width]="550">
 		<app-book-add></app-book-add>
-	</kendo-dialog>
+	</kendo-window>
 </div>

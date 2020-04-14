@@ -33,10 +33,19 @@ namespace SimplyBooks.Repository.Queries.Authors
             try
             {
                 result.Value = await _context.Author
+                    .Join(_context.Nationality,
+                        a => a.Nationality.NationalityId,
+                        n => n.NationalityId,
+                        (a, n) => new { a, n})
                     .Select(x => new AuthorSelectListItem
                     {
-                        Name = x.Name,
-                        AuthorId = x.AuthorId
+                        Name = x.a.Name,
+                        AuthorId = x.a.AuthorId,
+                        Nationality = new Nationality 
+                        { 
+                            Name = x.n.Name, 
+                            NationalityId = x.n.NationalityId 
+                        }
                     })
                     .OrderBy(x => x.Name)
                     .ToListAsync();
@@ -56,5 +65,6 @@ namespace SimplyBooks.Repository.Queries.Authors
     {
         public string Name { get; set; }
         public int AuthorId { get; set; }
+        public Nationality Nationality { get; set; }
     }
 }

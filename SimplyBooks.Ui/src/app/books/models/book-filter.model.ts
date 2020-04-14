@@ -14,6 +14,12 @@ export class AuthorSelectList {
 export class AuthorListItem {
 	public name: string;
 	public authorId: number;
+	public nationality: Nationality;
+}
+
+export class Nationality {
+	public name: string;
+	public nationalityId: number;
 }
 
 export class BookListFilter {
