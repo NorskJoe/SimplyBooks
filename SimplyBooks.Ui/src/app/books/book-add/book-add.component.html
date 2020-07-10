@@ -21,12 +21,12 @@
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<button type="button" class="btn add-new">
+				<button type="button" class="btn add-new" (click)="newAuthorClicked()">
 					{{ 'Book_AddNew_AddNewButton' | translate }}
 				</button>
 			</div>
 		</div>
-		<div class="column-row">
+		<div *ngIf="!newGenreOpened" class="column-row">
 			<div class="col-sm-6">
 				<div class="form-group">
 					<label class="control-label" for="genre">
@@ -39,11 +39,12 @@
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<button type="button" class="btn add-new">
+				<button type="button" class="btn add-new" (click)="newGenreClicked()">
 					{{ 'Book_AddNew_AddNewButton' | translate }}
 				</button>
 			</div>
 		</div>
+		<app-genre-add *ngIf="newGenreOpened" (newGenre)="addGenre($event)"></app-genre-add>
 		<div class="col-sm-6">
 			<div class="form-group">
 				<label class="control-label" for="rating">

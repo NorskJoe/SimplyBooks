@@ -6,6 +6,8 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookActionBarComponent } from './book-action-bar/book-action-bar.component';
 import { BookDetailComponent } from './book-detail/book-detail.component';
 import { BookAddComponent } from './book-add/book-add.component';
+import { AuthorsModule } from '../authors/authors.module';
+import { GenresModule } from '../genres/genres.module';
 
 
 
@@ -19,7 +21,9 @@ import { BookAddComponent } from './book-add/book-add.component';
 		BookAddComponent
 	],
 	imports: [
-		SharedModule
+		SharedModule,
+		AuthorsModule,
+		GenresModule
 	]
 })
 export class BooksModule { }

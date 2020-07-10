@@ -13,6 +13,7 @@
 	"_Warning": "Warning",
 	"Book_AddNew_Submit": "Submit",
 	"Book_AddNew_AddNewButton": "+ Add New",
+	"Book_AddNew_AddNewAuthor": "Add Author",
 	"Book_ActionBar_AddNew": "Add New Book",
 	"Filter_ApplyFilter": "Apply Filter",
 	"Filter_ClearFilter": "Clear",
@@ -22,5 +23,7 @@
 	"Navigation_Books": "Books",
 	"Navigation_Home": "Home",
 	"AuthorList_BooksRead": "Books Read",
-	"AuthorList_AverageRating": "Average Rating"
+	"AuthorList_AverageRating": "Average Rating",
+	"Genre_AddNew_Done": "Done",
+	"Genre_AddNew_Saved": "Saved"
 }

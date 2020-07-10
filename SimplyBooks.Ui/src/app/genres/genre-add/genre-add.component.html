@@ -1,0 +1,20 @@
+<div class="new-genre-container">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="genre">
+					{{ '_Genre' | translate }}
+				</label>
+				<input [readonly]="saved" type="text" class="form-control" id="genre" [(ngModel)]="genre" name="genre">
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<button *ngIf="!saved" type="button" class="btn add-new" (click)="save()">
+				{{ 'Genre_AddNew_Done' | translate }}
+			</button>
+			<button *ngIf="saved" type="button" class="btn saved">
+				{{ 'Genre_AddNew_Saved' | translate }}
+			</button>
+		</div>
+	</div>
+</div>

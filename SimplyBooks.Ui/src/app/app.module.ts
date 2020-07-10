@@ -22,6 +22,7 @@ import { GenreService } from './services/genres.service';
 import { BookService } from './services/books.service';
 import { NationalityService } from './services/nationality.service';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
+import { GenreAddComponent } from './genres/genre-add/genre-add.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {

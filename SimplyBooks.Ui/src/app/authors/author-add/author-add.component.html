@@ -1,0 +1,30 @@
+<div class="author-add-container">
+	<form class="author-add-form" (submit)="addAuthor()">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="name">
+					{{ '_Name' | translate }}
+				</label>
+				<input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name">
+			</div>
+		</div>
+		<div class="column-row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="control-label" for="nationality">
+						{{ '_Nationality' | translate }}
+					</label>
+					<kendo-combobox class="form-control" [data]="nationalityList" [textField]="'name'"
+						[valueField]="'nationalityId'" [valuePrimitive]="true" [(ngModel)]="nationalityId"
+						name="nationalityId" id="nationality">
+					</kendo-combobox>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<button type="button" class="btn add-new">
+					{{ 'Book_AddNew_AddNewButton' | translate }}
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
