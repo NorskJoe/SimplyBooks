@@ -14,17 +14,17 @@ namespace SimplyBooks.Tests.Services
     {
         protected Mock<IAddAuthorCommand> AddAuthorCommandMock { get; }
         protected Mock<IUpdateAuthorCommand> UpdateAuthorCommandMock { get; }
-        protected Mock<IListAllAuthorsQuery> ListAllAuthorsQueryMock { get; }
+        protected Mock<IListAuthorsQuery> ListAuthorsQueryMock { get; }
         protected AuthorsService ServiceUnderTest { get; }
 
         public AuthorsServiceTest()
         {
             AddAuthorCommandMock = new Mock<IAddAuthorCommand>();
             UpdateAuthorCommandMock = new Mock<IUpdateAuthorCommand>();
-            ListAllAuthorsQueryMock = new Mock<IListAllAuthorsQuery>();
+            ListAuthorsQueryMock = new Mock<IListAuthorsQuery>();
             ServiceUnderTest = new AuthorsService(AddAuthorCommandMock.Object,
                 UpdateAuthorCommandMock.Object,
-                ListAllAuthorsQueryMock.Object);
+                ListAuthorsQueryMock.Object);
         }
 
         public class ListAllAuthorsAsync : AuthorsServiceTest

@@ -42,11 +42,11 @@ namespace SimplyBooks.Tests.Controllers
                 };
                 var result = new Result<IList<AuthorListItem>>(authors);
                 AuthorServiceMock
-                    .Setup(x => x.ListAllAuthorsAsync())
+                    .Setup(x => x.ListAuthorsAsync())
                     .ReturnsAsync(result);
 
                 // Act
-                var requestResult = await ControllerUnderTest.ListAllAuthors();
+                var requestResult = await ControllerUnderTest.ListAuthors();
 
                 // Assert
                 var okResult = Assert.IsType<OkObjectResult>(requestResult);
@@ -140,6 +140,7 @@ namespace SimplyBooks.Tests.Controllers
                 };
                 var result = new Result();
                 result.AddError("there was an error");
+
                 AuthorServiceMock
                     .Setup(x => x.AddAuthorAsync(duplicateAuthor))
                     .ReturnsAsync(result);

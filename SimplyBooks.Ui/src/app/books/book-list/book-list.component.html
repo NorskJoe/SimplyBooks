@@ -1,13 +1,16 @@
-<kendo-grid [data]="list" [pageable]="{ pageSizes: state.pageSizes }" [pageSize]="state.pageSize" [skip]="state.skip"
-	(dataStateChange)="dataStateChanged($event)" [scrollable]="'none'">
+<kendo-grid [data]="list" [pageable]="{ pageSizes: state.pageSizes }"
+	[sortable]="{ mode: 'single', allowUnsort: false }" [sort]="[state.sort]" [pageSize]="state.pageSize"
+	[skip]="state.skip" (dataStateChange)="dataStateChanged($event)" [scrollable]="'none'">
 	<kendo-grid-column field="title" title="{{ '_Title' | translate }}"></kendo-grid-column>
 	<kendo-grid-column field="author" title="{{ '_Author' | translate }}"></kendo-grid-column>
 	<kendo-grid-column field="genre" title="{{ '_Genre' | translate }}"></kendo-grid-column>
 	<kendo-grid-column field="nationality" title="{{ '_Nationality' | translate }}"></kendo-grid-column>
 	<kendo-grid-column field="rating" title="{{ '_Rating' | translate }}">
 		<ng-template kendoGridCellTemplate let-dataItem>
-			<ngx-stars [readonly]="true" [maxStars]="10" [initialStars]="dataItem.rating" [color]="'#550022'">
-			</ngx-stars>
+			<!-- <ngx-stars [readonly]="true" [maxStars]="10" [initialStars]="dataItem.rating" [color]="'#550022'">
+			</ngx-stars> -->
+			<star-rating-comp [starType]="'svg'" [readOnly]="true" [showHalfStars]="true" [numOfStars]="10"
+				[rating]="dataItem.rating"></star-rating-comp>
 		</ng-template>
 	</kendo-grid-column>
 	<kendo-grid-column field="dateRead" title="{{ '_DateRead' | translate }}">

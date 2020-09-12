@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { TooltipModule } from '@progress/kendo-angular-tooltip';
 import { NgxStarsModule, NgxStarsComponent } from 'ngx-stars';
+import { StarRatingModule, StarRatingComponent } from 'angular-star-rating';
 
 @NgModule({
 	imports: [
@@ -21,7 +22,8 @@ import { NgxStarsModule, NgxStarsComponent } from 'ngx-stars';
 		FormsModule,
 		DialogsModule,
 		TooltipModule,
-		NgxStarsModule
+		NgxStarsModule,
+		StarRatingModule
 	],
 	exports: [
 		// Modules
@@ -36,6 +38,7 @@ import { NgxStarsModule, NgxStarsComponent } from 'ngx-stars';
 		TooltipModule,
 		// Components
 		NgxStarsComponent,
+		StarRatingComponent
 	]
 })
 export class SharedModule { }

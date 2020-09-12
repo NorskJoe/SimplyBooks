@@ -17,6 +17,8 @@ export class BookService {
 		let params = new HttpParams();
 		params = params.set('page', criteria.page.toString());
 		params = params.set('pageSize', criteria.pageSize.toString());
+		params = params.set('orderField', criteria.orderField.toString());
+		params = params.set('orderDirection', criteria.orderDirection.toString());
 
 		if (criteria.bookTitle) {
 			params = params.set('bookTitle', criteria.bookTitle);

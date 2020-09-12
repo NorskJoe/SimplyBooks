@@ -24,23 +24,25 @@ export class NotificationService {
 	}
 
 	public errors(messages: string[], title: string = null, options: any = null) {
-		if (!title) {
-			title = 'Error';
-		}
-		if (messages.length === 1) {
-			this.toastr.error(messages[0], title, options);
-		} else {
-			let message = `<ul class='multi-message'>`;
-			for (const msg of messages) {
-				message += `<li>${msg}</li>`;
+		if (messages.length > 0) {
+			if (!title) {
+				title = 'Error';
 			}
-			message += '</ul>';
-			if (options === null) {
-				options = { enableHtml: true };
+			if (messages.length === 1) {
+				this.toastr.error(messages[0], title, options);
 			} else {
-				options.enableHtml = true;
+				let message = `<ul class='multi-message'>`;
+				for (const msg of messages) {
+					message += `<li>${msg}</li>`;
+				}
+				message += '</ul>';
+				if (options === null) {
+					options = { enableHtml: true };
+				} else {
+					options.enableHtml = true;
+				}
+				this.toastr.error(message, title, options);
 			}
-			this.toastr.error(message, title, options);
 		}
 	}
 

@@ -47,6 +47,9 @@ namespace SimplyBooks.Repository.Queries.Books
                         g => g.GenreId,
                         (x, g) => new {x.b, x.a, x.n, g});
 
+                    /*
+                     * FILTER CRITERIA
+                     */
                     if (criteria.AuthorId.HasValue)
                     {
                         query = query.Where(x => x.a.AuthorId == criteria.AuthorId);
@@ -72,18 +75,49 @@ namespace SimplyBooks.Repository.Queries.Books
                         query = query.Where(x => x.b.YearPublished.Year == criteria.YearPublished);
                     }
 
-                    result.Value = await query
-                                    .Select(x => new BookListItem
-                                    {
-                                        Title = x.b.Title,
-                                        Author = x.a.Name,
-                                        Nationality = x.n.Name,
-                                        Genre = x.g.Name,
-                                        Rating = x.b.Rating,
-                                        DateRead = x.b.DateRead,
-                                        YearPublished = x.b.YearPublished
-                                    })
-                                    .ToListAsync();
+                /*
+                 * SORT CRITERIA
+                 */
+                switch (criteria.OrderField)
+                {
+                    case "title":
+                        query = query.OrderByDynamic(x => x.b.Title, criteria.OrderDirection);
+                        break;
+                    case "author":
+                        query = query.OrderByDynamic(x => x.a.Name, criteria.OrderDirection);
+                        break;
+                    case "genre":
+                        query = query.OrderByDynamic(x => x.g.Name, criteria.OrderDirection);
+                        break;
+                    case "nationality":
+                        query = query.OrderByDynamic(x => x.n.Name, criteria.OrderDirection);
+                        break;
+                    case "rating":
+                        query = query.OrderByDynamic(x => x.b.Rating, criteria.OrderDirection);
+                        break;
+                    case "dateRead":
+                        query = query.OrderByDynamic(x => x.b.DateRead, criteria.OrderDirection);
+                        break;
+                    case "yearPublished":
+                        query = query.OrderByDynamic(x => x.b.YearPublished, criteria.OrderDirection);
+                        break;
+                    default:
+                        query = query.OrderByDynamic(x => x.b.Title, OrderDirection.ASC);
+                        break;
+                }
+
+                result.Value = await query
+                    .Select(x => new BookListItem
+                    {
+                        Title = x.b.Title,
+                        Author = x.a.Name,
+                        Nationality = x.n.Name,
+                        Genre = x.g.Name,
+                        Rating = x.b.Rating,
+                        DateRead = x.b.DateRead,
+                        YearPublished = x.b.YearPublished
+                    })
+                    .ToListAsync();
             }
             catch (Exception ex)
             {

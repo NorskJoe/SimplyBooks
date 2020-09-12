@@ -9,7 +9,7 @@ namespace SimplyBooks.Models.Extensions
         private static EventId GenerateEventId()
         {
             var id = new Random((int)DateTime.UtcNow.ToBinary()).Next(0, 100000);
-            return new EventId(id, $"{DateTime.UtcNow:yyyyMMddHHmm}-{id}");
+            return new EventId(id);
         }
 
         private static SimplyBooksLogEvent BuildLogEvent(EventId eventId, string message)

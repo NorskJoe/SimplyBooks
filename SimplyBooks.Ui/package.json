@@ -39,6 +39,7 @@
     "@progress/kendo-drawing": "^1.0.0",
     "@progress/kendo-theme-default": "latest",
     "@progress/kendo-theme-material": "^3.10.2",
+    "angular-star-rating": "^3.0.8",
     "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
     "ngx-stars": "^1.4.3",

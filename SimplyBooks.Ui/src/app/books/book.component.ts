@@ -6,6 +6,7 @@ import { GridDataResult } from '@progress/kendo-angular-grid';
 import { NotificationService } from '../services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { List } from '../shared/models/list.model';
+import { SortDescriptor } from '@progress/kendo-data-query';
 
 @Component({
 	templateUrl: './book.component.html',
@@ -20,11 +21,14 @@ export class BookComponent extends List {
 		private notificationService: NotificationService,
 		private translateService: TranslateService) {
 		super();
+		this.state.sort = {
+			field: 'title',
+			dir: 'asc'
+		} as SortDescriptor;
 	}
 
 	applyFilter(filter: BookListFilter) {
 		this.filter = filter;
-
 		this.load();
 	}
 
@@ -36,6 +40,8 @@ export class BookComponent extends List {
 		const criteria = {
 			pageSize: this.state.pageSize,
 			page: this.state.page,
+			orderField: this.state.sort.field,
+			orderDirection: this.state.sort.dir,
 			bookTitle: this.filter.title ? this.filter.title : null,
 			authorId: this.filter.authorId ? this.filter.authorId : null,
 			genreId: this.filter.genreId ? this.filter.genreId : null,
@@ -45,6 +51,7 @@ export class BookComponent extends List {
 
 		this.bookService.listBooks(criteria).subscribe(result => {
 			this.notificationService.warnings(result.warnings, this.translateService.instant('_Warning'));
+			this.notificationService.errors(result.errors, this.translateService.instant('_Error'));
 			this.data = {
 				data: result.value.items,
 				total: result.value.total
