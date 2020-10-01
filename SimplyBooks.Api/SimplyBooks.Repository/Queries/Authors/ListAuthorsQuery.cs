@@ -1,18 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
+using SimplyBooks.Domain.QueryModels;
 
 namespace SimplyBooks.Repository.Queries.Authors
 {
-    public interface IListAuthorsQuery
+    public interface IListAuthorsQuery : IQuery<List<AuthorListItem>, AuthorListCriteria>
     {
-        Task<Result<IList<AuthorListItem>>> Execute(AuthorListCriteria criteria);
     }
     public class ListAuthorsQuery : IListAuthorsQuery
     {
@@ -26,40 +25,40 @@ namespace SimplyBooks.Repository.Queries.Authors
             _logger = logger;
         }
 
-        public async Task<Result<IList<AuthorListItem>>> Execute(AuthorListCriteria criteria)
+        public async Task<List<AuthorListItem>> Execute(AuthorListCriteria criteria)
         {
-            Result<IList<AuthorListItem>> result = new Result<IList<AuthorListItem>>();
+            var result = new List<AuthorListItem>();
 
             try
             {
-                var query = _context.Author
-                    .Join(_context.Nationality,
-                        a => a.Nationality.NationalityId,
-                        n => n.NationalityId,
-                        (a, n) => new { a, n })
-                    .Join(_context.Book,
-                        x => x.a.AuthorId,
-                        b => b.Author.AuthorId,
-                        (x, b) => new { x.a, x.n, b });
+                var query = from b in _context.Book
+                            join a in _context.Author on b.Author.AuthorId equals a.AuthorId
+                            join n in _context.Nationality on a.Nationality.NationalityId equals n.NationalityId
+                            select new 
+                            { 
+                                Name = a.Name,
+                                Nationality = n.Name, 
+                                Rating = b.Rating, 
+                                NationalityId = n.NationalityId 
+                            };
 
                 if (!string.IsNullOrWhiteSpace(criteria.AuthorName))
                 {
-                    query = query.Where(x => EF.Functions.Like(x.a.Name, $"%{criteria.AuthorName}%"));
+                    query = query.Where(x => EF.Functions.Like(x.Name, $"%{criteria.AuthorName}%"));
                 }
 
                 if (criteria.NationalityId.HasValue)
                 {
-                    query = query.Where(x => x.n.NationalityId == criteria.NationalityId);
+                    query = query.Where(x => x.NationalityId == criteria.NationalityId);
                 }
 
-
-                result.Value = await query
-                    .GroupBy(x => new { Name = x.a.Name, Nationality = x.n.Name })
+                result = await query
+                    .GroupBy(x => new { Name = x.Name, Nationality = x.Name })
                     .Select(x => new AuthorListItem
                     {
                         Name = x.Key.Name,
                         Nationality = x.Key.Nationality,
-                        AverageRating = x.Average(x => x.b.Rating),
+                        AverageRating = x.Average(x => x.Rating),
                         BooksRead = x.Count()
                     })
                     .OrderBy(x => x.Name)
@@ -69,12 +68,10 @@ namespace SimplyBooks.Repository.Queries.Authors
             {
                 var id = _logger.LogErrorWithEventId(ex);
                 var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
             }
 
             return result;
         }
-
     }
 
     public class AuthorListCriteria : PagedCriteria

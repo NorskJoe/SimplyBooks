@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Nationalities
 {
-    public interface INationalitySelectListQuery
+    public interface INationalitySelectListQuery : IQuery<IList<NationalitySelectListItem>>
     {
-        Task<Result<IList<NationalitySelectListItem>>> Execute();
     }
     public class NationalitySelectListQuery : INationalitySelectListQuery
     {
@@ -26,13 +24,13 @@ namespace SimplyBooks.Repository.Queries.Nationalities
             _logger = logger;
         }
 
-        public async Task<Result<IList<NationalitySelectListItem>>> Execute()
+        public async Task<IList<NationalitySelectListItem>> Execute()
         {
-            var result = new Result<IList<NationalitySelectListItem>>();
+            var result = new List<NationalitySelectListItem>();
 
             try
             {
-                result.Value = await _context.Nationality
+                result = await _context.Nationality
                     .Select(x => new NationalitySelectListItem
                     {
                         Name = x.Name,
@@ -45,7 +43,6 @@ namespace SimplyBooks.Repository.Queries.Nationalities
             {
                 var id = _logger.LogErrorWithEventId(ex);
                 var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
             }
 
             return result;

@@ -120,4 +120,7 @@
   <data name="NoAuthorsFound" xml:space="preserve">
     <value>No Authors found matching that criteria</value>
   </data>
+  <data name="NoAuthorsSelectList" xml:space="preserve">
+    <value>There are no existing authors</value>
+  </data>
 </root>

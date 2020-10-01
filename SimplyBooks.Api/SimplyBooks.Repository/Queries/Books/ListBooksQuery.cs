@@ -1,18 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
+using SimplyBooks.Domain.QueryModels;
 
 namespace SimplyBooks.Repository.Queries.Books
 {
-    public interface IListAllBooksQuery
+    public interface IListAllBooksQuery : IPagedQuery<IList<BookListItem>, BookListCriteria>
     {
-        Task<Result<IList<BookListItem>>> Execute(BookListCriteria criteria);
     }
 
     public class ListBooksQuery : IListAllBooksQuery
@@ -27,9 +26,9 @@ namespace SimplyBooks.Repository.Queries.Books
             _logger = logger;
         }
 
-        public async Task<Result<IList<BookListItem>>> Execute(BookListCriteria criteria)
+        public async Task<IList<BookListItem>> Execute(BookListCriteria criteria)
         {
-            var result = new Result<IList<BookListItem>>();
+            var result = new List<BookListItem>();
 
             try
             {
@@ -106,7 +105,7 @@ namespace SimplyBooks.Repository.Queries.Books
                         break;
                 }
 
-                result.Value = await query
+                result = await query
                     .Select(x => new BookListItem
                     {
                         Title = x.b.Title,
@@ -123,7 +122,6 @@ namespace SimplyBooks.Repository.Queries.Books
             {
                 var id = _logger.LogErrorWithEventId(ex);
                 var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
             }
 
             return result;

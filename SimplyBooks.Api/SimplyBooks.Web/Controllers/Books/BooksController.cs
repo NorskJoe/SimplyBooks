@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SimplyBooks.Models;
-using SimplyBooks.Models.Dtos;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain;
+using SimplyBooks.Domain.QueryModels;
+using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Services.Books;
 
@@ -15,13 +14,10 @@ namespace SimplyBooks.Web.Controllers.Books
     public class BooksController : ControllerBase
     {
         private readonly IBooksService _booksService;
-        private readonly IMapper _mapper;
 
-        public BooksController(IBooksService booksService,
-            IMapper mapper)
+        public BooksController(IBooksService booksService)
         {
             _booksService = booksService;
-            _mapper = mapper;
         }
 
         // GET: /book/list
@@ -38,13 +34,18 @@ namespace SimplyBooks.Web.Controllers.Books
         [ProducesResponseType(typeof(BookItem), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetBook(int bookId)
         {
-            var result = await _booksService.GetBookAsync(bookId);
+            var criteria = new BookItemCriteria
+            {
+                BookId = bookId
+            };
+
+            var result = await _booksService.GetBookAsync(criteria);
             return Ok(result);
         }
 
-        // POST: /book/add/
-        [HttpPost("add")]
-        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        // POST
+        [HttpPost]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddBook([FromBody]Book book)
         {
@@ -57,29 +58,32 @@ namespace SimplyBooks.Web.Controllers.Books
             return Ok(result);
         }
 
-        // PUT: /book/update/{book}
-        [HttpPut("update")]
-        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        // PUT
+        [HttpPut]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateBook([FromBody]BookDto book)
+        public async Task<IActionResult> UpdateBook([FromBody]Book book)
         {
-            Book toUpdate = _mapper.Map<Book>(book);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _booksService.UpdateBookAsync(toUpdate);
+            var result = await _booksService.UpdateBookAsync(book);
             return Ok(result);
             
         }
 
-        // DELETE: /book/delete/{bookId}
-        [HttpDelete("delete/{bookId}")]
-        [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
+        // DELETE
+        [HttpDelete]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteBook(int bookId)
         {
-            var result = await _booksService.DeleteBookAsync(bookId);
+            var criteria = new DeleteBookCriteria
+            {
+                BookId = bookId
+            };
+            var result = await _booksService.DeleteBookAsync(criteria);
             return Ok(result);
         }
     }

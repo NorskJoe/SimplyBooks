@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimplyBooks.Models\SimplyBooks.Models.csproj" />
+    <ProjectReference Include="..\SimplyBooks.Domain\SimplyBooks.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

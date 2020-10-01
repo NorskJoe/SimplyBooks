@@ -1,15 +1,15 @@
-﻿using SimplyBooks.Models;
+﻿using SimplyBooks.Domain;
 using SimplyBooks.Repository.Commands.Authors;
 using SimplyBooks.Repository.Queries.Authors;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.QueryModels;
 using System.Linq;
 using Microsoft.Extensions.Localization;
 
 namespace SimplyBooks.Services.Authors
 {
-    public interface IAuthorsService
+    public interface IAuthorsService : IService
     {
         Task<Result<PagedResult<AuthorListItem>>> ListAuthorsAsync(AuthorListCriteria criteria);
         Task<Result<AuthorSelectList>> SelectList();
@@ -44,9 +44,9 @@ namespace SimplyBooks.Services.Authors
 
             var queryResult = await _listAuthorsQuery.Execute(criteria);
 
-            if (queryResult.IsSuccess)
+            if (queryResult.Any())
             {
-                var rowItems = queryResult.Value
+                var rowItems = queryResult
                     .Skip(criteria.FirstRecord)
                     .Take(criteria.PageSize)
                     .ToList();
@@ -55,17 +55,12 @@ namespace SimplyBooks.Services.Authors
                 {
                     Items = rowItems,
                     PageIndex = criteria.PageIndex,
-                    Total = queryResult.Value.Count
+                    Total = queryResult.Count
                 };
-
-                if (queryResult.Value.Count == 0)
-                {
-                    result.Warnings.Add(_localiser["NoAuthorsFound"]);
-                }
             }
             else
             {
-                result.Errors = queryResult.Errors;
+                result.Warnings.Add(_localiser["NoAuthorsFound"]);
             }
 
             return result;
@@ -78,16 +73,16 @@ namespace SimplyBooks.Services.Authors
 
             var queryResult = await _authorSelectListQuery.Execute();
 
-            if (queryResult.IsSuccess)
+            if (!queryResult.Any())
             {
-                result.Value = new AuthorSelectList
-                {
-                    Items = queryResult.Value
-                };
+                result.AddWarning(_localiser["NoAuthorsSelectList"]);
             }
             else
             {
-                result.Errors = queryResult.Errors;
+                result.Value = new AuthorSelectList
+                {
+                    Items = queryResult
+                };
             }
 
             return result;

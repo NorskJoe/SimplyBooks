@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="3.1.8" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimplyBooks.Models\SimplyBooks.Models.csproj" />
     <ProjectReference Include="..\SimplyBooks.Repository\SimplyBooks.Repository.csproj" />
   </ItemGroup>
 
@@ -25,6 +25,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>BooksService.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Genres\GenresService.Designer.cs">
+      <DependentUpon>GenresService.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Home\HomeService.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HomeService.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Nationalities\NationalitiesService.Designer.cs">
+      <DependentUpon>NationalitiesService.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +50,18 @@
     <EmbeddedResource Update="Resources\Books\BooksService.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BooksService.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Genres\GenresService.resx">
+      <LastGenOutput>GenresService.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Home\HomeService.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeService.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Nationalities\NationalitiesService.resx">
+      <LastGenOutput>NationalitiesService.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

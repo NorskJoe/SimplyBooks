@@ -1,13 +1,11 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
-using SimplyBooks.Models;
-using SimplyBooks.Models.Dtos;
+using SimplyBooks.Domain;
 using SimplyBooks.Services.Books;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.QueryModels;
 using SimplyBooks.Web.Controllers.Books;
 using Xunit;
 
@@ -16,7 +14,6 @@ namespace SimplyBooks.Tests.Controllers
     public class BasicBooksControllerTest
     {
         protected Mock<IBooksService> BasicBookServiceMock { get; }
-        protected Mock<IMapper> MapperMock { get; }
         protected BooksController ControllerUnderTest { get; }
         protected Genre TestGenreOne { get; }
         protected Genre TestGenreTwo { get; }

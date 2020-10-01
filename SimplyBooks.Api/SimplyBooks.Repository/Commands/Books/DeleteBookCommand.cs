@@ -1,15 +1,14 @@
 ﻿using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
+using SimplyBooks.Domain.QueryModels;
 
 namespace SimplyBooks.Repository.Commands.Books
 {
-    public interface IDeleteBookCommand
+    public interface IDeleteBookCommand : ICommand<DeleteBookCriteria>
     {
-        Task<Result> Execute(int id);
     }
 
     public class DeleteBookCommand : IDeleteBookCommand
@@ -24,10 +23,10 @@ namespace SimplyBooks.Repository.Commands.Books
             _logger = logger;
         }
 
-        public async Task<Result> Execute(int id)
+        public async Task<Result> Execute(DeleteBookCriteria criteria)
         {
             Result result = new Result();
-            var book = new Book { BookId = id };
+            var book = new Book { BookId = criteria.BookId };
 
             try
             {
@@ -43,5 +42,10 @@ namespace SimplyBooks.Repository.Commands.Books
 
             return result;
         }
+    }
+
+    public class DeleteBookCriteria
+    {
+        public int BookId { get; set; }
     }
 }

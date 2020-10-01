@@ -1,11 +1,14 @@
 ﻿using SimplyBooks.Repository.Queries.Home;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.QueryModels;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Localization;
+using System.Linq;
 
 namespace SimplyBooks.Services.Home
 {
-    public interface IHomeService
+    public interface IHomeService : IService
     {
         Task<Result<RecentBooksList>> GetRecentBooks();
     }
@@ -13,10 +16,13 @@ namespace SimplyBooks.Services.Home
     public class HomeService : IHomeService
     {
         private readonly IListRecentBooksQuery _listRecentBooksQuery;
+        private readonly IStringLocalizer<HomeService> _localizer;
 
-        public HomeService(IListRecentBooksQuery listRecentBooksQuery)
+        public HomeService(IListRecentBooksQuery listRecentBooksQuery,
+            IStringLocalizer<HomeService> localizer)
         {
             _listRecentBooksQuery = listRecentBooksQuery;
+            _localizer = localizer;
         }
 
         public async Task<Result<RecentBooksList>> GetRecentBooks()
@@ -25,11 +31,15 @@ namespace SimplyBooks.Services.Home
 
             var queryResult = await _listRecentBooksQuery.Execute();
 
-            if (queryResult.IsSuccess)
+            if (!queryResult.Any())
+            {
+                result.AddWarning(_localizer["NoRecentBooks"]);
+            }
+            else
             {
                 result.Value = new RecentBooksList
                 {
-                    Items = queryResult.Value
+                    Items = queryResult
                 };
             }
 

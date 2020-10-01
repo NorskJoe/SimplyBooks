@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimplyBooks.Models\SimplyBooks.Models.csproj" />
     <ProjectReference Include="..\SimplyBooks.Repository\SimplyBooks.Repository.csproj" />
     <ProjectReference Include="..\SimplyBooks.Services\SimplyBooks.Services.csproj" />
     <ProjectReference Include="..\SimplyBooks.Web\SimplyBooks.Web.csproj" />

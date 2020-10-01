@@ -1,15 +1,17 @@
-﻿using SimplyBooks.Models;
+﻿using SimplyBooks.Domain;
 using SimplyBooks.Repository.Commands.Genres;
 using SimplyBooks.Repository.Queries.Genres;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.QueryModels;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
+using Microsoft.Extensions.Localization;
 
 namespace SimplyBooks.Services.Genres
 {
-    public interface IGenresService
+    public interface IGenresService : IService
     {
-        Task<Result<IList<Genre>>> ListAllGenresAsync();
         Task<Result<GenreSelectList>> SelectList();
         Task<Result> UpdateGenreAsync(Genre genre);
         Task<Result> AddGenreAsync(Genre genre);
@@ -19,23 +21,18 @@ namespace SimplyBooks.Services.Genres
     {
         private readonly IAddGenreCommand _addGenreCommand;
         private readonly IUpdateGenreCommand _updateGenreCommand;
-        private readonly IListAllGenresQuery _listAllGenresQuery;
         private readonly IGenreSelectListQuery _genreSelectListQuery;
+        private readonly IStringLocalizer<GenresService> _localizer;
 
         public GenresService(IAddGenreCommand addGenreCommand,
             IUpdateGenreCommand updateGenreCommand,
-            IListAllGenresQuery listAllGenresQuery,
-            IGenreSelectListQuery genreSelectListQuery)
+            IGenreSelectListQuery genreSelectListQuery,
+            IStringLocalizer<GenresService> localizer)
         {
             _addGenreCommand = addGenreCommand;
             _updateGenreCommand = updateGenreCommand;
-            _listAllGenresQuery = listAllGenresQuery;
             _genreSelectListQuery = genreSelectListQuery;
-        }
-
-        public async Task<Result<IList<Genre>>> ListAllGenresAsync()
-        {
-            return await _listAllGenresQuery.Execute();
+            _localizer = localizer;
         }
 
         public async Task<Result<GenreSelectList>> SelectList()
@@ -44,16 +41,16 @@ namespace SimplyBooks.Services.Genres
 
             var queryResult = await _genreSelectListQuery.Execute();
 
-            if (queryResult.IsSuccess)
+            if (!queryResult.Any())
             {
-                result.Value = new GenreSelectList
-                {
-                    Items = queryResult.Value
-                };
+                result.AddWarning(_localizer["NoGenresSelectList"]);
             }
             else
             {
-                result.Errors = queryResult.Errors;
+                result.Value = new GenreSelectList
+                {
+                    Items = queryResult
+                };
             }
 
             return result;

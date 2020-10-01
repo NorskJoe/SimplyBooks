@@ -1,17 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Books
 {
-    public interface IGetBookQuery
+    public interface IGetBookQuery : IQuery<BookItem, BookItemCriteria>
     {
-        Task<Result<BookItem>> Execute(int id);
     }
 
     public class GetBookQuery : IGetBookQuery
@@ -26,13 +24,13 @@ namespace SimplyBooks.Repository.Queries.Books
             _logger = logger;
         }
 
-        public async Task<Result<BookItem>> Execute(int id)
+        public async Task<BookItem> Execute(BookItemCriteria criteria)
         {
-            var result = new Result<BookItem>();
+            var result = new BookItem();
 
             try
             {
-                result.Value = await _context.Book
+                result = await _context.Book
                     .Join(_context.Author,
                         b => b.Author.AuthorId,
                         a => a.AuthorId,
@@ -41,7 +39,7 @@ namespace SimplyBooks.Repository.Queries.Books
                         x => x.a.Nationality.NationalityId,
                         n => n.NationalityId,
                         (x, n) => new { x.b, x.a, n })
-                    .Where(x => x.b.BookId == id)
+                    .Where(x => x.b.BookId == criteria.BookId)
                     .Select(x => new BookItem
                     {
                         Title = x.b.Title,
@@ -57,7 +55,6 @@ namespace SimplyBooks.Repository.Queries.Books
             {
                 var eventId = _logger.LogErrorWithEventId(ex);
                 var message = $"An unhandled exception occured.  An error has been logged with id: {eventId}";
-                result.AddError(message);
             }
 
             return result;
@@ -72,5 +69,10 @@ namespace SimplyBooks.Repository.Queries.Books
         public double Rating { get; set; }
         public string DateRead { get; set; }
         public string YearPublished { get; set; }
+    }
+
+    public class BookItemCriteria
+    {
+        public int BookId { get; set; }
     }
 }

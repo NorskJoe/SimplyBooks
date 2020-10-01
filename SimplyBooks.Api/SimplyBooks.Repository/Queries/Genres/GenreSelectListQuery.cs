@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Genres
 {
-    public interface IGenreSelectListQuery
+    public interface IGenreSelectListQuery : IQuery<IList<GenreSelectListItem>>
     {
-        Task<Result<IList<GenreSelectListItem>>> Execute();
     }
 
     public class GenreSelectListQuery : IGenreSelectListQuery
@@ -27,13 +25,13 @@ namespace SimplyBooks.Repository.Queries.Genres
             _logger = logger;
         }
 
-        public async Task<Result<IList<GenreSelectListItem>>> Execute()
+        public async Task<IList<GenreSelectListItem>> Execute()
         {
-            var result = new Result<IList<GenreSelectListItem>>();
+            var result = new List<GenreSelectListItem>();
 
             try
             {
-                result.Value = await _context.Genre
+                result = await _context.Genre
                     .Select(x => new GenreSelectListItem
                     {
                         Name = x.Name,
@@ -46,7 +44,6 @@ namespace SimplyBooks.Repository.Queries.Genres
             {
                 var id = _logger.LogErrorWithEventId(ex);
                 var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
             }
 
             return result;

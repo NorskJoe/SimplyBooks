@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
+using SimplyBooks.Domain.QueryModels;
 
 namespace SimplyBooks.Repository.Commands.Authors
 {
-    public interface IAddAuthorCommand
+    public interface IAddAuthorCommand : ICommand<Author>
     {
-        Task<Result> Execute(Author author);
     }
 
     public class AddAuthorCommand : IAddAuthorCommand
@@ -30,7 +29,7 @@ namespace SimplyBooks.Repository.Commands.Authors
             Result result = new Result();
             try
             {
-                // Do not save Nationality when adding Author
+                // Do not add new Nationality when adding Author
                 _context.Entry(author.Nationality).State = EntityState.Unchanged;
                 _context.Author.Add(author);
                 await _context.SaveChangesAsync();

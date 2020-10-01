@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
+using SimplyBooks.Domain.QueryModels;
 
 namespace SimplyBooks.Repository.Commands.Books
 {
-    public interface IAddBookCommand
+    public interface IAddBookCommand : ICommand<Book>
     {
-        Task<Result> Execute(Book book);
     }
 
     public class AddBookCommand : IAddBookCommand

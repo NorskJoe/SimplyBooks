@@ -1,18 +1,16 @@
 ﻿using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace SimplyBooks.Repository.Queries.Home
 {
-    public interface IListRecentBooksQuery
+    public interface IListRecentBooksQuery : IQuery<IList<RecentBookItem>>
     {
-        Task<Result<IList<RecentBookItem>>> Execute();
     }
 
     public class ListRecentBooksQuery : IListRecentBooksQuery
@@ -27,13 +25,13 @@ namespace SimplyBooks.Repository.Queries.Home
             _logger = logger;
         }
 
-        public async Task<Result<IList<RecentBookItem>>> Execute()
+        public async Task<IList<RecentBookItem>> Execute()
         {
-            var result = new Result<IList<RecentBookItem>>();
+            var result = new List<RecentBookItem>();
 
             try
             {
-                result.Value = await _context.Book
+                result = await _context.Book
                     .Join(_context.Author,
                         b => b.Author.AuthorId,
                         a => a.AuthorId,
@@ -53,7 +51,6 @@ namespace SimplyBooks.Repository.Queries.Home
             {
                 var id = _logger.LogErrorWithEventId(ex);
                 var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
             }
 
 

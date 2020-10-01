@@ -1,24 +1,26 @@
-﻿using System;
-using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
+using SimplyBooks.Repository.Commands;
 using SimplyBooks.Repository.Commands.Authors;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Commands.Genres;
 using SimplyBooks.Repository.Commands.Nationalities;
+using SimplyBooks.Repository.Queries;
 using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Repository.Queries.Genres;
 using SimplyBooks.Repository.Queries.Home;
 using SimplyBooks.Repository.Queries.Nationalities;
+using SimplyBooks.Services;
 using SimplyBooks.Services.Authors;
 using SimplyBooks.Services.Books;
+using SimplyBooks.Services.DependencyResolver;
 using SimplyBooks.Services.Genres;
 using SimplyBooks.Services.Home;
 using SimplyBooks.Services.Nationalities;
@@ -37,24 +39,27 @@ namespace SimplyBooks.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
-                .AddControllers();
-
-            // Connection string
             var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddControllers();
+
+
             services
-                .AddDbContext<SimplyBooksContext>(options => options.UseSqlServer(connection));
+                .AddDbContext<SimplyBooksContext>(options => options.UseSqlServer(connection))
 
-            // Localisation
-            services.AddLocalization(options =>
-            {
-                options.ResourcesPath = "Resources";
-            });
+                .AddLocalization(options =>
+                {
+                    options.ResourcesPath = "Resources";
+                });
 
-            // Register dependencies
-            RegisterServices(services);
-            RegisterCommands(services);
-            RegisterQueries(services);
+            // Register all implementations of my interfaces using custom dependency resolver
+            services.RegisterAssemblies(DependancyLifetime.Transient,
+                new[] { "SimplyBooks.Services" },
+                typeof(IService));
+
+            services.RegisterAssemblies(DependancyLifetime.Transient,
+                new[] { "SimplyBooks.Repository" },
+                typeof(IQuery),
+                typeof(ICommand));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +84,8 @@ namespace SimplyBooks.Web
             app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseAuthentication();
 
             // I will handle any info / error logs manually.  Auto log critical crashes
             loggerFactory.AddFile("Logs/logs.txt", LogLevel.Critical);
@@ -138,7 +145,7 @@ namespace SimplyBooks.Web
             services.AddTransient<IGenresService, GenresService>();
 
             // Nationalities
-            services.AddTransient<INationalityService, NationalityService>();
+            services.AddTransient<INationalityService, NationalitiesService>();
 
             // Home
             services.AddTransient<IHomeService, HomeService>();

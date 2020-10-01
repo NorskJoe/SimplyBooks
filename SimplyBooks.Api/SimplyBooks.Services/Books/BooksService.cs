@@ -1,21 +1,20 @@
 ﻿using Microsoft.Extensions.Localization;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.QueryModels;
 
 namespace SimplyBooks.Services.Books
 {
-    public interface IBooksService
+    public interface IBooksService : IService
     {
         Task<Result<PagedResult<BookListItem>>> ListAllBooksAsync(BookListCriteria criteria);
-        Task<Result<BookItem>> GetBookAsync(int bookId);
+        Task<Result<BookItem>> GetBookAsync(BookItemCriteria criteria);
         Task<Result> AddBookAsync(Book book);
         Task<Result> UpdateBookAsync(Book book);
-        Task<Result> DeleteBookAsync(int bookId);
+        Task<Result> DeleteBookAsync(DeleteBookCriteria criteria);
     }
 
     public class BooksService : IBooksService
@@ -48,9 +47,13 @@ namespace SimplyBooks.Services.Books
 
             var queryResult = await _listBooksQuery.Execute(criteria);
 
-            if (queryResult.IsSuccess)
+            if (!queryResult.Any())
             {
-                var rowItems = queryResult.Value
+                result.Warnings.Add(_localiser["NoBooksFound"]);
+            }
+            else
+            {
+                var rowItems = queryResult
                     .Skip(criteria.FirstRecord)
                     .Take(criteria.PageSize)
                     .ToList();
@@ -59,25 +62,18 @@ namespace SimplyBooks.Services.Books
                 {
                     Items = rowItems,
                     PageIndex = criteria.PageIndex,
-                    Total = queryResult.Value.Count
+                    Total = queryResult.Count
                 };
-
-                if (queryResult.Value.Count == 0)
-                {
-                    result.Warnings.Add(_localiser["NoBooksFound"]);
-                }
-            }
-            else
-            {
-                result.Errors = queryResult.Errors;
             }
 
             return result;
         }
 
-        public async Task<Result<BookItem>> GetBookAsync(int bookId)
+        public async Task<Result<BookItem>> GetBookAsync(BookItemCriteria criteria)
         {
-            return await _getBookQuery.Execute(bookId);
+            var result = new Result<BookItem>();
+            result.Value = await _getBookQuery.Execute(criteria);
+            return result;
         }
 
         public async Task<Result> AddBookAsync(Book book)
@@ -90,9 +86,9 @@ namespace SimplyBooks.Services.Books
             return await _updateBookCommand.Execute(book);
         }
 
-        public async Task<Result> DeleteBookAsync(int bookId)
+        public async Task<Result> DeleteBookAsync(DeleteBookCriteria criteria)
         {
-            return await _deleteBookCommand.Execute(bookId);
+            return await _deleteBookCommand.Execute(criteria);
         }
     }
 }

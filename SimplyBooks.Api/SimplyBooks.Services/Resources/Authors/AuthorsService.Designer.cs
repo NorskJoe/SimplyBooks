@@ -68,5 +68,14 @@ namespace SimplyBooks.Services.Resources.Authors {
                 return ResourceManager.GetString("NoAuthorsFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no existing authors.
+        /// </summary>
+        internal static string NoAuthorsSelectList {
+            get {
+                return ResourceManager.GetString("NoAuthorsSelectList", resourceCulture);
+            }
+        }
     }
 }

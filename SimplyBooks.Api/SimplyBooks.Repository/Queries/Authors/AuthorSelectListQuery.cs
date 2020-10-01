@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Models.Extensions;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Authors
 {
-    public interface IAuthorSelectListQuery
+    public interface IAuthorSelectListQuery : IQuery<IList<AuthorSelectListItem>>
     {
-        Task<Result<IList<AuthorSelectListItem>>> Execute();
     }
     public class AuthorSelectListQuery : IAuthorSelectListQuery
     {
@@ -26,13 +24,13 @@ namespace SimplyBooks.Repository.Queries.Authors
             _logger = logger;
         }
 
-        public async Task<Result<IList<AuthorSelectListItem>>> Execute()
+        public async Task<IList<AuthorSelectListItem>> Execute()
         {
-            var result = new Result<IList<AuthorSelectListItem>>();
+            var result = new List<AuthorSelectListItem>();
 
             try
             {
-                result.Value = await _context.Author
+                result = await _context.Author
                     .Join(_context.Nationality,
                         a => a.Nationality.NationalityId,
                         n => n.NationalityId,
@@ -54,13 +52,12 @@ namespace SimplyBooks.Repository.Queries.Authors
             {
                 var id = _logger.LogErrorWithEventId(ex);
                 var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
             }
 
             return result;
         }
-
     }
+
     public class AuthorSelectListItem
     {
         public string Name { get; set; }

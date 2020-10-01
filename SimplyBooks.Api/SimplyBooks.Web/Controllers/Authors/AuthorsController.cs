@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SimplyBooks.Models;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain;
+using SimplyBooks.Domain.QueryModels;
 using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Services.Authors;
 
@@ -21,7 +21,7 @@ namespace SimplyBooks.Web.Controllers.Authors
 
         // GET: /authors/list
         [HttpGet("list")]
-        [ProducesResponseType(typeof(PagedResult<AuthorListItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<PagedResult<AuthorListItem>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ListAuthors([FromQuery]AuthorListCriteria criteria)
         {
             return Ok(await _authorsService.ListAuthorsAsync(criteria));
@@ -35,9 +35,9 @@ namespace SimplyBooks.Web.Controllers.Authors
             return Ok(await _authorsService.SelectList());
         }
 
-        // POST: /authors/add/{author}
-        [HttpPost("add")]
-        [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
+        // POST
+        [HttpPost]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddAuthor([FromBody]Author author)
         {
@@ -50,9 +50,9 @@ namespace SimplyBooks.Web.Controllers.Authors
             return Ok(result);
         }
 
-        // PUT: /authors/update/{author}
-        [HttpPut("update")]
-        [ProducesResponseType(typeof(Author), StatusCodes.Status200OK)]
+        // PUT
+        [HttpPut]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAuthor(Author author)
         {

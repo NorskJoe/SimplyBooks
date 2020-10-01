@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
-using SimplyBooks.Models;
+using SimplyBooks.Domain;
 using SimplyBooks.Services.Genres;
 using SimplyBooks.Web.Controllers.Genres;
 using System.Collections.Generic;
-using SimplyBooks.Models.QueryModels;
+using SimplyBooks.Domain.QueryModels;
 using Xunit;
 
 namespace SimplyBooks.Tests.Controllers

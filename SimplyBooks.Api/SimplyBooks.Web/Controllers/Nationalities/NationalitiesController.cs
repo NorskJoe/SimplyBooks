@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SimplyBooks.Models;
-using SimplyBooks.Repository.Queries.Authors;
+using SimplyBooks.Domain;
+using SimplyBooks.Domain.QueryModels;
 using SimplyBooks.Services.Nationalities;
 
 namespace SimplyBooks.Web.Controllers.Nationalities
@@ -19,26 +18,17 @@ namespace SimplyBooks.Web.Controllers.Nationalities
             _nationalityService = nationalityService;
         }
 
-        // GET: /nationalities/list
-        [HttpGet("list")]
-        [ProducesResponseType(typeof(IList<Nationality>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListAllNationalities()
-        {
-            var result = await _nationalityService.ListAllNationalitiesAsync();
-            return Ok(result);
-        }
-
-        // GET: /nationalities/select-list
-        [HttpGet("select-list")]
+        // GET
+        [HttpGet]
         [ProducesResponseType(typeof(NationalitySelectList), StatusCodes.Status200OK)]
         public async Task<IActionResult> SelectList()
         {
             return Ok(await _nationalityService.SelectList());
         }
 
-        // POST: /nationalities/add/{nationality}
-        [HttpPost("add")]
-        [ProducesResponseType(typeof(Nationality), StatusCodes.Status200OK)]
+        // POST
+        [HttpPost]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddNationality([FromBody]Nationality nationality)
         {
@@ -51,9 +41,9 @@ namespace SimplyBooks.Web.Controllers.Nationalities
             return Ok(result);
         }
 
-        // PUT: /nationalities/update/{nationality}
-        [HttpPut("update")]
-        [ProducesResponseType(typeof(Nationality), StatusCodes.Status200OK)]
+        // PUT
+        [HttpPut]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> UpdateNationality(Nationality nationality)
         {
