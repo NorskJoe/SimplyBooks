@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SimplyBooks.Domain.QueryModels;
 using SimplyBooks.Repository.Queries.Home;
 using SimplyBooks.Services.Home;
 
@@ -20,8 +21,8 @@ namespace SimplyBooks.Web.Controllers.Home
 
         // GET
         [HttpGet]
-        [ProducesResponseType(typeof(IList<RecentBookItem>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListRecentBooks()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Result<RecentBooksList>>> ListRecentBooks()
         {
             return Ok(await _homeService.GetRecentBooks());
         }

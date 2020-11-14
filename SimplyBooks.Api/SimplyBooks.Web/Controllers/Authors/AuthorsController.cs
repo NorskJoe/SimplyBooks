@@ -21,25 +21,32 @@ namespace SimplyBooks.Web.Controllers.Authors
 
         // GET: /authors/list
         [HttpGet("list")]
-        [ProducesResponseType(typeof(Result<PagedResult<AuthorListItem>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListAuthors([FromQuery]AuthorListCriteria criteria)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Result<PagedResult<AuthorListItem>>>> ListAuthors([FromQuery]AuthorListCriteria criteria)
         {
-            return Ok(await _authorsService.ListAuthorsAsync(criteria));
+            if (!ModelState.IsValid || criteria == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _authorsService.ListAuthorsAsync(criteria);
+            return Ok(result);
         }
 
         // GET: /authors/select-list
         [HttpGet("select-list")]
-        [ProducesResponseType(typeof(AuthorSelectList), StatusCodes.Status200OK)]
-        public async Task<IActionResult> SelectList()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Result<AuthorSelectList>>> SelectList()
         {
             return Ok(await _authorsService.SelectList());
         }
 
         // POST
         [HttpPost]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddAuthor([FromBody]Author author)
+        public async Task<ActionResult<Result>> AddAuthor([FromBody]Author author)
         {
             if (!ModelState.IsValid)
             {
@@ -52,9 +59,9 @@ namespace SimplyBooks.Web.Controllers.Authors
 
         // PUT
         [HttpPut]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateAuthor(Author author)
+        public async Task<ActionResult<Result>> UpdateAuthor(Author author)
         {
             if (!ModelState.IsValid)
             {
