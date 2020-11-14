@@ -15,7 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D6F8CD4A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleBooks.Api.Tests.ControllerTests", "SimpleBooks.Api.Tests.ControllerTests\SimpleBooks.Api.Tests.ControllerTests.csproj", "{0307B1F4-BBCC-4A3E-8301-875388F389D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyBooks.Api.Tests.Common", "SimplyBooks.Api.Tests.Common\SimplyBooks.Api.Tests.Common.csproj", "{FDA8C1CF-F111-48CB-995C-4F8CFE2DD5BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Api.Tests.Common", "SimplyBooks.Api.Tests.Common\SimplyBooks.Api.Tests.Common.csproj", "{FDA8C1CF-F111-48CB-995C-4F8CFE2DD5BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplyBooks.Api.Tests.ServiceTests", "SimplyBooks.Api.Tests.ServiceTests\SimplyBooks.Api.Tests.ServiceTests.csproj", "{7A2E9ED2-1BAF-41F9-9E09-526E5C20E8D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplyBooks.Api.Tests.RepositoryTests", "SimplyBooks.Api.Tests.RepositoryTests\SimplyBooks.Api.Tests.RepositoryTests.csproj", "{B3F442D8-A219-41FE-8521-444F785FB0E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{FDA8C1CF-F111-48CB-995C-4F8CFE2DD5BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDA8C1CF-F111-48CB-995C-4F8CFE2DD5BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDA8C1CF-F111-48CB-995C-4F8CFE2DD5BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A2E9ED2-1BAF-41F9-9E09-526E5C20E8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A2E9ED2-1BAF-41F9-9E09-526E5C20E8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A2E9ED2-1BAF-41F9-9E09-526E5C20E8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A2E9ED2-1BAF-41F9-9E09-526E5C20E8D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3F442D8-A219-41FE-8521-444F785FB0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3F442D8-A219-41FE-8521-444F785FB0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3F442D8-A219-41FE-8521-444F785FB0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3F442D8-A219-41FE-8521-444F785FB0E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +66,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0307B1F4-BBCC-4A3E-8301-875388F389D6} = {D6F8CD4A-5740-4B29-BB2E-E10AB86F390A}
 		{FDA8C1CF-F111-48CB-995C-4F8CFE2DD5BF} = {D6F8CD4A-5740-4B29-BB2E-E10AB86F390A}
+		{7A2E9ED2-1BAF-41F9-9E09-526E5C20E8D2} = {D6F8CD4A-5740-4B29-BB2E-E10AB86F390A}
+		{B3F442D8-A219-41FE-8521-444F785FB0E3} = {D6F8CD4A-5740-4B29-BB2E-E10AB86F390A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A62CBD50-B865-41E7-986A-7B4C88854E6A}
