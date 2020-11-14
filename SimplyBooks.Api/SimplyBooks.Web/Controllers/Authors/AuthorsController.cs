@@ -48,7 +48,7 @@ namespace SimplyBooks.Web.Controllers.Authors
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Result>> AddAuthor([FromBody]Author author)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || author == null)
             {
                 return BadRequest(ModelState);
             }
@@ -63,7 +63,7 @@ namespace SimplyBooks.Web.Controllers.Authors
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Result>> UpdateAuthor(Author author)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || author == null)
             {
                 return BadRequest(ModelState);
             }
