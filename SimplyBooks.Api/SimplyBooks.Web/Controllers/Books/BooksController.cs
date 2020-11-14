@@ -24,13 +24,13 @@ namespace SimplyBooks.Web.Controllers.Books
         [HttpGet("list")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Result<PagedResult<BookListItem>>>> ListAllBooks([FromQuery]BookListCriteria criteria)
+        public async Task<ActionResult<Result<PagedResult<BookListItem>>>> ListBooks([FromQuery]BookListCriteria criteria)
         {
             if (!ModelState.IsValid || criteria == null)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
-            var result = await _booksService.ListAllBooksAsync(criteria);
+            var result = await _booksService.ListBooksAsync(criteria);
             return Ok(result);
         }
 
@@ -40,9 +40,9 @@ namespace SimplyBooks.Web.Controllers.Books
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Result<BookItem>>> GetBook(int bookId)
         {
-            if (bookId >= 0)
+            if (!ModelState.IsValid || bookId <= 0)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             var criteria = new BookItemCriteria
@@ -91,9 +91,9 @@ namespace SimplyBooks.Web.Controllers.Books
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Result>> DeleteBook(int bookId)
         {
-            if (bookId <= 0)
+            if (!ModelState.IsValid || bookId <= 0)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             
             var criteria = new DeleteBookCriteria

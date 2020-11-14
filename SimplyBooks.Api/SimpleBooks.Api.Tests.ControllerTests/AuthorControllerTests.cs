@@ -6,12 +6,10 @@ using SimplyBooks.Domain.QueryModels;
 using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Services.Authors;
 using SimplyBooks.Web.Controllers.Authors;
-using System;
-using System.Collections.Generic;
 using System.Net;
 using Xunit;
 
-namespace SimpleBooks.Api.Tests.ControllerTests
+namespace SimpleBooks.Api.Tests.ControllerTests.AuthorControllerTests
 {
     public class AuthorControllerTests : TestBase<AuthorsController, IAuthorsService>
     {

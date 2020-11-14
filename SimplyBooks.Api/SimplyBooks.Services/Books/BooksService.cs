@@ -10,7 +10,7 @@ namespace SimplyBooks.Services.Books
 {
     public interface IBooksService : IService
     {
-        Task<Result<PagedResult<BookListItem>>> ListAllBooksAsync(BookListCriteria criteria);
+        Task<Result<PagedResult<BookListItem>>> ListBooksAsync(BookListCriteria criteria);
         Task<Result<BookItem>> GetBookAsync(BookItemCriteria criteria);
         Task<Result> AddBookAsync(Book book);
         Task<Result> UpdateBookAsync(Book book);
@@ -41,7 +41,7 @@ namespace SimplyBooks.Services.Books
             _localiser = localiser;
         }
 
-        public async Task<Result<PagedResult<BookListItem>>> ListAllBooksAsync(BookListCriteria criteria)
+        public async Task<Result<PagedResult<BookListItem>>> ListBooksAsync(BookListCriteria criteria)
         {
             var result = new Result<PagedResult<BookListItem>>();
 
