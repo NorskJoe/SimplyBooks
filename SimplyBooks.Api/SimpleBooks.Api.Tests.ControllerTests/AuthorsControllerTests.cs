@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using SimplyBooks.Api.Tests.Common.Extensions;
 using SimplyBooks.Domain;
 using SimplyBooks.Domain.QueryModels;
 using SimplyBooks.Repository.Queries.Authors;
@@ -11,12 +10,12 @@ using Xunit;
 
 namespace SimpleBooks.Api.Tests.ControllerTests.AuthorControllerTests
 {
-    public class AuthorControllerTests : TestBase<AuthorsController, IAuthorsService>
+    public class AuthorsControllerTests : TestBase<AuthorsController, IAuthorsService>
     {
 
     }
 
-    public class ListAuthors : AuthorControllerTests
+    public class ListAuthors : AuthorsControllerTests
     {
         [Fact]
         public async void Should_return_ok()
@@ -46,7 +45,7 @@ namespace SimpleBooks.Api.Tests.ControllerTests.AuthorControllerTests
         }
     }
 
-    public class SelectList : AuthorControllerTests
+    public class SelectList : AuthorsControllerTests
     {
         [Fact]
         public async void Should_return_ok()
@@ -64,7 +63,7 @@ namespace SimpleBooks.Api.Tests.ControllerTests.AuthorControllerTests
         }
     }
 
-    public class AddAuthor : AuthorControllerTests
+    public class AddAuthor : AuthorsControllerTests
     {
         [Fact]
         public async void Should_return_ok()
@@ -94,7 +93,7 @@ namespace SimpleBooks.Api.Tests.ControllerTests.AuthorControllerTests
         }
     }
 
-    public class UpdateAuthor : AuthorControllerTests
+    public class UpdateAuthor : AuthorsControllerTests
     {
         [Fact]
         public async void Should_return_ok()

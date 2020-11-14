@@ -6,19 +6,16 @@ using SimplyBooks.Repository.Commands.Books;
 using SimplyBooks.Repository.Queries.Books;
 using SimplyBooks.Services.Books;
 using SimplyBooks.Web.Controllers.Books;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using Xunit;
 
 namespace SimpleBooks.Api.Tests.ControllerTests.BookControllerTests
 {
-    public class BookControllerTests : TestBase<BooksController, IBooksService>
+    public class BooksControllerTests : TestBase<BooksController, IBooksService>
     {
     }
 
-    public class ListBooks : BookControllerTests
+    public class ListBooks : BooksControllerTests
     {
         [Fact]
         public async void Should_return_ok()
@@ -50,7 +47,7 @@ namespace SimpleBooks.Api.Tests.ControllerTests.BookControllerTests
         }
     }
 
-    public class GetBook : BookControllerTests
+    public class GetBook : BooksControllerTests
     {
         [Fact]
         public async void Should_return_ok()
@@ -83,7 +80,7 @@ namespace SimpleBooks.Api.Tests.ControllerTests.BookControllerTests
         }
     }
 
-    public class AddBook : BookControllerTests
+    public class AddBook : BooksControllerTests
     {
         [Fact]
         public async void Should_return_ok()
@@ -113,7 +110,7 @@ namespace SimpleBooks.Api.Tests.ControllerTests.BookControllerTests
         }
     }
 
-    public class UpdateBook : BookControllerTests
+    public class UpdateBook : BooksControllerTests
     {
         [Fact]
         public async void Should_return_ok()
@@ -143,7 +140,7 @@ namespace SimpleBooks.Api.Tests.ControllerTests.BookControllerTests
         }
     }
 
-    public class DeleteBook : BookControllerTests
+    public class DeleteBook : BooksControllerTests
     {
         [Fact]
         public async void Should_return_ok()

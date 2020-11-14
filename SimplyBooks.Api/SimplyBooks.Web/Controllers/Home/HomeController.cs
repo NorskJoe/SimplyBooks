@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimplyBooks.Domain.QueryModels;
-using SimplyBooks.Repository.Queries.Home;
 using SimplyBooks.Services.Home;
 
 namespace SimplyBooks.Web.Controllers.Home
