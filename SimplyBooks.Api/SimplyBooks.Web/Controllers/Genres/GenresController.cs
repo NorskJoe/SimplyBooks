@@ -20,19 +20,19 @@ namespace SimplyBooks.Web.Controllers.Genres
 
         // GET
         [HttpGet]
-        [ProducesResponseType(typeof(GenreSelectList), StatusCodes.Status200OK)]
-        public async Task<IActionResult> SelectList()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Result<GenreSelectList>>> SelectList()
         {
             return Ok(await _genresService.SelectList());
         }
 
         // POST
         [HttpPost]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddGenre([FromBody]Genre genre)
+        public async Task<ActionResult<Result>> AddGenre([FromBody]Genre genre)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || genre == null)
             {
                 return BadRequest(ModelState);
             }
@@ -43,11 +43,11 @@ namespace SimplyBooks.Web.Controllers.Genres
 
         // PUT
         [HttpPut]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateGenre(Genre genre)
+        public async Task<ActionResult<Result>> UpdateGenre(Genre genre)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || genre == null)
             {
                 return BadRequest(ModelState);
             }

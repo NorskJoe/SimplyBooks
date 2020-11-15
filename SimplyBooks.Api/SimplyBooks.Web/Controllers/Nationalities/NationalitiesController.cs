@@ -20,19 +20,19 @@ namespace SimplyBooks.Web.Controllers.Nationalities
 
         // GET
         [HttpGet]
-        [ProducesResponseType(typeof(NationalitySelectList), StatusCodes.Status200OK)]
-        public async Task<IActionResult> SelectList()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Result<NationalitySelectList>>> SelectList()
         {
             return Ok(await _nationalityService.SelectList());
         }
 
         // POST
         [HttpPost]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddNationality([FromBody]Nationality nationality)
+        public async Task<ActionResult<Result>> AddNationality([FromBody]Nationality nationality)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || nationality == null)
             {
                 return BadRequest(ModelState);
             }
@@ -43,11 +43,11 @@ namespace SimplyBooks.Web.Controllers.Nationalities
 
         // PUT
         [HttpPut]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> UpdateNationality(Nationality nationality)
+        public async Task<ActionResult<Result>> UpdateNationality(Nationality nationality)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || nationality == null)
             {
                 return BadRequest(ModelState);
             }
