@@ -109,7 +109,7 @@ namespace SimplyBooks.Repository.Queries.Books
                     .Select(x => new BookListItem
                     {
                         Title = x.b.Title,
-                        Author = x.a.Name,
+                        AuthorName = x.a.Name,
                         Nationality = x.n.Name,
                         Genre = x.g.Name,
                         Rating = x.b.Rating,
@@ -140,7 +140,7 @@ namespace SimplyBooks.Repository.Queries.Books
     public class BookListItem
     {
         public string Title { get; set; }
-        public string Author { get; set; }
+        public string AuthorName { get; set; }
         public string Nationality { get; set; }
         public string Genre { get; set; }
         public double Rating { get; set; }
