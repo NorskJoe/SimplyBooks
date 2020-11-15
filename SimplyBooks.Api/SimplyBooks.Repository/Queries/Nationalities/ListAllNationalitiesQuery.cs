@@ -32,7 +32,7 @@ namespace SimplyBooks.Repository.Queries.Nationalities
 
             try
             {
-                result.Value = await _context.Nationality
+                result.Value = await _context.Nationalilties
                             .ToListAsync();
             }
             catch (Exception ex)

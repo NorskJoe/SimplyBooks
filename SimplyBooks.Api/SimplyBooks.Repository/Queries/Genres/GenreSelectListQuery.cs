@@ -31,7 +31,7 @@ namespace SimplyBooks.Repository.Queries.Genres
 
             try
             {
-                result = await _context.Genre
+                result = await _context.Genres
                     .Select(x => new GenreSelectListItem
                     {
                         Name = x.Name,

@@ -32,16 +32,16 @@ namespace SimplyBooks.Repository.Queries.Books
 
             try
             {
-                var query = _context.Book
-                    .Join(_context.Author,
+                var query = _context.Books
+                    .Join(_context.Authors,
                         b => b.Author.AuthorId,
                         a => a.AuthorId,
                         (b, a) => new {b, a})
-                    .Join(_context.Nationality,
+                    .Join(_context.Nationalilties,
                         x => x.a.Nationality.NationalityId,
                         n => n.NationalityId,
                         (x, n) => new {x.b, x.a, n})
-                    .Join(_context.Genre,
+                    .Join(_context.Genres,
                         x => x.b.Genre.GenreId,
                         g => g.GenreId,
                         (x, g) => new {x.b, x.a, x.n, g});

@@ -30,12 +30,12 @@ namespace SimplyBooks.Repository.Queries.Books
 
             try
             {
-                result = await _context.Book
-                    .Join(_context.Author,
+                result = await _context.Books
+                    .Join(_context.Authors,
                         b => b.Author.AuthorId,
                         a => a.AuthorId,
                         (b, a) => new { b, a })
-                    .Join(_context.Nationality,
+                    .Join(_context.Nationalilties,
                         x => x.a.Nationality.NationalityId,
                         n => n.NationalityId,
                         (x, n) => new { x.b, x.a, n })

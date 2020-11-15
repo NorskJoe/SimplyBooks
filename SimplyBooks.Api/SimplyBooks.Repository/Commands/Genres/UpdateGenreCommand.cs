@@ -28,7 +28,7 @@ namespace SimplyBooks.Repository.Commands.Genres
             Result result = new Result();
             try
             {
-                _context.Genre.Update(genre);
+                _context.Genres.Update(genre);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

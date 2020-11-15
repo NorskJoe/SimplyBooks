@@ -30,7 +30,7 @@ namespace SimplyBooks.Repository.Commands.Books
 
             try
             {
-                _context.Book.Remove(book);
+                _context.Books.Remove(book);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

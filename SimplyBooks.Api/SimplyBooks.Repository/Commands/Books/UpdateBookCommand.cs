@@ -29,7 +29,7 @@ namespace SimplyBooks.Repository.Commands.Books
             Result result = new Result();
             try
             {
-                _context.Book.Update(book);
+                _context.Books.Update(book);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

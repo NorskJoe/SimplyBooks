@@ -32,7 +32,7 @@ namespace SimplyBooks.Repository.Queries.Genres
 
             try
             {
-                result.Value = await _context.Genre
+                result.Value = await _context.Genres
                             .ToListAsync();
             }
             catch (Exception ex)

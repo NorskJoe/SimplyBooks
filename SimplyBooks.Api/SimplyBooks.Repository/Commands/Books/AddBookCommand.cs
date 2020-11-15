@@ -33,7 +33,7 @@ namespace SimplyBooks.Repository.Commands.Books
                 _context.Entry(book.Author).State = EntityState.Unchanged;
                 _context.Entry(book.Author.Nationality).State = EntityState.Unchanged;
                 _context.Entry(book.Genre).State = EntityState.Unchanged;
-                _context.Book.Add(book);
+                _context.Books.Add(book);
                  await _context.SaveChangesAsync();
             }
             catch (Exception ex)

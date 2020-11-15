@@ -28,7 +28,7 @@ namespace SimplyBooks.Repository.Commands.Nationalities
             Result result = new Result();
             try
             {
-                _context.Nationality.Add(nationality);
+                _context.Nationalilties.Add(nationality);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

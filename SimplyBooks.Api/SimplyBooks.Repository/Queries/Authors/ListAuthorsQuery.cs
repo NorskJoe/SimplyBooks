@@ -31,9 +31,9 @@ namespace SimplyBooks.Repository.Queries.Authors
 
             try
             {
-                var query = from b in _context.Book
-                            join a in _context.Author on b.Author.AuthorId equals a.AuthorId
-                            join n in _context.Nationality on a.Nationality.NationalityId equals n.NationalityId
+                var query = from b in _context.Books
+                            join a in _context.Authors on b.Author.AuthorId equals a.AuthorId
+                            join n in _context.Nationalilties on a.Nationality.NationalityId equals n.NationalityId
                             select new 
                             { 
                                 Name = a.Name,

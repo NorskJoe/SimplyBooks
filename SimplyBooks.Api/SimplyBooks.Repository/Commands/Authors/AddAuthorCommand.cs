@@ -31,7 +31,7 @@ namespace SimplyBooks.Repository.Commands.Authors
             {
                 // Do not add new Nationality when adding Author
                 _context.Entry(author.Nationality).State = EntityState.Unchanged;
-                _context.Author.Add(author);
+                _context.Authors.Add(author);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

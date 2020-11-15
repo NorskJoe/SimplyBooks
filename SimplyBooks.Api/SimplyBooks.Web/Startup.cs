@@ -7,23 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SimplyBooks.Domain;
 using SimplyBooks.Repository.Commands;
-using SimplyBooks.Repository.Commands.Authors;
-using SimplyBooks.Repository.Commands.Books;
-using SimplyBooks.Repository.Commands.Genres;
-using SimplyBooks.Repository.Commands.Nationalities;
 using SimplyBooks.Repository.Queries;
-using SimplyBooks.Repository.Queries.Authors;
-using SimplyBooks.Repository.Queries.Books;
-using SimplyBooks.Repository.Queries.Genres;
-using SimplyBooks.Repository.Queries.Home;
-using SimplyBooks.Repository.Queries.Nationalities;
 using SimplyBooks.Services;
-using SimplyBooks.Services.Authors;
-using SimplyBooks.Services.Books;
 using SimplyBooks.Services.DependencyResolver;
-using SimplyBooks.Services.Genres;
-using SimplyBooks.Services.Home;
-using SimplyBooks.Services.Nationalities;
 
 namespace SimplyBooks.Web
 {
@@ -89,66 +75,6 @@ namespace SimplyBooks.Web
 
             // I will handle any info / error logs manually.  Auto log critical crashes
             loggerFactory.AddFile("Logs/logs.txt", LogLevel.Critical);
-        }
-
-        private void RegisterQueries(IServiceCollection services)
-        {
-            // Authors
-            services.AddTransient<IListAuthorsQuery, ListAuthorsQuery>();
-            services.AddTransient<IAuthorSelectListQuery, AuthorSelectListQuery>();
-
-            // Books
-            services.AddTransient<IGetBookQuery, GetBookQuery>();
-            services.AddTransient<IListAllBooksQuery, ListBooksQuery>();
-
-            // Genres
-            services.AddTransient<IListAllGenresQuery, ListAllGenresQuery>();
-            services.AddTransient<IGenreSelectListQuery, GenreSelectListQuery>();
-
-            // Nationalities
-            services.AddTransient<IListAllNationalitiesQuery, ListAllNationalitiesQuery>();
-            services.AddTransient<INationalitySelectListQuery, NationalitySelectListQuery>();
-
-            // Home
-            services.AddTransient<IListRecentBooksQuery, ListRecentBooksQuery>();
-        }
-
-        private void RegisterCommands(IServiceCollection services)
-        {
-            //Authors
-            services.AddTransient<IAddAuthorCommand, AddAuthorCommand>();
-            services.AddTransient<IUpdateAuthorCommand, UpdateAuthorCommand>();
-
-            // Books
-            services.AddTransient<IAddBookCommand, AddBookCommand>();
-            services.AddTransient<IDeleteBookCommand, DeleteBookCommand>();
-            services.AddTransient<IUpdateBookCommand, UpdateBookCommand>();
-
-            //Genres
-            services.AddTransient<IAddGenreCommand, AddGenreCommand>();
-            services.AddTransient<IUpdateGenreCommand, UpdateGenreCommand>();
-
-            // Nationalities
-            services.AddTransient<IAddNationalityCommand, AddNationalityCommand>();
-            services.AddTransient<IUpdateNationalityCommand, UpdateNationalityCommand>();
-        }
-
-        private void RegisterServices(IServiceCollection services)
-        {
-            // Authors
-            services.AddTransient<IAuthorsService, AuthorsService>();
-
-            // Books
-            services.AddTransient<IBooksService, BooksService>();
-
-            // Genres
-            services.AddTransient<IGenresService, GenresService>();
-
-            // Nationalities
-            services.AddTransient<INationalityService, NationalitiesService>();
-
-            // Home
-            services.AddTransient<IHomeService, HomeService>();
         }
     }
 }

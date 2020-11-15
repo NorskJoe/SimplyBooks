@@ -30,7 +30,7 @@ namespace SimplyBooks.Repository.Queries.Nationalities
 
             try
             {
-                result = await _context.Nationality
+                result = await _context.Nationalilties
                     .Select(x => new NationalitySelectListItem
                     {
                         Name = x.Name,

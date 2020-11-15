@@ -28,7 +28,7 @@ namespace SimplyBooks.Repository.Commands.Authors
             Result result = new Result();
             try
             {
-                _context.Author.Update(author);
+                _context.Authors.Update(author);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
