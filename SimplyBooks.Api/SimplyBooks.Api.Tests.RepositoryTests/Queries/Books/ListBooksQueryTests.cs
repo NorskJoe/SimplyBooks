@@ -17,47 +17,47 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 }
             };
 
@@ -85,29 +85,29 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
             // Arrange
             var author1 = new Author
             {
-                Name = StringExtensions.GenerateRandomString(),
-                Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                Name = StringExtensions.RandomString(),
+                Nationality = new Nationality { Name = StringExtensions.RandomString() }
             };
 
             var author2 = new Author
             {
-                Name = StringExtensions.GenerateRandomString(),
-                Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                Name = StringExtensions.RandomString(),
+                Nationality = new Nationality { Name = StringExtensions.RandomString() }
             };
 
             var books = new List<Book>
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Author = author1,
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Author = author2,
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
             };
 
@@ -135,28 +135,28 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
         public async void Execute_should_filter_by_genre()
         {
             // Arrange 
-            var genre1 = new Genre { Name = StringExtensions.GenerateRandomString() };
-            var genre2 = new Genre { Name = StringExtensions.GenerateRandomString() };
+            var genre1 = new Genre { Name = StringExtensions.RandomString() };
+            var genre2 = new Genre { Name = StringExtensions.RandomString() };
 
             var books = new List<Book>
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
                     Genre = genre1
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
                     Genre = genre2
                 },
@@ -193,10 +193,10 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
                 new Book
                 {
@@ -204,10 +204,10 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
                 new Book
                 {
@@ -215,10 +215,10 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 },
                 new Book
                 {
@@ -226,10 +226,10 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() }
+                    Genre = new Genre { Name = StringExtensions.RandomString() }
                 }
             };
 
@@ -260,50 +260,50 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     DateRead = new DateTime(2020, 12, 3)
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     DateRead = new DateTime(1981, 12, 3)
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     DateRead = new DateTime(1988, 12, 3)
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     DateRead = new DateTime(2001, 12, 3)
                 }
             };
@@ -335,50 +335,50 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     YearPublished = new DateTime(2020, 12, 3)
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     YearPublished = new DateTime(1981, 12, 3)
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     YearPublished = new DateTime(1988, 12, 3)
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     },
-                    Genre = new Genre { Name = StringExtensions.GenerateRandomString() },
+                    Genre = new Genre { Name = StringExtensions.RandomString() },
                     YearPublished = new DateTime(2001, 12, 3)
                 }
             };

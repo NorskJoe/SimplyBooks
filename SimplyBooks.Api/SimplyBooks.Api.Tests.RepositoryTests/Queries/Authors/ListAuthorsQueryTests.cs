@@ -17,42 +17,42 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Authors
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 9,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 8,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 7,
                     Author = new Author
                     {
-                        Name = StringExtensions.GenerateRandomString(),
-                        Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                        Name = StringExtensions.RandomString(),
+                        Nationality = new Nationality { Name = StringExtensions.RandomString() }
                     }
                 }
             };
@@ -82,38 +82,38 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Authors
             var author1 = new Author
             {
                 Name = "Peter Parker",
-                Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                Nationality = new Nationality { Name = StringExtensions.RandomString() }
             };
 
             var author2 = new Author
             {
                 Name = "Peter Piper",
-                Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                Nationality = new Nationality { Name = StringExtensions.RandomString() }
             };
 
             var author3 = new Author
             {
                 Name = "Harry Potter",
-                Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                Nationality = new Nationality { Name = StringExtensions.RandomString() }
             };
 
             var books = new List<Book>
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = author1
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = author2
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
                     Author = author3
                 },
@@ -156,21 +156,21 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Authors
             {
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
-                    Author = new Author { Name = StringExtensions.GenerateRandomString(), Nationality = nationality1 }
+                    Author = new Author { Name = StringExtensions.RandomString(), Nationality = nationality1 }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
-                    Author = new Author { Name = StringExtensions.GenerateRandomString(), Nationality = nationality1 }
+                    Author = new Author { Name = StringExtensions.RandomString(), Nationality = nationality1 }
                 },
                 new Book
                 {
-                    Title = StringExtensions.GenerateRandomString(),
+                    Title = StringExtensions.RandomString(),
                     Rating = 10,
-                    Author = new Author { Name = StringExtensions.GenerateRandomString(), Nationality = nationality2 }
+                    Author = new Author { Name = StringExtensions.RandomString(), Nationality = nationality2 }
                 },
             };
 

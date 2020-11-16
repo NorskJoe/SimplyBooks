@@ -11,7 +11,7 @@ namespace SimplyBooks.Repository.Queries.Nationalities
 {
     public interface IListAllNationalitiesQuery
     {
-        Task<Result<IList<Nationality>>> Execute();
+        Task<List<Nationality>> Execute();
     }
 
     public class ListAllNationalitiesQuery : IListAllNationalitiesQuery
@@ -26,20 +26,18 @@ namespace SimplyBooks.Repository.Queries.Nationalities
             _logger = logger;
         }
 
-        public async Task<Result<IList<Nationality>>> Execute()
+        public async Task<List<Nationality>> Execute()
         {
-            Result<IList<Nationality>> result = new Result<IList<Nationality>>();
+            List<Nationality> result = new List<Nationality>();
 
             try
             {
-                result.Value = await _context.Nationalilties
+                result = await _context.Nationalilties
                             .ToListAsync();
             }
             catch (Exception ex)
             {
-                var id = _logger.LogErrorWithEventId(ex);
-                var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
+                _logger.LogErrorWithEventId(ex);
             }
 
             return result;

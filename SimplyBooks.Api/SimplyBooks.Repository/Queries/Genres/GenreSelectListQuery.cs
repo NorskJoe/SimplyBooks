@@ -42,8 +42,7 @@ namespace SimplyBooks.Repository.Queries.Genres
             }
             catch (Exception ex)
             {
-                var id = _logger.LogErrorWithEventId(ex);
-                var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
+                _logger.LogErrorWithEventId(ex);
             }
 
             return result;

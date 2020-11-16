@@ -13,11 +13,11 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Books
             // Arrange
             var book = new Book
             {
-                Title = StringExtensions.GenerateRandomString(),
+                Title = StringExtensions.RandomString(),
                 Author = new Author
                 {
-                    Name = StringExtensions.GenerateRandomString(),
-                    Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                    Name = StringExtensions.RandomString(),
+                    Nationality = new Nationality { Name = StringExtensions.RandomString() }
                 }
             };
 

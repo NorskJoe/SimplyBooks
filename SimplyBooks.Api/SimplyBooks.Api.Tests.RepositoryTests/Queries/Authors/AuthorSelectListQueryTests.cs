@@ -16,23 +16,23 @@ namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Authors
             {
                 new Author
                 {
-                    Name = StringExtensions.GenerateRandomString(),
-                    Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                    Name = StringExtensions.RandomString(),
+                    Nationality = new Nationality { Name = StringExtensions.RandomString() }
                 },
                 new Author
                 {
-                    Name = StringExtensions.GenerateRandomString(),
-                    Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                    Name = StringExtensions.RandomString(),
+                    Nationality = new Nationality { Name = StringExtensions.RandomString() }
                 },
                 new Author
                 {
-                    Name = StringExtensions.GenerateRandomString(),
-                    Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                    Name = StringExtensions.RandomString(),
+                    Nationality = new Nationality { Name = StringExtensions.RandomString() }
                 },
                 new Author
                 {
-                    Name = StringExtensions.GenerateRandomString(),
-                    Nationality = new Nationality { Name = StringExtensions.GenerateRandomString() }
+                    Name = StringExtensions.RandomString(),
+                    Nationality = new Nationality { Name = StringExtensions.RandomString() }
                 }
             };
 

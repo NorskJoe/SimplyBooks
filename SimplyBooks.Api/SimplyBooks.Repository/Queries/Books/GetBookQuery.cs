@@ -53,8 +53,7 @@ namespace SimplyBooks.Repository.Queries.Books
             }
             catch (Exception ex)
             {
-                var eventId = _logger.LogErrorWithEventId(ex);
-                var message = $"An unhandled exception occured.  An error has been logged with id: {eventId}";
+                _logger.LogErrorWithEventId(ex);
             }
 
             return result;

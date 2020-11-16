@@ -5,7 +5,7 @@ namespace SimplyBooks.Api.Tests.Common.Extensions
 {
     public static class StringExtensions
     {
-        public static string GenerateRandomString()
+        public static string RandomString()
         {
             Random random = new Random();
             const int length = 8;

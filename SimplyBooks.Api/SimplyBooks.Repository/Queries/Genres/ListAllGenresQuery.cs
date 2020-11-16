@@ -11,7 +11,7 @@ namespace SimplyBooks.Repository.Queries.Genres
 {
     public interface IListAllGenresQuery
     {
-        Task<Result<IList<Genre>>> Execute();
+        Task<IList<Genre>> Execute();
     }
 
     public class ListAllGenresQuery : IListAllGenresQuery
@@ -26,20 +26,18 @@ namespace SimplyBooks.Repository.Queries.Genres
             _logger = logger;
         }
 
-        public async Task<Result<IList<Genre>>> Execute()
+        public async Task<IList<Genre>> Execute()
         {
-            Result<IList<Genre>> result = new Result<IList<Genre>>();
+            List<Genre> result = new List<Genre>();
 
             try
             {
-                result.Value = await _context.Genres
+                result = await _context.Genres
                             .ToListAsync();
             }
             catch (Exception ex)
             {
-                var id = _logger.LogErrorWithEventId(ex);
-                var message = $"An unhandled exception occured.  An error has been logged with id: {id}";
-                result.AddError(message);
+                _logger.LogErrorWithEventId(ex);
             }
 
             return result;
