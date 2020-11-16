@@ -10,6 +10,7 @@ using SimplyBooks.Repository.Commands;
 using SimplyBooks.Repository.Queries;
 using SimplyBooks.Services;
 using SimplyBooks.Services.DependencyResolver;
+using SimplyBooks.Services.ExceptionHandling;
 
 namespace SimplyBooks.Web
 {
@@ -27,7 +28,6 @@ namespace SimplyBooks.Web
         {
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddControllers();
-
 
             services
                 .AddDbContext<SimplyBooksContext>(options => options.UseSqlServer(connection))
@@ -63,6 +63,9 @@ namespace SimplyBooks.Web
                 app.UseHsts();
             }
 
+            loggerFactory.AddFile("Logs/logs.txt", LogLevel.Error);
+            app.ConfigureExceptionHandler(loggerFactory.CreateLogger<SimplyBooksExceptionHandler>());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -72,9 +75,6 @@ namespace SimplyBooks.Web
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseAuthentication();
-
-            // I will handle any info / error logs manually.  Auto log critical crashes
-            loggerFactory.AddFile("Logs/logs.txt", LogLevel.Critical);
         }
     }
 }

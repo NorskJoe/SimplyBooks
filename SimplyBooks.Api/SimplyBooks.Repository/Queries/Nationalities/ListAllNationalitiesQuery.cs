@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SimplyBooks.Domain.Extensions;
-using SimplyBooks.Domain.QueryModels;
 
 namespace SimplyBooks.Repository.Queries.Nationalities
 {

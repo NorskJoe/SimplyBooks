@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /SimplyBooks.Api/SimplyBooks.Web/appsettings.json
+/SimplyBooks.Api/SimplyBooks.Web/Logs/

@@ -1,9 +1,7 @@
 ﻿using SimplyBooks.Api.Tests.Common.Extensions;
 using SimplyBooks.Domain;
 using SimplyBooks.Repository.Queries.Genres;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Genres

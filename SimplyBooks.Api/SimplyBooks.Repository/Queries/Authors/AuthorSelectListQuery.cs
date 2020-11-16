@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SimplyBooks.Domain;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimplyBooks.Domain.Extensions;
 
 namespace SimplyBooks.Repository.Queries.Authors
 {
@@ -26,34 +24,23 @@ namespace SimplyBooks.Repository.Queries.Authors
 
         public async Task<IList<AuthorSelectListItem>> Execute()
         {
-            var result = new List<AuthorSelectListItem>();
-
-            try
-            {
-                result = await _context.Authors
-                    .Join(_context.Nationalilties,
-                        a => a.Nationality.NationalityId,
-                        n => n.NationalityId,
-                        (a, n) => new { a, n})
-                    .Select(x => new AuthorSelectListItem
-                    {
-                        Name = x.a.Name,
-                        AuthorId = x.a.AuthorId,
-                        Nationality = new Nationality 
-                        { 
-                            Name = x.n.Name, 
-                            NationalityId = x.n.NationalityId 
-                        }
-                    })
-                    .OrderBy(x => x.Name)
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogErrorWithEventId(ex);
-            }
-
-            return result;
+            return await _context.Authors
+                .Join(_context.Nationalilties,
+                    a => a.Nationality.NationalityId,
+                    n => n.NationalityId,
+                    (a, n) => new { a, n})
+                .Select(x => new AuthorSelectListItem
+                {
+                    Name = x.a.Name,
+                    AuthorId = x.a.AuthorId,
+                    Nationality = new Nationality 
+                    { 
+                        Name = x.n.Name, 
+                        NationalityId = x.n.NationalityId 
+                    }
+                })
+                .OrderBy(x => x.Name)
+                .ToListAsync();
         }
     }
 
