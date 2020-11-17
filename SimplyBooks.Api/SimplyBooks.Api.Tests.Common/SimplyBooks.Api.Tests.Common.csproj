@@ -4,4 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0" />
+    <PackageReference Include="Moq" Version="4.15.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimplyBooks.Domain\SimplyBooks.Domain.csproj" />
+    <ProjectReference Include="..\SimplyBooks.Repository\SimplyBooks.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

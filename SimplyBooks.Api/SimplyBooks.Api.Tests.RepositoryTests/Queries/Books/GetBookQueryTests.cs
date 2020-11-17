@@ -1,4 +1,5 @@
-﻿using SimplyBooks.Api.Tests.Common.Extensions;
+﻿using SimplyBooks.Api.Tests.Common;
+using SimplyBooks.Api.Tests.Common.Extensions;
 using SimplyBooks.Domain;
 using SimplyBooks.Repository.Queries.Books;
 using Xunit;

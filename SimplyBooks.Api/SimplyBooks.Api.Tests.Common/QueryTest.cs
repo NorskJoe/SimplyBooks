@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SimplyBooks.Domain;
 using System;
 
-namespace SimplyBooks.Api.Tests.RepositoryTests
+namespace SimplyBooks.Api.Tests.Common
 {
     public class QueryTest<T> : IDisposable
     {

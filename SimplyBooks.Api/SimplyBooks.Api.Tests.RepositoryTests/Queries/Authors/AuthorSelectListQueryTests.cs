@@ -3,6 +3,7 @@ using SimplyBooks.Domain;
 using SimplyBooks.Repository.Queries.Authors;
 using SimplyBooks.Api.Tests.Common.Extensions;
 using System.Collections.Generic;
+using SimplyBooks.Api.Tests.Common;
 
 namespace SimplyBooks.Api.Tests.RepositoryTests.Queries.Authors
 {
